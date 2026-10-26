@@ -1,0 +1,57 @@
+{
+  "method": "Consolidated evidence: six-mode baseline run plus focused M03 final repair; this is not a single rerun of every check on the final runtime. M01/M02/M05 and fixture artwork unchanged by M03 clock/gate fix. Historical failures retained.",
+  "checks": [
+    {
+      "name": "M01: caught reaction hides the scoring hand and +1",
+      "passed": true,
+      "elapsedMs": 30185,
+      "sourceReport": "report-before-frame-gate.json"
+    },
+    {
+      "name": "M02: real MISS and EARLY enter the layered box; SUCCESS lands on the rug",
+      "passed": true,
+      "elapsedMs": 93005,
+      "sourceReport": "report-before-frame-gate.json"
+    },
+    {
+      "name": "M03: success releases through visible retreat; punch strikes and returns before result",
+      "passed": true,
+      "elapsedMs": 29182,
+      "sourceReport": "presentation-final-report.json"
+    },
+    {
+      "name": "M03-REDUCED: essential release and punch retreat complete with reduced motion",
+      "passed": true,
+      "elapsedMs": 21859,
+      "sourceReport": "presentation-final-report.json"
+    },
+    {
+      "name": "M05: multiple anchors stay attached through inward pulls and spring back",
+      "passed": true,
+      "elapsedMs": 73971,
+      "sourceReport": "report-before-frame-gate.json"
+    },
+    {
+      "name": "FIXTURES: six updated native-resolution reference poses",
+      "passed": true,
+      "elapsedMs": 25985,
+      "sourceReport": "report-before-frame-gate.json"
+    },
+    {
+      "name": "RUNTIME: no JavaScript or missing-asset errors",
+      "passed": true,
+      "elapsedMs": 1,
+      "sourceReport": "presentation-final-report.json"
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "errors": [],
+  "motionCoreTestedCommit": "7c7423f028cf899d5d0c7c67fe8c57a997da9a4e",
+  "releaseRuntimeCommit": "32ff3541ae259f4e44b8096869ebd838ed7a9eb3",
+  "supplementaryReports": [
+    "../hat-motion/report.json",
+    "../webkit-hat-shadow-report.json",
+    "../production-report.json"
+  ]
+}

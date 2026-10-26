@@ -1,0 +1,72 @@
+{
+  "mode": "06",
+  "reference": "06_nekojyarashi.webp",
+  "logicalStage": [
+    941,
+    1672
+  ],
+  "assets": {
+    "cat": {
+      "png": "m06-cat.png",
+      "webp": "m06-cat.webp",
+      "width": 1156,
+      "height": 1360,
+      "hasAlpha": true
+    },
+    "cat-idle": {
+      "png": "m06-cat-idle.png",
+      "webp": "m06-cat-idle.webp",
+      "width": 1156,
+      "height": 1360,
+      "hasAlpha": true
+    },
+    "wand": {
+      "png": "m06-wand.png",
+      "webp": "m06-wand.webp",
+      "width": 1224,
+      "height": 1285,
+      "hasAlpha": true
+    },
+    "background": {
+      "png": "m06-background.png",
+      "webp": "m06-background.webp",
+      "width": 941,
+      "height": 1672,
+      "hasAlpha": false
+    }
+  },
+  "placementNotes": {
+    "background": {
+      "x": 0,
+      "y": 0,
+      "width": 941,
+      "height": 1672
+    },
+    "cat": {
+      "x": 40,
+      "y": 525,
+      "width": 780,
+      "height": 800,
+      "note": "Initial reference fit, tighten through screenshot comparison; sprites use identical 1156x1360 canvases"
+    },
+    "wand": {
+      "connectorNormalized": [
+        0.7,
+        0.28
+      ],
+      "referenceControlPoint": [
+        847,
+        300
+      ],
+      "note": "Draw feathers around connector; black rod exits upper right. Collision should ignore black rod and interaction ring."
+    }
+  },
+  "poseNotes": "m06-cat and m06-cat-idle share canvas, same face/stripes/eyes/tail/body. Idle bends the previously raised right foreleg down to chin height. Keep face locked when mesh-interpolating the right arm; do not crossfade two full cats.",
+  "qualityNotes": [
+    "Both transparent poses inspected at native image view. Dense fur and white whiskers retained.",
+    "Background retains top wooden sofa, ivory shag rug, bottom-left plant, lower-right woven sofa and sunlight. No cat, feather, ring, UI or text remains.",
+    "Wand has blue/pink/yellow/purple detailed feathers, black connector and angled black rod. All effects removed.",
+    "Generated cat is slightly more frontal and evenly proportioned than original; screenshot alignment still required."
+  ],
+  "generatedMastersPreserved": true
+}

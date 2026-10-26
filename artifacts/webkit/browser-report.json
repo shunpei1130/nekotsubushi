@@ -1,0 +1,405 @@
+{
+  "date": "2026-10-23T14:10:14.495Z",
+  "baseURL": "http://127.0.0.1:5173",
+  "browser": "26.0",
+  "platform": "linux",
+  "method": "Playwright WebKit with mobile-sized viewports and real browser pointer input; Linux WebKit is not physical iOS Safari.",
+  "checks": [
+    {
+      "name": "NAV-01: all six menu cards load the correct playable mode",
+      "passed": true,
+      "elapsedMs": 10326
+    },
+    {
+      "name": "G01: tap score, warning/open reaction, result and replay",
+      "passed": true,
+      "elapsedMs": 7622
+    },
+    {
+      "name": "G02: real box drag during jump commits immediately once",
+      "passed": true,
+      "elapsedMs": 4323
+    },
+    {
+      "name": "G03: actual hold/release records, punch fails, cancellation does not record",
+      "passed": true,
+      "elapsedMs": 6881
+    },
+    {
+      "name": "G04: hat taps only count while bare and replay clears score",
+      "passed": true,
+      "elapsedMs": 5769
+    },
+    {
+      "name": "G05: both cheeks drag, stay on the selected side and spring back",
+      "passed": true,
+      "elapsedMs": 5336
+    },
+    {
+      "name": "G06: ring drag moves toy, release keeps pursuit and stationary feather is caught",
+      "passed": true,
+      "elapsedMs": 4124
+    },
+    {
+      "name": "LIFE-01: pause freezes clock, resume does not score, blur requires explicit resume",
+      "passed": true,
+      "elapsedMs": 4305
+    },
+    {
+      "name": "INPUT-01: real touch tap routes through Pointer Events",
+      "passed": true,
+      "elapsedMs": 1390
+    },
+    {
+      "name": "VIS-01–06: production fixtures capture exactly 941×1672",
+      "passed": true,
+      "elapsedMs": 17853
+    },
+    {
+      "name": "LAYOUT: mobile/desktop sizes preserve stage ratio and controls",
+      "passed": true,
+      "elapsedMs": 8620
+    },
+    {
+      "name": "ASSET: menu images decode and no horizontal overflow is present",
+      "passed": true,
+      "elapsedMs": 1785
+    },
+    {
+      "name": "SAVE-01: successful record persists; corrupt and unavailable storage remain playable",
+      "passed": true,
+      "elapsedMs": 7809
+    },
+    {
+      "name": "CONSOLE: no uncaught JavaScript or browser console errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "menu-mobile-390.png",
+    "motion-01-contact.png",
+    "motion-01-warning.png",
+    "motion-01-caught.png",
+    "motion-02-swipe.png",
+    "motion-03-hold.png",
+    "motion-03-punch.png",
+    "motion-04-putting.png",
+    "motion-04-fish.png",
+    "motion-05-neutral.png",
+    "motion-05-right.png",
+    "motion-05-return.png",
+    "motion-05-left.png",
+    "motion-06-drag.png",
+    "motion-06-captured.png",
+    "pause-mobile.png",
+    "actual-01.png",
+    "actual-02.png",
+    "actual-03.png",
+    "actual-04.png",
+    "actual-05.png",
+    "actual-06.png",
+    "layout-390x844.png",
+    "layout-360x800.png",
+    "layout-375x667.png",
+    "layout-1440x900.png",
+    "layout-844x390.png"
+  ],
+  "snapshots": {
+    "01": {
+      "mode": 1,
+      "status": "playing",
+      "phase": "CLOSED",
+      "score": 12,
+      "best": 1,
+      "elapsed": 12,
+      "remaining": 18,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": 1.597863545268774,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "+1"
+    },
+    "02": {
+      "mode": 2,
+      "status": "playing",
+      "phase": "JUMP",
+      "score": 7,
+      "best": 1,
+      "elapsed": 18,
+      "remaining": 12,
+      "hold": 0,
+      "success": false,
+      "boxX": 705.75,
+      "encounterOutcome": "SUCCESS",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "currentHat": "banana",
+      "phaseTime": 0.3,
+      "phaseDuration": 0.6,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "スカッ！"
+    },
+    "03": {
+      "mode": 3,
+      "status": "playing",
+      "phase": "WARNING",
+      "score": 0,
+      "best": 4.2,
+      "elapsed": 2.8,
+      "remaining": 0,
+      "hold": 2.8,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "currentHat": "banana",
+      "phaseTime": 0.25,
+      "phaseDuration": 0.65,
+      "punchAt": 3.2,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": ""
+    },
+    "04": {
+      "mode": 4,
+      "status": "playing",
+      "phase": "WEARING",
+      "score": 8,
+      "best": 2,
+      "elapsed": 6,
+      "remaining": 9,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": 0.7,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "+1"
+    },
+    "05": {
+      "mode": 5,
+      "status": "playing",
+      "phase": "DRAGGING",
+      "score": 0,
+      "best": 0,
+      "elapsed": 0,
+      "remaining": 0,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 150.56,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": null,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "むに〜"
+    },
+    "06": {
+      "mode": 6,
+      "status": "playing",
+      "phase": "PLAYING",
+      "score": 0,
+      "best": 0.2,
+      "elapsed": 9,
+      "remaining": 6,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": null,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "おしい！"
+    }
+  },
+  "performance": {
+    "resources": [
+      {
+        "name": "/src/main.ts",
+        "transferSize": 300,
+        "duration": 3
+      },
+      {
+        "name": "/@vite/client",
+        "transferSize": 300,
+        "duration": 3
+      },
+      {
+        "name": "/node_modules/vite/dist/client/env.mjs",
+        "transferSize": 300,
+        "duration": 4
+      },
+      {
+        "name": "/src/style.css",
+        "transferSize": 300,
+        "duration": 4
+      },
+      {
+        "name": "/src/engine.ts",
+        "transferSize": 300,
+        "duration": 4
+      },
+      {
+        "name": "/src/scene.ts",
+        "transferSize": 300,
+        "duration": 19
+      },
+      {
+        "name": "/src/data.ts",
+        "transferSize": 300,
+        "duration": 19
+      },
+      {
+        "name": "/src/store.ts",
+        "transferSize": 300,
+        "duration": 19
+      },
+      {
+        "name": "/node_modules/.vite/deps/pixi__js.js",
+        "transferSize": 0,
+        "duration": 3
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-SQKVGCTD.js",
+        "transferSize": 0,
+        "duration": 2
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-KYGQUIQW.js",
+        "transferSize": 0,
+        "duration": 1
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-AXMTJ4RB.js",
+        "transferSize": 0,
+        "duration": 0
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-PYXYOBZM.js",
+        "transferSize": 0,
+        "duration": 1
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-KNB3KT4Z.js",
+        "transferSize": 0,
+        "duration": 0
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-H5WP4S2H.js",
+        "transferSize": 0,
+        "duration": 0
+      },
+      {
+        "name": "/node_modules/.vite/deps/chunk-ACJFSB3G.js",
+        "transferSize": 0,
+        "duration": 0
+      },
+      {
+        "name": "/assets/thumb-01.webp",
+        "transferSize": 300,
+        "duration": 2
+      },
+      {
+        "name": "/assets/thumb-02.webp",
+        "transferSize": 300,
+        "duration": 2
+      },
+      {
+        "name": "/assets/thumb-03.webp",
+        "transferSize": 300,
+        "duration": 2
+      },
+      {
+        "name": "/assets/thumb-04.webp",
+        "transferSize": 300,
+        "duration": 2
+      },
+      {
+        "name": "/assets/thumb-05.webp",
+        "transferSize": 300,
+        "duration": 4
+      },
+      {
+        "name": "/assets/thumb-06.webp",
+        "transferSize": 300,
+        "duration": 4
+      },
+      {
+        "name": "/assets/mplus-rounded-800.woff2",
+        "transferSize": 300,
+        "duration": 1
+      }
+    ],
+    "navigation": [
+      {
+        "domContentLoadedMs": 191,
+        "loadMs": 208
+      }
+    ]
+  },
+  "limitations": [
+    "Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior.",
+    "Simultaneous touch ownership was tested via Chromium CDP; WebKit run verifies real single touch and pointer cancellation."
+  ],
+  "httpErrors": [],
+  "passed": 14,
+  "failed": 0
+}

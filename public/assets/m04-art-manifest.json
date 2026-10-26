@@ -1,0 +1,58 @@
+{
+  "m04-cat": {
+    "file": "m04-cat.webp",
+    "master": "m04-cat.png",
+    "width": 1168,
+    "height": 1346,
+    "opaqueBoundingBox": [
+      46,
+      23,
+      1165,
+      1308
+    ],
+    "alpha": true,
+    "bytes": 422358
+  },
+  "m04-banana": {
+    "file": "m04-banana.webp",
+    "master": "m04-banana.png",
+    "width": 1536,
+    "height": 1024,
+    "opaqueBoundingBox": [
+      54,
+      25,
+      1505,
+      1009
+    ],
+    "alpha": true,
+    "bytes": 286548
+  },
+  "m04-fish": {
+    "file": "m04-fish.webp",
+    "master": "m04-fish.png",
+    "width": 1536,
+    "height": 1024,
+    "opaqueBoundingBox": [
+      28,
+      25,
+      1517,
+      996
+    ],
+    "alpha": true,
+    "bytes": 396810
+  },
+  "m04-background": {
+    "file": "m04-background.webp",
+    "master": "m04-background.png",
+    "width": 941,
+    "height": 1672,
+    "opaqueBoundingBox": [
+      0,
+      0,
+      941,
+      1672
+    ],
+    "alpha": false,
+    "bytes": 206054
+  }
+}

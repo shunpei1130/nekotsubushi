@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-23T17:22:29.512Z",
+  "url": "https://nekotsubushi.vercel.app",
+  "browser": "154.0.8037.57",
+  "anonymous": true,
+  "entryAsset": "/assets/index-89Ph273l.js",
+  "checks": [
+    {
+      "name": "Anonymous public menu and six cards",
+      "passed": true
+    },
+    {
+      "name": "Production mode 1: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 2: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 3: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 4: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 5: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 6: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "No public JavaScript or HTTP asset errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 8
+}

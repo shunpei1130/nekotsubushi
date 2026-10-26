@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-23T14:12:33.282Z",
+  "baseURL": "http://127.0.0.1:5173",
+  "browser": "26.0",
+  "platform": "linux",
+  "method": "Playwright WebKit with mobile-sized viewports and real browser pointer input; Linux WebKit is not physical iOS Safari.",
+  "checks": [
+    {
+      "name": "ASSET-01: a failed cat download displays retry and recovers to actual play",
+      "passed": true,
+      "elapsedMs": 2700
+    },
+    {
+      "name": "CONSOLE: no uncaught JavaScript or browser console errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "asset-download-retry.png"
+  ],
+  "snapshots": {},
+  "performance": {},
+  "limitations": [
+    "Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior."
+  ],
+  "httpErrors": [],
+  "expectedAssetFailure": [
+    "Game assets could not be loaded Error: [Loader.load] Failed to load http://127.0.0.1:5173/assets/m01-cat.webp.\nTypeError: Load failed"
+  ],
+  "passed": 2,
+  "failed": 0
+}

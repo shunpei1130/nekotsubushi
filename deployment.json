@@ -1,0 +1,17 @@
+{
+  "provider": "vercel",
+  "projectId": "prj_b9KY9TnCKejq0A7fGpe6uoC0cPFE",
+  "teamId": "team_Iic3HLNmnGRA51i7VKtiOMmN",
+  "projectName": "nekotsubushi",
+  "environment": "production",
+  "sourceRepository": null,
+  "build": "npm run build",
+  "output": "dist",
+  "sourceStatus": "Local Git committed; GitHub repository creation denied by integration permissions; dedicated destination repository not specified",
+  "url": "https://nekotsubushi.vercel.app",
+  "runtimeCommit": "32ff3541ae259f4e44b8096869ebd838ed7a9eb3",
+  "anonymousPublicAccessVerified": true,
+  "deploymentId": "dpl_vtqZQxEsXos1VfstqmZjHv6TJxsd",
+  "status": "READY",
+  "entryAsset": "/assets/index-89Ph273l.js"
+}

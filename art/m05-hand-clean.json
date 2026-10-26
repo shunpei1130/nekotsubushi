@@ -1,0 +1,24 @@
+{
+  "source": "art/masters/m05-hand.png",
+  "sourceSha256": "12d1a2a372b5ef5f5d30231222f488f3dade113922c0bd8d9e2c431c1383bdee",
+  "output": "public/assets/m05-hand-clean.webp",
+  "master": "art/masters/m05-hand-clean.png",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "method": "Preserve original silhouette and color; clear negligible alpha <=8, normalize near-opaque alpha >=248, clear RGB for fully transparent pixels; encode lossless WebP with exact transparent RGB",
+  "noContourRedraw": true,
+  "alphaBounds": [
+    446,
+    159,
+    1536,
+    1016
+  ],
+  "outputBytes": 340754,
+  "pinchAnchorSourcePx": [
+    460,
+    350
+  ],
+  "importantObservation": "Previous lossy WebP has RGB in fully transparent pixels, but no alpha plate in correct compositing. Motion-05-left hard brown wedge is likely exposed room background from left-edge cheek mesh moving inward. This asset avoids possible transparent RGB bleed but does not replace that geometry fix."
+}

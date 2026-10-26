@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-23T17:15:50.373Z",
+  "baseURL": "http://127.0.0.1:5174",
+  "browser": "WebKit",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "method": "Playwright 1.56.1 WebKit 26.0, iPhone 13 mobile/touch context. Native WebKit Input.dispatchTouchEvent produces trusted touch PointerEvents. Deterministic game time uses __game.step; game state is never directly changed.",
+  "checks": [
+    {
+      "name": "WK-G04: native tap puts on hat and ignores taps while worn",
+      "passed": true,
+      "elapsedMs": 5095
+    },
+    {
+      "name": "WK-G06: native touch moves feather; release keeps pursuit; capture retries",
+      "passed": true,
+      "elapsedMs": 2011
+    },
+    {
+      "name": "WK-CONSOLE: no uncaught JS, console or local asset HTTP errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "screenshots": [
+    "webkit-mode-4-hat.png",
+    "webkit-mode-6-drag.png"
+  ],
+  "errors": [],
+  "snapshots": {},
+  "limitations": [
+    "This is Linux WebKit with an iPhone viewport/user agent, not a physical iPhone or shipping iOS Safari. Physical-device certification remains outstanding."
+  ],
+  "environment": {
+    "customExecutable": "/tmp/neko-webkit-deps/run-webkit.sh"
+  },
+  "version": "26.0",
+  "passed": 3,
+  "failed": 0
+}

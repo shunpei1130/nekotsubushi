@@ -1,0 +1,21 @@
+{
+ "name": "nekotsubushi",
+ "version": "1.0.0",
+ "private": true,
+ "type": "module",
+ "scripts": {
+  "dev": "vite --host 0.0.0.0",
+  "build": "tsc --noEmit && vite build",
+  "test": "tsx --test tests/*.test.ts",
+  "test:browser": "tsx tests/browser.ts"
+ },
+ "dependencies": {
+  "pixi.js": "8.14.0"
+ },
+ "devDependencies": {
+  "@playwright/test": "1.56.1",
+  "tsx": "4.20.6",
+  "typescript": "5.9.3",
+  "vite": "6.4.1"
+ }
+}

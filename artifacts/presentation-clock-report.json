@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-23T16:58:43.553Z",
+  "baseURL": "http://127.0.0.1:5174",
+  "browser": "154.0.8037.57",
+  "platform": "linux",
+  "method": "Chromium with real mouse/pointer browser input; window.__game.step advances only game time. Device viewports are emulation, not physical-device certification.",
+  "checks": [
+    {
+      "name": "G03: actual hold/release records, punch fails, cancellation does not record",
+      "passed": true,
+      "elapsedMs": 30588
+    },
+    {
+      "name": "G05: both cheeks drag, stay on the selected side and spring back",
+      "passed": true,
+      "elapsedMs": 43399
+    },
+    {
+      "name": "LIFE-01: pause freezes clock, resume does not score, blur requires explicit resume",
+      "passed": true,
+      "elapsedMs": 18779
+    },
+    {
+      "name": "CONSOLE: no uncaught JavaScript or browser console errors",
+      "passed": true,
+      "elapsedMs": 0
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "motion-03-hold.png",
+    "motion-03-punch.png",
+    "motion-05-neutral.png",
+    "motion-05-right.png",
+    "motion-05-return.png",
+    "motion-05-left.png",
+    "pause-mobile.png"
+  ],
+  "snapshots": {},
+  "performance": {},
+  "limitations": [
+    "Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior."
+  ],
+  "httpErrors": [],
+  "passed": 4,
+  "failed": 0
+}

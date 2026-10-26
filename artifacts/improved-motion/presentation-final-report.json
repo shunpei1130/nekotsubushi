@@ -1,0 +1,929 @@
+{
+  "date": "2026-10-23T17:05:32.032Z",
+  "baseURL": "http://127.0.0.1:5174",
+  "browser": "154.0.8037.57",
+  "method": "Real browser pointer input at 390×844. test=1 freezes game time except __game.step; presentation animation uses real render time. Videos and keyframes show entry/landing, hand retreat, punch return and cheek deformation.",
+  "checks": [
+    {
+      "name": "M03: success releases through visible retreat; punch strikes and returns before result",
+      "passed": true,
+      "elapsedMs": 29182
+    },
+    {
+      "name": "M03-REDUCED: essential release and punch retreat complete with reduced motion",
+      "passed": true,
+      "elapsedMs": 21859
+    },
+    {
+      "name": "RUNTIME: no JavaScript or missing-asset errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "frames": {
+    "03-holding": {
+      "state": {
+        "mode": 3,
+        "status": "playing",
+        "phase": "HOLDING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.9999999999999999,
+        "phaseDuration": 3.0446588631719353,
+        "punchAt": 3.6946588631719353,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "前足が上がったら、そろそろ離して"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-release-frame": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      },
+      "modal": false
+    },
+    "03-success-retreat": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 8.081663948513294,
+          "y": 40.563294024653786
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-success-withdrawn": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1301,
+          "rotation": 0.17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-warning": {
+      "state": {
+        "mode": 3,
+        "status": "playing",
+        "phase": "WARNING",
+        "score": 0,
+        "best": 1,
+        "elapsed": 3.3946588631719345,
+        "remaining": 0,
+        "hold": 3.3946588631719345,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.3499999999999992,
+        "phaseDuration": 0.65,
+        "punchAt": 3.6946588631719353,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "パンチが来る！ 離して！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-punch-start": {
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-punch-track": [
+      {
+        "ms": 0,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 0,
+            "y": -76.31
+          },
+          "paw": {
+            "x": 983,
+            "y": 1171,
+            "rotation": 0
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        },
+        "modal": false
+      },
+      {
+        "ms": 1,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 0,
+            "y": -76.31
+          },
+          "paw": {
+            "x": 982.7307350929867,
+            "y": 1170.6409801239824,
+            "rotation": -0.011668145970573161
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        },
+        "modal": false
+      },
+      {
+        "ms": 398,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 0,
+            "y": -76.31
+          },
+          "paw": {
+            "x": 977.2701160234725,
+            "y": 1163.3601546979633,
+            "rotation": -0.2482949723161928
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        },
+        "modal": false
+      },
+      {
+        "ms": 725.1999999992549,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 0.01424466472743482,
+            "y": -76.10400023317248
+          },
+          "paw": {
+            "x": 972.6016677539601,
+            "y": 1157.1355570052801,
+            "rotation": -0.4505943973283937
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        },
+        "modal": false
+      },
+      {
+        "ms": 952.3000000007451,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 5.977331399495684,
+            "y": 10.131407931168354
+          },
+          "paw": {
+            "x": 969.3708149414895,
+            "y": 1152.8277532553193,
+            "rotation": -0.5905980192021234
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        },
+        "modal": false
+      }
+    ],
+    "03-punch-return": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "PUNCH",
+        "score": 0,
+        "best": 1,
+        "elapsed": 3.6956588631719347,
+        "remaining": 0,
+        "hold": 3.6946588631719353,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.7,
+        "pointerId": null,
+        "message": "猫パンチ！ 次は少し早めに"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": -7.960204194457797e-17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-reduced-release-frame": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      },
+      "modal": false
+    },
+    "03-reduced-success-withdrawn": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1292.5184652366863,
+          "rotation": 0.15890876223258993
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-reduced-punch-start": {
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      },
+      "modal": false
+    },
+    "03-reduced-punch-return": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "PUNCH",
+        "score": 0,
+        "best": 1,
+        "elapsed": 3.696000000000003,
+        "remaining": 0,
+        "hold": 3.6946588631719353,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.7,
+        "pointerId": null,
+        "message": "猫パンチ！ 次は少し早めに"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": -7.960204194457797e-17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "actual-03": {
+      "state": {
+        "mode": 3,
+        "status": "playing",
+        "phase": "WARNING",
+        "score": 0,
+        "best": 4.2,
+        "elapsed": 2.8,
+        "remaining": 0,
+        "hold": 2.8,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.25,
+        "phaseDuration": 0.65,
+        "punchAt": 3.2,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    }
+  },
+  "screenshots": [
+    "03-holding.png",
+    "03-success-retreat.png",
+    "03-success-withdrawn.png",
+    "03-warning.png",
+    "03-punch-impact-canvas.png",
+    "03-punch-return.png",
+    "03-reduced-success-withdrawn.png",
+    "03-reduced-punch-return.png",
+    "actual-03.png"
+  ],
+  "videos": [
+    "video/mode03-retreat-and-punch.webm"
+  ],
+  "errors": [],
+  "limitations": [
+    "Mobile viewport emulation is not a physical iPhone or Android device test.",
+    "Video timing includes screenshot and browser automation overhead; engine events are advanced explicitly."
+  ],
+  "passed": 3,
+  "failed": 0
+}

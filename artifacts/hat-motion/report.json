@@ -1,0 +1,215 @@
+{
+  "date": "2026-10-23T17:19:55.810Z",
+  "baseURL": "http://127.0.0.1:5174",
+  "checks": [
+    {
+      "name": "Fast next tap preserves detached banana; fish has no floor duplicate",
+      "passed": true
+    },
+    {
+      "name": "Both removed hats settle and persist on the floor",
+      "passed": true
+    },
+    {
+      "name": "Retry resets physical hat states and score",
+      "passed": true
+    },
+    {
+      "name": "Native reference pose retains banana on head and fish on left floor",
+      "passed": true
+    },
+    {
+      "name": "No JavaScript, console or missing-asset errors",
+      "passed": true
+    }
+  ],
+  "frames": {
+    "fish-worn-banana-landed": {
+      "state": {
+        "mode": 4,
+        "status": "playing",
+        "phase": "WEARING",
+        "score": 2,
+        "best": 0,
+        "elapsed": 0.8346647157929838,
+        "remaining": 14.165335284207016,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "fish",
+        "phaseTime": 0.01999999999999999,
+        "phaseDuration": 0.5490893027326091,
+        "punchAt": 0,
+        "effect": 0.4999999999999999,
+        "pointerId": null,
+        "message": "+1"
+      },
+      "visual": {
+        "mode": 4,
+        "cat": {
+          "x": 155,
+          "y": 353,
+          "width": 753,
+          "height": 843.481426448737,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "hats": {
+          "worn": "fish",
+          "head": {
+            "kind": "fish",
+            "visible": true,
+            "pose": {
+              "x": 518.4375,
+              "y": 531.630859375,
+              "width": 525,
+              "height": 405,
+              "rotation": 0
+            }
+          },
+          "floor": {
+            "banana": {
+              "visible": true,
+              "pose": {
+                "x": 782.0833333333334,
+                "y": 1286.1328125,
+                "width": 292,
+                "height": 220,
+                "rotation": 0
+              }
+            },
+            "fish": {
+              "visible": false,
+              "pose": {
+                "x": 107.08333333333334,
+                "y": 1063.1328125,
+                "width": 292,
+                "height": 220,
+                "rotation": 0
+              }
+            }
+          },
+          "falling": []
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "both-hats-landed": {
+      "state": {
+        "mode": 4,
+        "status": "playing",
+        "phase": "BARE",
+        "score": 2,
+        "best": 0,
+        "elapsed": 1.4747540185255932,
+        "remaining": 13.525245981474407,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "fish",
+        "phaseTime": 0.010999999999999899,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "いま！ またかぶせて"
+      },
+      "visual": {
+        "mode": 4,
+        "cat": {
+          "x": 155,
+          "y": 353,
+          "width": 753,
+          "height": 843.481426448737,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "hats": {
+          "worn": null,
+          "head": {
+            "kind": "fish",
+            "visible": false,
+            "pose": {
+              "x": 518.4375,
+              "y": 531.630859375,
+              "width": 525,
+              "height": 405,
+              "rotation": 0
+            }
+          },
+          "floor": {
+            "banana": {
+              "visible": true,
+              "pose": {
+                "x": 782.0833333333334,
+                "y": 1286.1328125,
+                "width": 292,
+                "height": 220,
+                "rotation": 0
+              }
+            },
+            "fish": {
+              "visible": true,
+              "pose": {
+                "x": 107.08333333333334,
+                "y": 1063.1328125,
+                "width": 292,
+                "height": 220,
+                "rotation": 0
+              }
+            }
+          },
+          "falling": []
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    }
+  },
+  "errors": [],
+  "method": "Real pointer input; deterministic engine clock; hat fall uses actual presentation frames. Mobile viewport is emulation.",
+  "passed": 5
+}

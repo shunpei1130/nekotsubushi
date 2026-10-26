@@ -1,0 +1,9 @@
+{
+  "normalReplayTimingVaries": true,
+  "times": [
+    4.489033972192556,
+    4.95554490974173,
+    3.5355989628471436
+  ],
+  "seededFixturesRemainDeterministic": true
+}

@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "1.0",
+  "project": "猫つぶし",
+  "status": "仕様契約。アプリに結び付ける前の定義であり、実行・検証済みのコードではない。",
+  "capture": {
+    "stageWidth": 941,
+    "stageHeight": 1672,
+    "crop": "stage-only",
+    "freezeClock": true,
+    "freezeRandom": true,
+    "stopIdleMotion": true,
+    "waitForFontsAndAssets": true,
+    "hideDeveloperUi": true,
+    "sameProductionScene": true
+  },
+  "fixtureSeed": 627041,
+  "directionConvention": "left/rightは画面の左/右。猫自身の解剖学的な左右と混同しない。",
+  "calibrationPolicy": "指定された途中状態を初期化し、通常の描画・変形・エフェクトを使う。独立した完成画像の貼付けで代替しない。",
+  "fixtures": [
+    {
+      "modeId": "01",
+      "referenceId": "R01",
+      "fixture": "reference",
+      "activeTimeMs": 12000,
+      "durationMs": 30000,
+      "gameState": {
+        "phase": "CLOSED",
+        "score": 12,
+        "remainingMs": 18000,
+        "pendingTap": false
+      },
+      "pose": {
+        "eyes": "closed",
+        "cheek": "pressed_right",
+        "finger": "right_cheek_contact",
+        "tail": "reference"
+      },
+      "effects": [
+        "+1",
+        "contact_rings",
+        "tail_lines"
+      ],
+      "visibleText": [
+        "01 ねこつんつん",
+        "12 回",
+        "あと 18 秒",
+        "目を開けたら、手を止めて！"
+      ],
+      "calibration": "つつきアニメーションの原本一致時刻を、通常クリップ上で決める。"
+    },
+    {
+      "modeId": "02",
+      "referenceId": "R02",
+      "fixture": "reference",
+      "activeTimeMs": 18000,
+      "durationMs": 30000,
+      "gameState": {
+        "phase": "JUMP",
+        "score": 7,
+        "remainingMs": 12000,
+        "encounterOutcome": "SUCCESS",
+        "successCommitted": true
+      },
+      "pose": {
+        "cat": "airborne_surprised",
+        "box": "shifted_right",
+        "boxOffsetInitialW": 0.25,
+        "ghost": "pre_swipe_position"
+      },
+      "effects": [
+        "swipe_trail",
+        "box_ghost",
+        "スカッ！"
+      ],
+      "visibleText": [
+        "02 箱をずらせ",
+        "7 回",
+        "あと 12 秒",
+        "入る直前に、箱をスワイプ"
+      ],
+      "calibration": "成功済みの空中フレームへ固定。着地後しか加点・スカッが出ない実装にしない。箱の右端は原本どおり一部が切れる。"
+    },
+    {
+      "modeId": "03",
+      "referenceId": "R03",
+      "fixture": "reference",
+      "activeTimeMs": 2800,
+      "durationMs": null,
+      "gameState": {
+        "phase": "WARNING",
+        "currentHoldMs": 2800,
+        "bestMs": 4200,
+        "scheduledPunchMs": 3200,
+        "recordCommitted": false
+      },
+      "pose": {
+        "cat": "raised_right_paw",
+        "finger": "nose_contact",
+        "eyes": "look_at_finger"
+      },
+      "effects": [
+        "yellow_warning",
+        "yellow_contact_rings"
+      ],
+      "visibleText": [
+        "03 猫パンチ寸止め",
+        "最高 4.2 秒",
+        "2.8 秒",
+        "長押しでちょっかい",
+        "パンチの前に離す"
+      ],
+      "calibration": "同じWARNINGクリップ内で前足角度を合わせる。2.8秒を成功記録として保存しない。"
+    },
+    {
+      "modeId": "04",
+      "referenceId": "R04",
+      "fixture": "reference",
+      "activeTimeMs": 6000,
+      "durationMs": 15000,
+      "gameState": {
+        "phase": "WEARING",
+        "score": 8,
+        "remainingMs": 9000,
+        "currentHat": "banana"
+      },
+      "pose": {
+        "head": "reference_tilt",
+        "bananaHat": "on_head",
+        "fishHat": "floor_left"
+      },
+      "effects": [
+        "+1",
+        "stars",
+        "tap_ring"
+      ],
+      "visibleText": [
+        "04 その帽子、いやニャ！",
+        "8 回",
+        "あと 9 秒",
+        "タップで、またかぶせる"
+      ],
+      "calibration": "装着成功の短い演出と帽子角度を原本へ合わせる。帽子なし頭も通常状態として制作する。"
+    },
+    {
+      "modeId": "05",
+      "referenceId": "R05",
+      "fixture": "reference",
+      "activeTimeMs": null,
+      "durationMs": null,
+      "gameState": {
+        "phase": "DRAGGING",
+        "score": null,
+        "remainingMs": null,
+        "side": "screen_right"
+      },
+      "pose": {
+        "eyes": "half_closed_looking_right",
+        "pinchTargetNormalized": [
+          0.94,
+          0.52
+        ],
+        "initialSuggestedDragNormalized": [
+          0.16,
+          0.0
+        ],
+        "deformationSource": "neutral_face_master"
+      },
+      "effects": [
+        "むに〜",
+        "yellow_contact_ring"
+      ],
+      "visibleText": [
+        "05 ほっぺむにむに",
+        "ほっぺを引っぱって、離すだけ"
+      ],
+      "calibration": "通常の局所変形から到達すること。0.16は初期値。原本への一致を確認してマスターとパラメータを調整する。"
+    },
+    {
+      "modeId": "06",
+      "referenceId": "R06",
+      "fixture": "reference",
+      "activeTimeMs": 9000,
+      "durationMs": 15000,
+      "gameState": {
+        "phase": "PLAYING",
+        "remainingMs": 6000,
+        "captured": false
+      },
+      "pose": {
+        "camera": "overhead_reference",
+        "cat": "reaching_upper_right",
+        "pawCenterNormalized": [
+          0.76,
+          0.38
+        ],
+        "toyControlAnchorNormalized": [
+          0.9,
+          0.18
+        ],
+        "toy": "pink_blue_yellow_feathers"
+      },
+      "effects": [
+        "おしい！",
+        "white_blue_touch_ring",
+        "trail"
+      ],
+      "visibleText": [
+        "06 あとちょっとで届くのに",
+        "あと 6 秒",
+        "指で動かして、つかまるな！"
+      ],
+      "calibration": "操作輪と羽の当たり形状を区別。肉球と羽は未接触。近接演出は通常プレイのイベントと同じ経路で表示する。"
+    }
+  ]
+}

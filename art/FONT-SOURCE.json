@@ -1,0 +1,14 @@
+{
+  "font": "M PLUS Rounded 1c ExtraBold",
+  "weight": 800,
+  "license": "SIL Open Font License 1.1",
+  "copyright": "Copyright 2016 The Rounded M+ Project Authors.",
+  "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/mplusrounded1c/MPLUSRounded1c-ExtraBold.ttf",
+  "google_fonts_repository": "https://github.com/google/fonts/tree/main/ofl/mplusrounded1c",
+  "upstream_master_sha256": "8e7c15901dca87f1451b356dda594f7d092ba252a5dcc47da74523a242493c36",
+  "subset_sha256": "271e226fe232fc9fe31cf842b9a3b2fdd082955a2c22e99441efa6e3cbf0d90b",
+  "size_bytes": 190812,
+  "character_count": 1345,
+  "coverage": "All characters in original specification data and current app/test sources; ASCII, Latin-1, hiragana, katakana, Japanese punctuation, and fullwidth/halfwidth forms supported by the master.",
+  "rebuild": "python scripts/subset-font.py (requires fonttools and brotli)"
+}

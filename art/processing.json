@@ -1,0 +1,325 @@
+{
+  "version": 1,
+  "notes": [
+    "PNG masters unchanged",
+    "No new characters drawn or generated during processing",
+    "Fine fur alpha >=3 retained",
+    "Cardboard only uses hard silhouette mask"
+  ],
+  "assets": [
+    {
+      "source": "art/masters/m01-cat-open.png",
+      "sourceSha256": "e67b695c5bcf19acbcb210665207cd710f436f67ef239f0e38f70a876ebc62a0",
+      "output": "public/assets/m01-cat-open.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 13012,
+      "outputBytes": 323148,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m01-cat.png",
+      "sourceSha256": "ccdb618a977e784417d4bfd6bc428ea138c874679e4979014f688ea3cf6b5d46",
+      "output": "public/assets/m01-cat.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 15029,
+      "outputBytes": 399324,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m02-box.png",
+      "sourceSha256": "f15828a05fe913c70ec287fea989c0e5981d07ae7f11c618b8300cc793fc997e",
+      "output": "public/assets/m02-box.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly; antialiased physical six-corner box silhouette mask removes generated outside glow",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "changedAlphaPixels": 25913,
+      "outputBytes": 324470,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m02-cat-idle.png",
+      "sourceSha256": "20b6a676cc4763abae53ef8aba37709148d72ede08008706228d483b7f57f460",
+      "output": "public/assets/m02-cat-idle.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "changedAlphaPixels": 49945,
+      "outputBytes": 333114,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m02-cat.png",
+      "sourceSha256": "dca153575e29a139e7049e51931bf14791471620a797cdfcfbe649a3c7d79a65",
+      "output": "public/assets/m02-cat.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "changedAlphaPixels": 59988,
+      "outputBytes": 361460,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m03-body.png",
+      "sourceSha256": "009471d696eb9e87e5b141fe89f98256699fd8b923e4338be820646711601ea2",
+      "output": "public/assets/m03-body.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 8886,
+      "outputBytes": 289130,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m03-cat.png",
+      "sourceSha256": "4f99e7e92148b81390225b615c434576bb2686b37c76afc0a2dbd71befb24b7a",
+      "output": "public/assets/m03-cat.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 10776,
+      "outputBytes": 318626,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m03-hand.png",
+      "sourceSha256": "0c6813e319c6b80819b32fceeee14f794168234ffc580debf26b759d3353e863",
+      "output": "public/assets/m03-hand.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 3280,
+      "outputBytes": 37676,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m03-paw.png",
+      "sourceSha256": "93c8e86e853432696c6a177063b659fb79dd5d656a6581e6b55455b86caf71a2",
+      "output": "public/assets/m03-paw.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 7352,
+      "outputBytes": 135504,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m04-banana.png",
+      "sourceSha256": "2edfd04c2a6385b187f3fcd005ed604c2ca10236a75c24a01085241b0288206c",
+      "output": "public/assets/m04-banana.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "changedAlphaPixels": 15093,
+      "outputBytes": 286548,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m04-cat.png",
+      "sourceSha256": "2502397d783523b51e9e7eff6e17f0050d6b24a7b0dc8e3f305460da9ed3a4da",
+      "output": "public/assets/m04-cat.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1168,
+        1346
+      ],
+      "changedAlphaPixels": 45172,
+      "outputBytes": 422358,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m04-fish.png",
+      "sourceSha256": "b9f7df6108a19a9d76bc06ba020243b00fe961f09a0e01a123588b289168fb1f",
+      "output": "public/assets/m04-fish.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "changedAlphaPixels": 15998,
+      "outputBytes": 396810,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m05-cat-v1.png",
+      "sourceSha256": "1542ea66c76e9de6c863ad038dbb814e349221b0fa71563e1b309ad2748a9843",
+      "output": "public/assets/m05-cat-v1.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 12974,
+      "outputBytes": 468804,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m05-cat-v2.png",
+      "sourceSha256": "0c5d37641fceef116a8003c6df622f499dc8d0fe2a8f33cee4255f07e0ecc9eb",
+      "output": "public/assets/m05-cat-v2.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 12181,
+      "outputBytes": 347048,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m05-cat-v3.png",
+      "sourceSha256": "3e03e453eff21b7ff3fb3a0c8e08759b75fa99856e2bd78b95cc37df0b680c93",
+      "output": "public/assets/m05-cat-v3.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 13338,
+      "outputBytes": 239542,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m05-cat.png",
+      "sourceSha256": "3e03e453eff21b7ff3fb3a0c8e08759b75fa99856e2bd78b95cc37df0b680c93",
+      "output": "public/assets/m05-cat.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "changedAlphaPixels": 13338,
+      "outputBytes": 239542,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m05-hand.png",
+      "sourceSha256": "12d1a2a372b5ef5f5d30231222f488f3dade113922c0bd8d9e2c431c1383bdee",
+      "output": "public/assets/m05-hand.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "changedAlphaPixels": 6185,
+      "outputBytes": 60490,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m06-cat-idle.png",
+      "sourceSha256": "b88a67fbfaa4c400e93f943441cf5d7ff702047a1f6496e766c84e512c8d86f6",
+      "output": "public/assets/m06-cat-idle.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1156,
+        1360
+      ],
+      "changedAlphaPixels": 11598,
+      "outputBytes": 230974,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m06-cat.png",
+      "sourceSha256": "3d3aad8962ec5a50010f33ccf1226dd44caaa6de41f1844827e202aa95a06ae1",
+      "output": "public/assets/m06-cat.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1156,
+        1360
+      ],
+      "changedAlphaPixels": 28219,
+      "outputBytes": 295058,
+      "masterPreserved": true
+    },
+    {
+      "source": "art/masters/m06-wand.png",
+      "sourceSha256": "552111d6c8631d25148030247e6b1ee20e7643508326a87809cdd43d81e229db",
+      "output": "public/assets/m06-wand.webp",
+      "method": "Clear alpha <=2/255 (invisible canvas contamination); retain alpha 3..255 exactly",
+      "dimensions": [
+        1224,
+        1285
+      ],
+      "changedAlphaPixels": 37368,
+      "outputBytes": 464592,
+      "masterPreserved": true
+    },
+    {
+      "output": "public/assets/thumb-01.webp",
+      "method": "400x300 independent composition of isolated game actors; no reference UI or text",
+      "dimensions": [
+        400,
+        300
+      ],
+      "outputBytes": 12622
+    },
+    {
+      "output": "public/assets/thumb-02.webp",
+      "method": "400x300 independent composition of isolated game actors; no reference UI or text",
+      "dimensions": [
+        400,
+        300
+      ],
+      "outputBytes": 9974
+    },
+    {
+      "output": "public/assets/thumb-03.webp",
+      "method": "400x300 independent composition of isolated game actors; no reference UI or text",
+      "dimensions": [
+        400,
+        300
+      ],
+      "outputBytes": 12034
+    },
+    {
+      "output": "public/assets/thumb-04.webp",
+      "method": "400x300 independent composition of isolated game actors; no reference UI or text",
+      "dimensions": [
+        400,
+        300
+      ],
+      "outputBytes": 10782
+    },
+    {
+      "output": "public/assets/thumb-05.webp",
+      "method": "400x300 independent composition of isolated game actors; no reference UI or text",
+      "dimensions": [
+        400,
+        300
+      ],
+      "outputBytes": 10826
+    },
+    {
+      "output": "public/assets/thumb-06.webp",
+      "method": "400x300 independent composition of isolated game actors; no reference UI or text",
+      "dimensions": [
+        400,
+        300
+      ],
+      "outputBytes": 11794
+    }
+  ]
+}

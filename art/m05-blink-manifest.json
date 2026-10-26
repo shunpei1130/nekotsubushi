@@ -1,0 +1,37 @@
+{
+  "sourceReferenceId": "R05",
+  "selectedNeutralMaster": "art/masters/m05-cat.png",
+  "generatedMaster": "art/masters/m05-blink-generated.png",
+  "generatedSha256": "07d433da9d6cbdb9dcc7e3efb24e2e1f4d256f13f40155139888d9b13fc39db5",
+  "overlayMaster": "art/masters/m05-blink.png",
+  "delivery": "public/assets/m05-blink.webp",
+  "dimensions": [
+    941,
+    1672
+  ],
+  "eyeRegions": [
+    {
+      "center": [
+        150,
+        575
+      ],
+      "radii": [
+        190,
+        115
+      ]
+    },
+    {
+      "center": [
+        565,
+        675
+      ],
+      "radii": [
+        165,
+        105
+      ]
+    }
+  ],
+  "method": "Single natural closed-eyelid state, full-frame registered overlay with local elliptical feathering. Only eyelids and immediate fur appear; original nose/head/body remain rendered underneath. No geometric eye squash. No translation or warp needed: generated nose/framing match selected master.",
+  "featherFraction": 0.15,
+  "deliveryBytes": 45104
+}

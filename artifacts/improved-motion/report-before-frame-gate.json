@@ -1,0 +1,6600 @@
+{
+  "date": "2026-10-23T16:59:05.424Z",
+  "baseURL": "http://127.0.0.1:5174",
+  "browser": "154.0.8037.57",
+  "method": "Real browser pointer input at 390×844. test=1 freezes game time except __game.step; presentation animation uses real render time. Videos and keyframes show entry/landing, hand retreat, punch return and cheek deformation.",
+  "checks": [
+    {
+      "name": "M01: caught reaction hides the scoring hand and +1",
+      "passed": true,
+      "elapsedMs": 30185
+    },
+    {
+      "name": "M02: real MISS and EARLY enter the layered box; SUCCESS lands on the rug",
+      "passed": true,
+      "elapsedMs": 93005
+    },
+    {
+      "name": "M03: success releases through visible retreat; punch strikes and returns before result",
+      "passed": false,
+      "elapsedMs": 23095,
+      "error": "AssertionError [ERR_ASSERTION]: paw strikes visibly from its shoulder\n    at <anonymous> (/workspace/sites/nekotsubushi/tests/motion.ts:228:14)\n    at async recorded (/workspace/sites/nekotsubushi/tests/motion.ts:98:9)\n    at async <anonymous> (/workspace/sites/nekotsubushi/tests/motion.ts:185:5)\n    at async check (/workspace/sites/nekotsubushi/tests/motion.ts:81:5)\n    at async <anonymous> (/workspace/sites/nekotsubushi/tests/motion.ts:184:3)"
+    },
+    {
+      "name": "M03-REDUCED: essential release and punch retreat complete with reduced motion",
+      "passed": true,
+      "elapsedMs": 12400
+    },
+    {
+      "name": "M05: multiple anchors stay attached through inward pulls and spring back",
+      "passed": true,
+      "elapsedMs": 73971
+    },
+    {
+      "name": "FIXTURES: six updated native-resolution reference poses",
+      "passed": true,
+      "elapsedMs": 25985
+    },
+    {
+      "name": "RUNTIME: no JavaScript or missing-asset errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "frames": {
+    "01-caught": {
+      "state": {
+        "mode": 1,
+        "status": "playing",
+        "phase": "CAUGHT",
+        "score": 1,
+        "best": 0,
+        "elapsed": 2.218863545268774,
+        "remaining": 27.781136454731225,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": 1.5,
+        "punchAt": 0,
+        "effect": 0.45,
+        "pointerId": 1,
+        "message": "見つかったニャ！"
+      },
+      "visual": {
+        "mode": 1,
+        "cat": {
+          "x": -17,
+          "y": 159,
+          "width": 913.9915132702434,
+          "height": 1375.8075634801858,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 682,
+          "y": 751
+        },
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "02-miss-ready": {
+      "state": {
+        "mode": 2,
+        "status": "ready",
+        "phase": "APPROACH",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 30,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": 1.0483976589515804,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "飛び込むまで待って…"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": -26,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": -26,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "idle",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 304.2,
+          "shadowY": 1144,
+          "shadowScale": 1,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-miss-2": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 0,
+        "best": 0,
+        "elapsed": 1.739397658951581,
+        "remaining": 28.26060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.24100000000000021,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "いま！ 箱をスワイプ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 310.8878593116751,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 10,
+          "y": 310.8878593116751,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 0.6665684815612447,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-miss-5": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 0,
+        "best": 0,
+        "elapsed": 1.9793976589515812,
+        "remaining": 28.02060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.4810000000000004,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "いま！ 箱をスワイプ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 395.7855213880934,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 10,
+          "y": 395.7855213880934,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 0.7957605760253595,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-miss-8": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 0,
+        "best": 0,
+        "elapsed": 2.219397658951581,
+        "remaining": 27.780602341048418,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "MISS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.12100000000000061,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "入れたニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 182.71237500000123,
+          "y": 598.9700000000005,
+          "width": 522.9237499999992,
+          "height": 506.5449999999993,
+          "alpha": 1
+        },
+        "box": {
+          "x": 182.71237500000123,
+          "y": 598.9700000000005,
+          "width": 522.9237499999992,
+          "height": 506.5449999999993,
+          "rotation": -0.024313824200888477,
+          "texture": "jump",
+          "inBox": true,
+          "occlusion": 0.5747500000000041,
+          "shadowX": 449.5749250000008,
+          "shadowY": 1144,
+          "shadowScale": 0.7356149999999981,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-miss-10": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 0,
+        "best": 0,
+        "elapsed": 2.3793976589515813,
+        "remaining": 27.620602341048418,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "MISS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.28100000000000075,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "入れたニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 310.5,
+          "y": 650,
+          "width": 440,
+          "height": 429.99999999999994,
+          "alpha": 1
+        },
+        "box": {
+          "x": 310.5,
+          "y": 650,
+          "width": 440,
+          "height": 430,
+          "rotation": -3.061616997868383e-18,
+          "texture": "idle",
+          "inBox": true,
+          "occlusion": 1,
+          "shadowX": 530.5,
+          "shadowY": 1144,
+          "shadowScale": 0.54,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-miss-track": [
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.5793976589515808,
+          "remaining": 28.42060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "PENDING",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.08100000000000007,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 435.3516975208249,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 435.3516975208249,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.8559699744882119,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.6593976589515809,
+          "remaining": 28.34060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "PENDING",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.16100000000000014,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 358.2732180743599,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 358.2732180743599,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.7386766362001129,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.739397658951581,
+          "remaining": 28.26060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "PENDING",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.24100000000000021,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 310.8878593116751,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 310.8878593116751,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.6665684815612447,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.819397658951581,
+          "remaining": 28.18060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "PENDING",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.3210000000000003,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 301.38898024530874,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 301.38898024530874,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.6521136655906872,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.899397658951581,
+          "remaining": 28.10060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "PENDING",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.40100000000000036,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 331.4190233604428,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 331.4190233604428,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.6978115572876302,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.9793976589515812,
+          "remaining": 28.02060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "PENDING",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.4810000000000004,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 395.7855213880934,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 395.7855213880934,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.7957605760253595,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.059397658951581,
+          "remaining": 27.940602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "MISS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.5610000000000005,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "いま！ 箱をスワイプ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 483.35892206800264,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 483.35892206800264,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.9290244466252214,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.139397658951581,
+          "remaining": 27.86060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "MISS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.04100000000000056,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 37.42028634485419,
+            "y": 540.9498647633361,
+            "width": 617.2064697595788,
+            "height": 593.5752028549958,
+            "alpha": 1
+          },
+          "box": {
+            "x": 37.42028634485419,
+            "y": 540.9498647633361,
+            "width": 617.2064697595788,
+            "height": 593.5752028549958,
+            "rotation": -0.00706891534083976,
+            "texture": "jump",
+            "inBox": true,
+            "occlusion": 0.09124887302780095,
+            "shadowX": 357.5646605371905,
+            "shadowY": 1144,
+            "shadowScale": 0.9580255184072116,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.219397658951581,
+          "remaining": 27.780602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "MISS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.12100000000000061,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 182.71237500000123,
+            "y": 598.9700000000005,
+            "width": 522.9237499999992,
+            "height": 506.5449999999993,
+            "alpha": 1
+          },
+          "box": {
+            "x": 182.71237500000123,
+            "y": 598.9700000000005,
+            "width": 522.9237499999992,
+            "height": 506.5449999999993,
+            "rotation": -0.024313824200888477,
+            "texture": "jump",
+            "inBox": true,
+            "occlusion": 0.5747500000000041,
+            "shadowX": 449.5749250000008,
+            "shadowY": 1144,
+            "shadowScale": 0.7356149999999981,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.299397658951581,
+          "remaining": 27.70060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "MISS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.20100000000000068,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 304.16314134109734,
+            "y": 647.4694740796396,
+            "width": 444.11210462058574,
+            "height": 433.7957888805407,
+            "alpha": 1
+          },
+          "box": {
+            "x": 304.16314134109734,
+            "y": 647.4694740796396,
+            "width": 444.11210462058574,
+            "height": 433.7957888805407,
+            "rotation": -0.0016550140977191442,
+            "texture": "jump",
+            "inBox": true,
+            "occlusion": 0.9789122839969961,
+            "shadowX": 526.4870076446284,
+            "shadowY": 1144,
+            "shadowScale": 0.5497003493613818,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.3793976589515813,
+          "remaining": 27.620602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 470.5,
+          "encounterOutcome": "MISS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.28100000000000075,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 310.5,
+            "y": 650,
+            "width": 440,
+            "height": 429.99999999999994,
+            "alpha": 1
+          },
+          "box": {
+            "x": 310.5,
+            "y": 650,
+            "width": 440,
+            "height": 430,
+            "rotation": -3.061616997868383e-18,
+            "texture": "idle",
+            "inBox": true,
+            "occlusion": 1,
+            "shadowX": 530.5,
+            "shadowY": 1144,
+            "shadowScale": 0.54,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 572.9167,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      }
+    ],
+    "02-miss-landed": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 0,
+        "best": 0,
+        "elapsed": 2.3793976589515813,
+        "remaining": 27.620602341048418,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "MISS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.28100000000000075,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "入れたニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 310.5,
+          "y": 650,
+          "width": 440,
+          "height": 429.99999999999994,
+          "alpha": 1
+        },
+        "box": {
+          "x": 310.5,
+          "y": 650,
+          "width": 440,
+          "height": 430,
+          "rotation": -3.061616997868383e-18,
+          "texture": "idle",
+          "inBox": true,
+          "occlusion": 1,
+          "shadowX": 530.5,
+          "shadowY": 1144,
+          "shadowScale": 0.54,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-early-ready": {
+      "state": {
+        "mode": 2,
+        "status": "ready",
+        "phase": "APPROACH",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 30,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": 1.0483976589515804,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "飛び込むまで待って…"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": -26,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": -26,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "idle",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 304.2,
+          "shadowY": 1144,
+          "shadowScale": 1,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-early-2": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 0,
+        "best": 0,
+        "elapsed": 1.739397658951581,
+        "remaining": 28.26060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 715.4999876755934,
+        "encounterOutcome": "EARLY",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.24100000000000021,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "早かったニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 96.82840169702483,
+          "y": 310.8878593116751,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 96.82840169702483,
+          "y": 310.8878593116751,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 427.02840169702483,
+          "shadowY": 1144,
+          "shadowScale": 0.6665684815612447,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 817.9166876755935,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-early-5": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 0,
+        "best": 0,
+        "elapsed": 1.9793976589515812,
+        "remaining": 28.02060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 715.4999876755934,
+        "encounterOutcome": "EARLY",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.4810000000000004,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "早かったニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 229.91076166915602,
+          "y": 395.7855213880934,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 229.91076166915602,
+          "y": 395.7855213880934,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 560.110761669156,
+          "shadowY": 1144,
+          "shadowScale": 0.7957605760253595,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 817.9166876755935,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-early-8": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 0,
+        "best": 0,
+        "elapsed": 2.219397658951581,
+        "remaining": 27.780602341048418,
+        "hold": 0,
+        "success": false,
+        "boxX": 715.4999876755934,
+        "encounterOutcome": "EARLY",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.12100000000000061,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "入れたニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 427.7123626755946,
+          "y": 598.9700000000005,
+          "width": 522.9237499999992,
+          "height": 506.5449999999993,
+          "alpha": 1
+        },
+        "box": {
+          "x": 427.7123626755946,
+          "y": 598.9700000000005,
+          "width": 522.9237499999992,
+          "height": 506.5449999999993,
+          "rotation": -0.024313824200888477,
+          "texture": "jump",
+          "inBox": true,
+          "occlusion": 0.5747500000000041,
+          "shadowX": 694.5749126755941,
+          "shadowY": 1144,
+          "shadowScale": 0.7356149999999981,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 817.9166876755935,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-early-10": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 0,
+        "best": 0,
+        "elapsed": 2.3793976589515813,
+        "remaining": 27.620602341048418,
+        "hold": 0,
+        "success": false,
+        "boxX": 715.4999876755934,
+        "encounterOutcome": "EARLY",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.28100000000000075,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "入れたニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 555.4999876755934,
+          "y": 650,
+          "width": 440,
+          "height": 429.99999999999994,
+          "alpha": 1
+        },
+        "box": {
+          "x": 555.4999876755934,
+          "y": 650,
+          "width": 440,
+          "height": 430,
+          "rotation": -3.061616997868383e-18,
+          "texture": "idle",
+          "inBox": true,
+          "occlusion": 1,
+          "shadowX": 775.4999876755934,
+          "shadowY": 1144,
+          "shadowScale": 0.54,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 817.9166876755935,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-early-track": [
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.5793976589515808,
+          "remaining": 28.42060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.08100000000000007,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 22.18979063680841,
+            "y": 435.3516975208249,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 22.18979063680841,
+            "y": 435.3516975208249,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 352.3897906368084,
+            "shadowY": 1144,
+            "shadowScale": 0.8559699744882119,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.6593976589515809,
+          "remaining": 28.34060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.16100000000000014,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 53.45487424924418,
+            "y": 358.2732180743599,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 53.45487424924418,
+            "y": 358.2732180743599,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 383.6548742492442,
+            "shadowY": 1144,
+            "shadowScale": 0.7386766362001129,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.739397658951581,
+          "remaining": 28.26060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.24100000000000021,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 96.82840169702483,
+            "y": 310.8878593116751,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 96.82840169702483,
+            "y": 310.8878593116751,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 427.02840169702483,
+            "shadowY": 1144,
+            "shadowScale": 0.6665684815612447,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.819397658951581,
+          "remaining": 28.18060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.3210000000000003,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 145.34148444182233,
+            "y": 301.38898024530874,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 145.34148444182233,
+            "y": 301.38898024530874,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 475.5414844418223,
+            "shadowY": 1144,
+            "shadowScale": 0.6521136655906872,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.899397658951581,
+          "remaining": 28.10060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.40100000000000036,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 192.02523394530877,
+            "y": 331.4190233604428,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 192.02523394530877,
+            "y": 331.4190233604428,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 522.2252339453088,
+            "shadowY": 1144,
+            "shadowScale": 0.6978115572876302,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 1.9793976589515812,
+          "remaining": 28.02060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.4810000000000004,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 229.91076166915602,
+            "y": 395.7855213880934,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 229.91076166915602,
+            "y": 395.7855213880934,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 560.110761669156,
+            "shadowY": 1144,
+            "shadowScale": 0.7957605760253595,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.059397658951581,
+          "remaining": 27.940602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.5610000000000005,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "早かったニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 252.02917907503613,
+            "y": 483.35892206800264,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 252.02917907503613,
+            "y": 483.35892206800264,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 582.2291790750361,
+            "shadowY": 1144,
+            "shadowScale": 0.9290244466252214,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.139397658951581,
+          "remaining": 27.86060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.04100000000000056,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 282.42027402044755,
+            "y": 540.9498647633361,
+            "width": 617.2064697595788,
+            "height": 593.5752028549958,
+            "alpha": 1
+          },
+          "box": {
+            "x": 282.42027402044755,
+            "y": 540.9498647633361,
+            "width": 617.2064697595788,
+            "height": 593.5752028549958,
+            "rotation": -0.00706891534083976,
+            "texture": "jump",
+            "inBox": true,
+            "occlusion": 0.09124887302780095,
+            "shadowX": 602.5646482127838,
+            "shadowY": 1144,
+            "shadowScale": 0.9580255184072116,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.219397658951581,
+          "remaining": 27.780602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.12100000000000061,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 427.7123626755946,
+            "y": 598.9700000000005,
+            "width": 522.9237499999992,
+            "height": 506.5449999999993,
+            "alpha": 1
+          },
+          "box": {
+            "x": 427.7123626755946,
+            "y": 598.9700000000005,
+            "width": 522.9237499999992,
+            "height": 506.5449999999993,
+            "rotation": -0.024313824200888477,
+            "texture": "jump",
+            "inBox": true,
+            "occlusion": 0.5747500000000041,
+            "shadowX": 694.5749126755941,
+            "shadowY": 1144,
+            "shadowScale": 0.7356149999999981,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.299397658951581,
+          "remaining": 27.70060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.20100000000000068,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 549.1631290166907,
+            "y": 647.4694740796396,
+            "width": 444.11210462058574,
+            "height": 433.7957888805407,
+            "alpha": 1
+          },
+          "box": {
+            "x": 549.1631290166907,
+            "y": 647.4694740796396,
+            "width": 444.11210462058574,
+            "height": 433.7957888805407,
+            "rotation": -0.0016550140977191442,
+            "texture": "jump",
+            "inBox": true,
+            "occlusion": 0.9789122839969961,
+            "shadowX": 771.4869953202217,
+            "shadowY": 1144,
+            "shadowScale": 0.5497003493613818,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 0,
+          "best": 0,
+          "elapsed": 2.3793976589515813,
+          "remaining": 27.620602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 715.4999876755934,
+          "encounterOutcome": "EARLY",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.28100000000000075,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "入れたニャ"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 555.4999876755934,
+            "y": 650,
+            "width": 440,
+            "height": 429.99999999999994,
+            "alpha": 1
+          },
+          "box": {
+            "x": 555.4999876755934,
+            "y": 650,
+            "width": 440,
+            "height": 430,
+            "rotation": -3.061616997868383e-18,
+            "texture": "idle",
+            "inBox": true,
+            "occlusion": 1,
+            "shadowX": 775.4999876755934,
+            "shadowY": 1144,
+            "shadowScale": 0.54,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 817.9166876755935,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      }
+    ],
+    "02-early-landed": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 0,
+        "best": 0,
+        "elapsed": 2.3793976589515813,
+        "remaining": 27.620602341048418,
+        "hold": 0,
+        "success": false,
+        "boxX": 715.4999876755934,
+        "encounterOutcome": "EARLY",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.28100000000000075,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "入れたニャ"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 555.4999876755934,
+          "y": 650,
+          "width": 440,
+          "height": 429.99999999999994,
+          "alpha": 1
+        },
+        "box": {
+          "x": 555.4999876755934,
+          "y": 650,
+          "width": 440,
+          "height": 430,
+          "rotation": -3.061616997868383e-18,
+          "texture": "idle",
+          "inBox": true,
+          "occlusion": 1,
+          "shadowX": 775.4999876755934,
+          "shadowY": 1144,
+          "shadowScale": 0.54,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 817.9166876755935,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-success-ready": {
+      "state": {
+        "mode": 2,
+        "status": "ready",
+        "phase": "APPROACH",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 30,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": 1.0483976589515804,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "飛び込むまで待って…"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": -26,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": -26,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "idle",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 304.2,
+          "shadowY": 1144,
+          "shadowScale": 1,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 572.9167,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-success-2": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 1,
+        "best": 0,
+        "elapsed": 1.779397658951581,
+        "remaining": 28.22060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 705.75,
+        "encounterOutcome": "SUCCESS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.28100000000000025,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0.4099999999999998,
+        "pointerId": null,
+        "message": "スカッ！"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 301.13721890891793,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 10,
+          "y": 301.13721890891793,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 0.6517305505135708,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 808.1667,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-success-5": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 1,
+        "best": 0,
+        "elapsed": 2.019397658951581,
+        "remaining": 27.980602341048417,
+        "hold": 0,
+        "success": false,
+        "boxX": 705.75,
+        "encounterOutcome": "SUCCESS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.5210000000000005,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0.1699999999999996,
+        "pointerId": null,
+        "message": "スカッ！"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 437.5520113691297,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 10,
+          "y": 437.5520113691297,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 0.8593182781704147,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 808.1667,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-success-8": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 1,
+        "best": 0,
+        "elapsed": 2.259397658951581,
+        "remaining": 27.74060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 705.75,
+        "encounterOutcome": "SUCCESS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.16100000000000064,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "スカッ！"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 7.375616120973575,
+          "y": 543.1095207311367,
+          "width": 640.2487677580528,
+          "height": 596.8904792688633,
+          "alpha": 1
+        },
+        "box": {
+          "x": 7.375616120973575,
+          "y": 543.1095207311367,
+          "width": 640.2487677580528,
+          "height": 596.8904792688633,
+          "rotation": 0,
+          "texture": "idle",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 1,
+          "airborne": false,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 808.1667,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-success-10": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 1,
+        "best": 0,
+        "elapsed": 2.4193976589515813,
+        "remaining": 27.58060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 705.75,
+        "encounterOutcome": "SUCCESS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.3210000000000008,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "スカッ！"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "alpha": 0.9466879999999962
+        },
+        "box": {
+          "x": 10,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "idle",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 1,
+          "airborne": false,
+          "alpha": 0.9466879999999962,
+          "returnProgress": 0.05331200000000384,
+          "opening": {
+            "x": 808.1667,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "02-success-track": [
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 1,
+          "best": 0,
+          "elapsed": 1.6193976589515808,
+          "remaining": 28.38060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.12100000000000011,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0.57,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 393.8369688761794,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 393.8369688761794,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.792795387420273,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 1,
+          "best": 0,
+          "elapsed": 1.699397658951581,
+          "remaining": 28.300602341048418,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.20100000000000018,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0.4899999999999999,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 330.2147516792159,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 330.2147516792159,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.695978969946633,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 1,
+          "best": 0,
+          "elapsed": 1.779397658951581,
+          "remaining": 28.22060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.28100000000000025,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0.4099999999999998,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 301.13721890891793,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 301.13721890891793,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.6517305505135708,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 1,
+          "best": 0,
+          "elapsed": 1.859397658951581,
+          "remaining": 28.140602341048417,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.3610000000000003,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0.32999999999999974,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 311.63214014236223,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 311.63214014236223,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.6677010828253338,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 1,
+          "best": 0,
+          "elapsed": 1.9393976589515811,
+          "remaining": 28.06060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.4410000000000004,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0.24999999999999967,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 359.88484815492006,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 359.88484815492006,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.7411291167574872,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "JUMP",
+          "score": 1,
+          "best": 0,
+          "elapsed": 2.019397658951581,
+          "remaining": 27.980602341048417,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.5210000000000005,
+          "phaseDuration": 0.6,
+          "punchAt": 0,
+          "effect": 0.1699999999999996,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 437.5520113691297,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 437.5520113691297,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 0.8593182781704147,
+            "airborne": true,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 1,
+          "best": 0,
+          "elapsed": 2.099397658951581,
+          "remaining": 27.90060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.001000000000000556,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0.08999999999999952,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 9.99804166145151,
+            "y": 530.0097824407494,
+            "width": 635.0039166770969,
+            "height": 609.9902175592506,
+            "alpha": 1
+          },
+          "box": {
+            "x": 9.99804166145151,
+            "y": 530.0097824407494,
+            "width": 635.003916677097,
+            "height": 609.9902175592506,
+            "rotation": 0,
+            "texture": "jump",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 1,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 1,
+          "best": 0,
+          "elapsed": 2.179397658951581,
+          "remaining": 27.82060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.08100000000000057,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0.009999999999999502,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 2.7487739708477648,
+            "y": 566.2218723849934,
+            "width": 649.5024520583045,
+            "height": 573.7781276150066,
+            "alpha": 1
+          },
+          "box": {
+            "x": 2.7487739708477648,
+            "y": 566.2218723849934,
+            "width": 649.5024520583045,
+            "height": 573.7781276150066,
+            "rotation": 0,
+            "texture": "idle",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 1,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 1,
+          "best": 0,
+          "elapsed": 2.259397658951581,
+          "remaining": 27.74060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.16100000000000064,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 7.375616120973575,
+            "y": 543.1095207311367,
+            "width": 640.2487677580528,
+            "height": 596.8904792688633,
+            "alpha": 1
+          },
+          "box": {
+            "x": 7.375616120973575,
+            "y": 543.1095207311367,
+            "width": 640.2487677580528,
+            "height": 596.8904792688633,
+            "rotation": 0,
+            "texture": "idle",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 1,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 1,
+          "best": 0,
+          "elapsed": 2.3393976589515812,
+          "remaining": 27.660602341048417,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.2410000000000007,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 530,
+            "width": 635,
+            "height": 610,
+            "alpha": 1
+          },
+          "box": {
+            "x": 10,
+            "y": 530,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "idle",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 1,
+            "airborne": false,
+            "alpha": 1,
+            "returnProgress": 0,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      },
+      {
+        "state": {
+          "mode": 2,
+          "status": "playing",
+          "phase": "REACTION",
+          "score": 1,
+          "best": 0,
+          "elapsed": 2.4193976589515813,
+          "remaining": 27.58060234104842,
+          "hold": 0,
+          "success": false,
+          "boxX": 705.75,
+          "encounterOutcome": "SUCCESS",
+          "catX": 715.16,
+          "catY": 635.36,
+          "toyX": 846.9,
+          "toyY": 300.96,
+          "cheekX": 0,
+          "cheekY": 0,
+          "cheekSide": "right",
+          "cheekAnchorX": 737,
+          "cheekAnchorY": 871,
+          "currentHat": "banana",
+          "phaseTime": 0.3210000000000008,
+          "phaseDuration": 0.45,
+          "punchAt": 0,
+          "effect": 0,
+          "pointerId": null,
+          "message": "スカッ！"
+        },
+        "visual": {
+          "mode": 2,
+          "cat": {
+            "x": 10,
+            "y": 530,
+            "width": 635,
+            "height": 610,
+            "alpha": 0.9466879999999962
+          },
+          "box": {
+            "x": 10,
+            "y": 530,
+            "width": 635,
+            "height": 610,
+            "rotation": 0,
+            "texture": "idle",
+            "inBox": false,
+            "occlusion": 0,
+            "shadowX": 340.2,
+            "shadowY": 1144,
+            "shadowScale": 1,
+            "airborne": false,
+            "alpha": 0.9466879999999962,
+            "returnProgress": 0.05331200000000384,
+            "opening": {
+              "x": 808.1667,
+              "y": 919.3223
+            }
+          },
+          "hand": null,
+          "paw": null,
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": [
+            "background",
+            "shadow",
+            "ghost",
+            "boxBack",
+            "cat",
+            "boxFront",
+            "effects"
+          ]
+        }
+      }
+    ],
+    "02-success-landed": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "REACTION",
+        "score": 1,
+        "best": 0,
+        "elapsed": 2.4193976589515813,
+        "remaining": 27.58060234104842,
+        "hold": 0,
+        "success": false,
+        "boxX": 705.75,
+        "encounterOutcome": "SUCCESS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.3210000000000008,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": "スカッ！"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "alpha": 0.9466879999999962
+        },
+        "box": {
+          "x": 10,
+          "y": 530,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "idle",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 1,
+          "airborne": false,
+          "alpha": 0.9466879999999962,
+          "returnProgress": 0.05331200000000384,
+          "opening": {
+            "x": 808.1667,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "03-holding": {
+      "state": {
+        "mode": 3,
+        "status": "playing",
+        "phase": "HOLDING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.9999999999999999,
+        "phaseDuration": 3.0446588631719353,
+        "punchAt": 3.6946588631719353,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "前足が上がったら、そろそろ離して"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-release-frame": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      },
+      "modal": false
+    },
+    "03-success-retreat": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1301,
+          "rotation": 0.17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-success-withdrawn": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1301,
+          "rotation": 0.17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-warning": {
+      "state": {
+        "mode": 3,
+        "status": "playing",
+        "phase": "WARNING",
+        "score": 0,
+        "best": 1,
+        "elapsed": 3.3946588631719345,
+        "remaining": 0,
+        "hold": 3.3946588631719345,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.3499999999999992,
+        "phaseDuration": 0.65,
+        "punchAt": 3.6946588631719353,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "パンチが来る！ 離して！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-punch-start": {
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-punch-track": [
+      {
+        "ms": 0,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 0,
+            "y": -76.31
+          },
+          "paw": {
+            "x": 983,
+            "y": 1171,
+            "rotation": 0
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        }
+      },
+      {
+        "ms": 2,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": true,
+            "x": 0,
+            "y": -76.31
+          },
+          "paw": {
+            "x": 982.8092655861657,
+            "y": 1170.745687448221,
+            "rotation": -0.008265157932818974
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        }
+      },
+      {
+        "ms": 551.5999999996275,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": false,
+            "x": 65,
+            "y": 863.69
+          },
+          "paw": {
+            "x": 983,
+            "y": 1171,
+            "rotation": -7.960204194457797e-17
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        }
+      },
+      {
+        "ms": 688,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": false,
+            "x": 65,
+            "y": 863.69
+          },
+          "paw": {
+            "x": 983,
+            "y": 1171,
+            "rotation": -7.960204194457797e-17
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        }
+      },
+      {
+        "ms": 854.4000000003725,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": false,
+            "x": 65,
+            "y": 863.69
+          },
+          "paw": {
+            "x": 983,
+            "y": 1171,
+            "rotation": -7.960204194457797e-17
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        }
+      },
+      {
+        "ms": 989.4000000003725,
+        "visual": {
+          "mode": 3,
+          "cat": {
+            "x": 0,
+            "y": -3,
+            "width": 941,
+            "height": 1532,
+            "alpha": 1
+          },
+          "box": null,
+          "hand": {
+            "visible": false,
+            "x": 65,
+            "y": 863.69
+          },
+          "paw": {
+            "x": 983,
+            "y": 1171,
+            "rotation": -7.960204194457797e-17
+          },
+          "cheek": {
+            "x": 737,
+            "y": 871,
+            "strength": 1,
+            "contact": {
+              "x": 737,
+              "y": 871
+            }
+          },
+          "eyesClosed": false,
+          "layers": []
+        }
+      }
+    ],
+    "03-reduced-release-frame": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1268.5,
+          "rotation": 0.1275
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      },
+      "modal": false
+    },
+    "03-reduced-success-withdrawn": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "SUCCESS",
+        "score": 1,
+        "best": 1,
+        "elapsed": 0.9999999999999999,
+        "remaining": 0,
+        "hold": 0.9999999999999999,
+        "success": true,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.6,
+        "pointerId": null,
+        "message": "寸止め成功！"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1301,
+          "rotation": 0.17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "03-reduced-punch-return": {
+      "state": {
+        "mode": 3,
+        "status": "result",
+        "phase": "PUNCH",
+        "score": 0,
+        "best": 1,
+        "elapsed": 3.696000000000003,
+        "remaining": 0,
+        "hold": 3.6946588631719353,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 3.6946588631719353,
+        "effect": 0.7,
+        "pointerId": null,
+        "message": "猫パンチ！ 次は少し早めに"
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 65,
+          "y": 863.69
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": -7.960204194457797e-17
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-neutral": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 0,
+          "y": 0
+        },
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 872.895601019947,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 872.895601019947
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-anchor-1": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "left",
+        "cheekAnchorX": 179.99999620486528,
+        "cheekAnchorY": 850.0000169113171,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 179.99999620486528,
+          "y": 847.8182737920929
+        },
+        "paw": null,
+        "cheek": {
+          "x": 179.99999620486528,
+          "y": 847.8182737920929,
+          "strength": 1,
+          "contact": {
+            "x": 179.99999620486528,
+            "y": 847.8182737920929
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-inward-1": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 133.1282949830883,
+        "cheekY": 49.325640198300384,
+        "cheekSide": "left",
+        "cheekAnchorX": 179.99999620486528,
+        "cheekAnchorY": 850.0000169113171,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 262.94311972007216,
+          "y": 882.631888292258
+        },
+        "paw": null,
+        "cheek": {
+          "x": 262.94311972007216,
+          "y": 882.631888292258,
+          "strength": 0.6230315965143164,
+          "contact": {
+            "x": 262.94311972007216,
+            "y": 882.631888292258
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-spring-1": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "SPRING_BACK",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 21.203961822022784,
+        "cheekY": 7.856323794610736,
+        "cheekSide": "left",
+        "cheekAnchorX": 179.99999620486528,
+        "cheekAnchorY": 850.0000169113171,
+        "currentHat": "banana",
+        "phaseTime": 0.15,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 262.94311972007216,
+          "y": 878.5454310179462
+        },
+        "paw": null,
+        "cheek": {
+          "x": 201.20391240545598,
+          "y": 855.721958435874,
+          "strength": 0.999997771437295,
+          "contact": {
+            "x": 201.20391240545598,
+            "y": 855.721958435874
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-rest-1": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "left",
+        "cheekAnchorX": 179.99999620486528,
+        "cheekAnchorY": 850.0000169113171,
+        "currentHat": "banana",
+        "phaseTime": 0.04599999999999973,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 262.94311972007216,
+          "y": 878.5454310179462
+        },
+        "paw": null,
+        "cheek": {
+          "x": 179.99999620486528,
+          "y": 852.1459727824227,
+          "strength": 1,
+          "contact": {
+            "x": 179.99999620486528,
+            "y": 852.1459727824227
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-anchor-2": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "left",
+        "cheekAnchorX": 229.9999910599146,
+        "cheekAnchorY": 1049.9999429243048,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 229.9999910599146,
+          "y": 1051.3624066419775
+        },
+        "paw": null,
+        "cheek": {
+          "x": 229.9999910599146,
+          "y": 1051.3624066419775,
+          "strength": 1,
+          "contact": {
+            "x": 229.9999910599146,
+            "y": 1051.3624066419775
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-inward-2": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 133.12829899893492,
+        "cheekY": 49.325640198300384,
+        "cheekSide": "left",
+        "cheekAnchorX": 229.9999910599146,
+        "cheekAnchorY": 1049.9999429243048,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 299.67536626833436,
+          "y": 1075.7668781329037
+        },
+        "paw": null,
+        "cheek": {
+          "x": 299.67536626833436,
+          "y": 1075.7668781329037,
+          "strength": 0.5233701639674374,
+          "contact": {
+            "x": 299.67536626833436,
+            "y": 1075.7668781329037
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-spring-2": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "SPRING_BACK",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 21.20396246164533,
+        "cheekY": 7.856323794610736,
+        "cheekSide": "left",
+        "cheekAnchorX": 229.9999910599146,
+        "cheekAnchorY": 1049.9999429243048,
+        "currentHat": "banana",
+        "phaseTime": 0.15,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 299.67536626833436,
+          "y": 1077.0731231918937
+        },
+        "paw": null,
+        "cheek": {
+          "x": 251.2037581561177,
+          "y": 1058.7172484750479,
+          "strength": 0.9999908558819256,
+          "contact": {
+            "x": 251.2037581561177,
+            "y": 1058.7172484750479
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-rest-2": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "left",
+        "cheekAnchorX": 229.9999910599146,
+        "cheekAnchorY": 1049.9999429243048,
+        "currentHat": "banana",
+        "phaseTime": 0.04599999999999973,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 299.67536626833436,
+          "y": 1077.0731231918937
+        },
+        "paw": null,
+        "cheek": {
+          "x": 229.9999910599146,
+          "y": 1048.3119653075546,
+          "strength": 1,
+          "contact": {
+            "x": 229.9999910599146,
+            "y": 1048.3119653075546
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-anchor-3": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 620.0000319260818,
+        "cheekAnchorY": 799.9999985907236,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 620.0000319260818,
+          "y": 800.2444941798249
+        },
+        "paw": null,
+        "cheek": {
+          "x": 620.0000319260818,
+          "y": 800.2444941798249,
+          "strength": 1,
+          "contact": {
+            "x": 620.0000319260818,
+            "y": 800.2444941798249
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-inward-3": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": -133.12830301478067,
+        "cheekY": 49.325640198300306,
+        "cheekSide": "right",
+        "cheekAnchorX": 620.0000319260818,
+        "cheekAnchorY": 799.9999985907236,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 540.2342643704515,
+          "y": 828.1729793667315
+        },
+        "paw": null,
+        "cheek": {
+          "x": 540.2342643704515,
+          "y": 828.1729793667315,
+          "strength": 0.5991645374164919,
+          "contact": {
+            "x": 540.2342643704515,
+            "y": 828.1729793667315
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-spring-3": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "SPRING_BACK",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": -21.20396310126773,
+        "cheekY": 7.856323794610724,
+        "cheekSide": "right",
+        "cheekAnchorX": 620.0000319260818,
+        "cheekAnchorY": 799.9999985907236,
+        "currentHat": "banana",
+        "phaseTime": 0.15,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 540.2342643704515,
+          "y": 829.7197649454516
+        },
+        "paw": null,
+        "cheek": {
+          "x": 598.796152542098,
+          "y": 808.4938683876344,
+          "strength": 0.9999969349739758,
+          "contact": {
+            "x": 598.796152542098,
+            "y": 808.4938683876344
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-rest-3": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 620.0000319260818,
+        "cheekAnchorY": 799.9999985907236,
+        "currentHat": "banana",
+        "phaseTime": 0.04599999999999973,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 540.2342643704515,
+          "y": 829.7197649454516
+        },
+        "paw": null,
+        "cheek": {
+          "x": 620.0000319260818,
+          "y": 800.2216278494539,
+          "strength": 1,
+          "contact": {
+            "x": 620.0000319260818,
+            "y": 800.2216278494539
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-anchor-4": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 779.9999712821765,
+        "cheekAnchorY": 1019.9999908397033,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 779.9999712821765,
+          "y": 1018.2667163549609
+        },
+        "paw": null,
+        "cheek": {
+          "x": 779.9999712821765,
+          "y": 1018.2667163549609,
+          "strength": 1,
+          "contact": {
+            "x": 779.9999712821765,
+            "y": 1018.2667163549609
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-inward-4": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": -133.12829498308832,
+        "cheekY": 49.325640198300384,
+        "cheekSide": "right",
+        "cheekAnchorX": 779.9999712821765,
+        "cheekAnchorY": 1019.9999908397033,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": 1,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 654.1142092655398,
+          "y": 1068.771206313991
+        },
+        "paw": null,
+        "cheek": {
+          "x": 654.1142092655398,
+          "y": 1068.771206313991,
+          "strength": 0.9455972999978803,
+          "contact": {
+            "x": 654.1142092655398,
+            "y": 1068.771206313991
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-spring-4": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "SPRING_BACK",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": -21.203961822022787,
+        "cheekY": 7.856323794610736,
+        "cheekSide": "right",
+        "cheekAnchorX": 779.9999712821765,
+        "cheekAnchorY": 1019.9999908397033,
+        "currentHat": "banana",
+        "phaseTime": 0.15,
+        "phaseDuration": 0.45,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 654.1142092655398,
+          "y": 1064.9715953593713
+        },
+        "paw": null,
+        "cheek": {
+          "x": 758.7959988629443,
+          "y": 1025.9411509978302,
+          "strength": 0.9999999707802312,
+          "contact": {
+            "x": 758.7959988629443,
+            "y": 1025.9411509978302
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-rest-4": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 779.9999712821765,
+        "cheekAnchorY": 1019.9999908397033,
+        "currentHat": "banana",
+        "phaseTime": 0.04599999999999973,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 654.1142092655398,
+          "y": 1064.9715953593713
+        },
+        "paw": null,
+        "cheek": {
+          "x": 779.9999712821765,
+          "y": 1021.2082259471728,
+          "strength": 1,
+          "contact": {
+            "x": 779.9999712821765,
+            "y": 1021.2082259471728
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "05-idle-blink": {
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 654.1142092655398,
+          "y": 1064.9715953593713
+        },
+        "paw": null,
+        "cheek": {
+          "x": 779.9999712821765,
+          "y": 1021.072280608044,
+          "strength": 1,
+          "contact": {
+            "x": 779.9999712821765,
+            "y": 1021.072280608044
+          }
+        },
+        "eyesClosed": true,
+        "layers": []
+      },
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 779.9999712821765,
+        "cheekAnchorY": 1019.9999908397033,
+        "currentHat": "banana",
+        "phaseTime": 0.04599999999999973,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "note": "Same-frame presented WebGL canvas capture during a natural idle blink; DOM HUD is excluded."
+    },
+    "05-idle-eyes-reopened": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "IDLE",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 779.9999712821765,
+        "cheekAnchorY": 1019.9999908397033,
+        "currentHat": "banana",
+        "phaseTime": 0.04599999999999973,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 941,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": false,
+          "x": 654.1142092655398,
+          "y": 1064.9715953593713
+        },
+        "paw": null,
+        "cheek": {
+          "x": 779.9999712821765,
+          "y": 1020.4487693813028,
+          "strength": 1,
+          "contact": {
+            "x": 779.9999712821765,
+            "y": 1020.4487693813028
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "actual-01": {
+      "state": {
+        "mode": 1,
+        "status": "playing",
+        "phase": "CLOSED",
+        "score": 12,
+        "best": 0,
+        "elapsed": 12,
+        "remaining": 18,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": 1.597863545268774,
+        "punchAt": 0,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": "+1"
+      },
+      "visual": {
+        "mode": 1,
+        "cat": {
+          "x": -17,
+          "y": 159,
+          "width": 914,
+          "height": 1375.0000000862099,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 682,
+          "y": 751
+        },
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "actual-02": {
+      "state": {
+        "mode": 2,
+        "status": "playing",
+        "phase": "JUMP",
+        "score": 7,
+        "best": 0,
+        "elapsed": 18,
+        "remaining": 12,
+        "hold": 0,
+        "success": false,
+        "boxX": 705.75,
+        "encounterOutcome": "SUCCESS",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.3,
+        "phaseDuration": 0.6,
+        "punchAt": 0,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": "スカッ！"
+      },
+      "visual": {
+        "mode": 2,
+        "cat": {
+          "x": 10,
+          "y": 300,
+          "width": 635,
+          "height": 610,
+          "alpha": 1
+        },
+        "box": {
+          "x": 10,
+          "y": 300,
+          "width": 635,
+          "height": 610,
+          "rotation": 0,
+          "texture": "jump",
+          "inBox": false,
+          "occlusion": 0,
+          "shadowX": 340.2,
+          "shadowY": 1144,
+          "shadowScale": 0.65,
+          "airborne": true,
+          "alpha": 1,
+          "returnProgress": 0,
+          "opening": {
+            "x": 808.1667,
+            "y": 919.3223
+          }
+        },
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": [
+          "background",
+          "shadow",
+          "ghost",
+          "boxBack",
+          "cat",
+          "boxFront",
+          "effects"
+        ]
+      }
+    },
+    "actual-03": {
+      "state": {
+        "mode": 3,
+        "status": "playing",
+        "phase": "WARNING",
+        "score": 0,
+        "best": 4.2,
+        "elapsed": 2.8,
+        "remaining": 0,
+        "hold": 2.8,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0.25,
+        "phaseDuration": 0.65,
+        "punchAt": 3.2,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": ""
+      },
+      "visual": {
+        "mode": 3,
+        "cat": {
+          "x": 0,
+          "y": -3,
+          "width": 941,
+          "height": 1532,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 0,
+          "y": -76.31
+        },
+        "paw": {
+          "x": 983,
+          "y": 1171,
+          "rotation": 0
+        },
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "actual-04": {
+      "state": {
+        "mode": 4,
+        "status": "playing",
+        "phase": "WEARING",
+        "score": 8,
+        "best": 0,
+        "elapsed": 6,
+        "remaining": 9,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": 0.7,
+        "punchAt": 0,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": "+1"
+      },
+      "visual": {
+        "mode": 4,
+        "cat": {
+          "x": 155,
+          "y": 353,
+          "width": 753,
+          "height": 843.481426448737,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "actual-05": {
+      "state": {
+        "mode": 5,
+        "status": "playing",
+        "phase": "DRAGGING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 150.56,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": "むに〜"
+      },
+      "visual": {
+        "mode": 5,
+        "cat": {
+          "x": 0,
+          "y": 0,
+          "width": 1013.2366943359375,
+          "height": 1672,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": {
+          "visible": true,
+          "x": 886.594937994359,
+          "y": 870.999987223502
+        },
+        "paw": null,
+        "cheek": {
+          "x": 886.594937994359,
+          "y": 870.999987223502,
+          "strength": 0.9935901236063832,
+          "contact": {
+            "x": 886.594937994359,
+            "y": 870.999987223502
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    },
+    "actual-06": {
+      "state": {
+        "mode": 6,
+        "status": "playing",
+        "phase": "PLAYING",
+        "score": 0,
+        "best": 0,
+        "elapsed": 9,
+        "remaining": 6,
+        "hold": 0,
+        "success": false,
+        "boxX": 470.5,
+        "encounterOutcome": "PENDING",
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "cheekSide": "right",
+        "cheekAnchorX": 737,
+        "cheekAnchorY": 871,
+        "currentHat": "banana",
+        "phaseTime": 0,
+        "phaseDuration": null,
+        "punchAt": 0,
+        "effect": 0.25,
+        "pointerId": null,
+        "message": "おしい！"
+      },
+      "visual": {
+        "mode": 6,
+        "cat": {
+          "x": 29,
+          "y": 516,
+          "width": 800.0000158395735,
+          "height": 874.9999998878031,
+          "alpha": 1
+        },
+        "box": null,
+        "hand": null,
+        "paw": null,
+        "cheek": {
+          "x": 737,
+          "y": 871,
+          "strength": 1,
+          "contact": {
+            "x": 737,
+            "y": 871
+          }
+        },
+        "eyesClosed": false,
+        "layers": []
+      }
+    }
+  },
+  "screenshots": [
+    "01-caught.png",
+    "02-miss-ready.png",
+    "02-miss-2.png",
+    "02-miss-5.png",
+    "02-miss-8.png",
+    "02-miss-10.png",
+    "02-miss-landed.png",
+    "02-early-ready.png",
+    "02-early-2.png",
+    "02-early-5.png",
+    "02-early-8.png",
+    "02-early-10.png",
+    "02-early-landed.png",
+    "02-success-ready.png",
+    "02-success-2.png",
+    "02-success-5.png",
+    "02-success-8.png",
+    "02-success-10.png",
+    "02-success-landed.png",
+    "03-holding.png",
+    "03-success-retreat.png",
+    "03-success-withdrawn.png",
+    "03-warning.png",
+    "03-reduced-success-withdrawn.png",
+    "03-reduced-punch-return.png",
+    "05-neutral.png",
+    "05-anchor-1.png",
+    "05-inward-1.png",
+    "05-spring-1.png",
+    "05-anchor-2.png",
+    "05-inward-2.png",
+    "05-spring-2.png",
+    "05-anchor-3.png",
+    "05-inward-3.png",
+    "05-spring-3.png",
+    "05-anchor-4.png",
+    "05-inward-4.png",
+    "05-spring-4.png",
+    "05-idle-blink-canvas.png",
+    "05-idle-eyes-reopened.png",
+    "actual-01.png",
+    "actual-02.png",
+    "actual-03.png",
+    "actual-04.png",
+    "actual-05.png",
+    "actual-06.png"
+  ],
+  "videos": [
+    "video/mode02-entry-and-landing.webm",
+    "video/mode03-retreat-and-punch.webm",
+    "video/mode05-anchors-and-inward-pulls.webm"
+  ],
+  "errors": [],
+  "limitations": [
+    "Mobile viewport emulation is not a physical iPhone or Android device test.",
+    "Video timing includes screenshot and browser automation overhead; engine events are advanced explicitly."
+  ],
+  "passed": 6,
+  "failed": 1
+}

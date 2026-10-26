@@ -1,0 +1,159 @@
+{
+  "status": "generated",
+  "metric_interpretation": "Descriptive image differences only. No automatic quality threshold or pass/fail. Perceptual likeness, character identity, fur, composition and animation require visual review.",
+  "ssim_definition": "Rec.601 luminance, 11x11 Gaussian window sigma=1.5, K1=.01, K2=.03, data range=255, population covariance, valid border",
+  "diff_gain": 3.0,
+  "modes": {
+    "01": {
+      "reference": "/workspace/sites/nekotsubushi/docs/references/01_neko_tsuntun.webp",
+      "reference_sha256": "f783d4f34e55235f416a44eb70b855a65592af9cb8a13d311cbb69a8619d980e",
+      "actual": "/workspace/sites/nekotsubushi/artifacts/actual-01.png",
+      "actual_sha256": "52ad22bde7cdb327abbd24170ec85a205ca73e1d94ae753651dcb9d7abec40ef",
+      "comparison_size": [
+        941,
+        1672
+      ],
+      "actual_normalization": {
+        "resized": false,
+        "original_size": [
+          941,
+          1672
+        ]
+      },
+      "mae_rgb_0_255": 21.55958,
+      "rmse_rgb_0_255": 38.5169,
+      "ssim_luminance": 0.6078516,
+      "artifacts": {
+        "comparison": "comparison-01.jpg",
+        "overlay": "overlay-01.png",
+        "diff": "diff-01.png"
+      }
+    },
+    "02": {
+      "reference": "/workspace/sites/nekotsubushi/docs/references/02_hako_zurase.webp",
+      "reference_sha256": "7e4c9f6f01dbc7d9f90ebb4d1a4fac8e561e006e02b51196c740c25448ae7c70",
+      "actual": "/workspace/sites/nekotsubushi/artifacts/actual-02.png",
+      "actual_sha256": "c7c94b3831403988891724e7eef4f97873a165629e845e38fdc0b874332dea29",
+      "comparison_size": [
+        941,
+        1672
+      ],
+      "actual_normalization": {
+        "resized": false,
+        "original_size": [
+          941,
+          1672
+        ]
+      },
+      "mae_rgb_0_255": 18.41311,
+      "rmse_rgb_0_255": 40.19326,
+      "ssim_luminance": 0.7558573,
+      "artifacts": {
+        "comparison": "comparison-02.jpg",
+        "overlay": "overlay-02.png",
+        "diff": "diff-02.png"
+      }
+    },
+    "03": {
+      "reference": "/workspace/sites/nekotsubushi/docs/references/03_neko_punch.webp",
+      "reference_sha256": "eaa7f7217e1b20b8b890dce90435d3a38834abd7c6692a809642d1373e8b5fc4",
+      "actual": "/workspace/sites/nekotsubushi/artifacts/actual-03.png",
+      "actual_sha256": "f1c84d7c990fc1127509f8350398884e87b2095af299cfdf98be60b483b07d0d",
+      "comparison_size": [
+        941,
+        1672
+      ],
+      "actual_normalization": {
+        "resized": false,
+        "original_size": [
+          941,
+          1672
+        ]
+      },
+      "mae_rgb_0_255": 24.87555,
+      "rmse_rgb_0_255": 44.76641,
+      "ssim_luminance": 0.6018832,
+      "artifacts": {
+        "comparison": "comparison-03.jpg",
+        "overlay": "overlay-03.png",
+        "diff": "diff-03.png"
+      }
+    },
+    "04": {
+      "reference": "/workspace/sites/nekotsubushi/docs/references/04_boushi.webp",
+      "reference_sha256": "a65fab4a9986adb0a520c8e77b1735f5a0cf11c465e24b787f062909ee6b0132",
+      "actual": "/workspace/sites/nekotsubushi/artifacts/actual-04.png",
+      "actual_sha256": "c40b21d3a8a2dc42500a206bfa3afe5185c3a06bd3661b461bdbfbabdc24f3b1",
+      "comparison_size": [
+        941,
+        1672
+      ],
+      "actual_normalization": {
+        "resized": false,
+        "original_size": [
+          941,
+          1672
+        ]
+      },
+      "mae_rgb_0_255": 19.09492,
+      "rmse_rgb_0_255": 38.0213,
+      "ssim_luminance": 0.7107162,
+      "artifacts": {
+        "comparison": "comparison-04.jpg",
+        "overlay": "overlay-04.png",
+        "diff": "diff-04.png"
+      }
+    },
+    "05": {
+      "reference": "/workspace/sites/nekotsubushi/docs/references/05_hoppe.webp",
+      "reference_sha256": "36844ce89cf64d9634234cbfe8448c6b06c2ead835e6337e17dcdfe0a6f15ab2",
+      "actual": "/workspace/sites/nekotsubushi/artifacts/actual-05.png",
+      "actual_sha256": "b3e4eb168bf879397c96492aaf6808e27912e67fa964f091ff85ac2593b6ed0a",
+      "comparison_size": [
+        941,
+        1672
+      ],
+      "actual_normalization": {
+        "resized": false,
+        "original_size": [
+          941,
+          1672
+        ]
+      },
+      "mae_rgb_0_255": 10.21262,
+      "rmse_rgb_0_255": 24.6144,
+      "ssim_luminance": 0.8116311,
+      "artifacts": {
+        "comparison": "comparison-05.jpg",
+        "overlay": "overlay-05.png",
+        "diff": "diff-05.png"
+      }
+    },
+    "06": {
+      "reference": "/workspace/sites/nekotsubushi/docs/references/06_nekojyarashi.webp",
+      "reference_sha256": "e8c308a6a4fcf6b867367de6e0ed2f8ec26dd71d0708bd01b8c6da90737df3cf",
+      "actual": "/workspace/sites/nekotsubushi/artifacts/actual-06.png",
+      "actual_sha256": "051ceba84d704fa0062ed7b99605741c5974246694c8d3884562c7b99265779e",
+      "comparison_size": [
+        941,
+        1672
+      ],
+      "actual_normalization": {
+        "resized": false,
+        "original_size": [
+          941,
+          1672
+        ]
+      },
+      "mae_rgb_0_255": 17.33645,
+      "rmse_rgb_0_255": 33.62505,
+      "ssim_luminance": 0.6541931,
+      "artifacts": {
+        "comparison": "comparison-06.jpg",
+        "overlay": "overlay-06.png",
+        "diff": "diff-06.png"
+      }
+    }
+  },
+  "overview": "overview.jpg"
+}

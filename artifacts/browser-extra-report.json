@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-23T14:12:59.405Z",
+  "baseURL": "http://127.0.0.1:5173",
+  "browser": "154.0.8037.57",
+  "platform": "linux",
+  "method": "Chromium with real mouse/pointer browser input; window.__game.step advances only game time. Device viewports are emulation, not physical-device certification.",
+  "checks": [
+    {
+      "name": "ASSET-01: a failed cat download displays retry and recovers to actual play",
+      "passed": true,
+      "elapsedMs": 4315
+    },
+    {
+      "name": "CONSOLE: no uncaught JavaScript or browser console errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "asset-download-retry.png"
+  ],
+  "snapshots": {},
+  "performance": {},
+  "limitations": [
+    "Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior."
+  ],
+  "httpErrors": [],
+  "expectedAssetFailure": [
+    "Game assets could not be loaded Error: [Loader.load] Failed to load http://127.0.0.1:5173/assets/m01-cat.webp.\nTypeError: Failed to fetch\n    at _Loader2._loadAssetWithRetry (http://127.0.0.1:5173/node_modules/.vite/deps/pixi__js.js?v=859b8946:7608:15)\n    at async http://127.0.0.1:5173/node_modules/.vite/deps/pixi__js.js?v=859b8946:7527:7\n    at async Promise.all (index 0)\n    at async _Loader2.load (http://127.0.0.1:5173/node_modules/.vite/deps/pixi__js.js?v=859b8946:7532:5)\n    at async AssetsClass._mapLoadToResolve (http://127.0.0.1:5173/node_modules/.vite/deps/pixi__js.js?v=859b8946:8859:26)\n    at async AssetsClass.load (http://127.0.0.1:5173/node_modules/.vite/deps/pixi__js.js?v=859b8946:8544:17)\n    at async http://127.0.0.1:5173/src/scene.ts?t=1792764573724:76:29\n    at async Promise.all (index 1)\n    at async GameScene.init (http://127.0.0.1:5173/src/scene.ts?t=1792764573724:75:5)\n    at async GameScene.create (http://127.0.0.1:5173/src/scene.ts?t=1792764573724:58:7)"
+  ],
+  "passed": 2,
+  "failed": 0
+}

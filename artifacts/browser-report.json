@@ -1,0 +1,360 @@
+{
+  "date": "2026-10-23T16:51:54.911Z",
+  "baseURL": "http://127.0.0.1:5174",
+  "browser": "154.0.8037.57",
+  "platform": "linux",
+  "method": "Chromium with real mouse/pointer browser input; window.__game.step advances only game time. Device viewports are emulation, not physical-device certification.",
+  "checks": [
+    {
+      "name": "NAV-01: all six menu cards load the correct playable mode",
+      "passed": true,
+      "elapsedMs": 22532
+    },
+    {
+      "name": "G01: tap score, warning/open reaction, result and replay",
+      "passed": true,
+      "elapsedMs": 51157
+    },
+    {
+      "name": "G02: real box drag during jump commits immediately once",
+      "passed": true,
+      "elapsedMs": 32048
+    },
+    {
+      "name": "G03: actual hold/release records, punch fails, cancellation does not record",
+      "passed": true,
+      "elapsedMs": 31772
+    },
+    {
+      "name": "G04: hat taps only count while bare and replay clears score",
+      "passed": true,
+      "elapsedMs": 25644
+    },
+    {
+      "name": "G05: both cheeks drag, stay on the selected side and spring back",
+      "passed": true,
+      "elapsedMs": 29983
+    },
+    {
+      "name": "G06: ring drag moves toy, release keeps pursuit and stationary feather is caught",
+      "passed": true,
+      "elapsedMs": 20285
+    },
+    {
+      "name": "LIFE-01: pause freezes clock, resume does not score, blur requires explicit resume",
+      "passed": true,
+      "elapsedMs": 18734
+    },
+    {
+      "name": "INPUT-01: two real touch contacts retain one pointer owner without handover",
+      "passed": true,
+      "elapsedMs": 9790
+    },
+    {
+      "name": "VIS-01–06: production fixtures capture exactly 941×1672",
+      "passed": true,
+      "elapsedMs": 57737
+    },
+    {
+      "name": "LAYOUT: mobile/desktop sizes preserve stage ratio and controls",
+      "passed": true,
+      "elapsedMs": 30820
+    },
+    {
+      "name": "ASSET: menu images decode and no horizontal overflow is present",
+      "passed": true,
+      "elapsedMs": 1886
+    },
+    {
+      "name": "ASSET-01: a failed cat download displays retry and recovers to actual play",
+      "passed": true,
+      "elapsedMs": 5399
+    },
+    {
+      "name": "SAVE-01: successful record persists; corrupt and unavailable storage remain playable",
+      "passed": true,
+      "elapsedMs": 14841
+    },
+    {
+      "name": "CONSOLE: no uncaught JavaScript or browser console errors",
+      "passed": true,
+      "elapsedMs": 1
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "menu-mobile-390.png",
+    "motion-01-contact.png",
+    "motion-01-warning.png",
+    "motion-01-caught.png",
+    "motion-02-swipe.png",
+    "motion-03-hold.png",
+    "motion-03-punch.png",
+    "motion-04-putting.png",
+    "motion-04-fish.png",
+    "motion-05-neutral.png",
+    "motion-05-right.png",
+    "motion-05-return.png",
+    "motion-05-left.png",
+    "motion-06-drag.png",
+    "motion-06-captured.png",
+    "pause-mobile.png",
+    "actual-01.png",
+    "actual-02.png",
+    "actual-03.png",
+    "actual-04.png",
+    "actual-05.png",
+    "actual-06.png",
+    "layout-390x844.png",
+    "layout-360x800.png",
+    "layout-375x667.png",
+    "layout-1440x900.png",
+    "layout-844x390.png",
+    "asset-download-retry.png"
+  ],
+  "snapshots": {
+    "01": {
+      "mode": 1,
+      "status": "playing",
+      "phase": "CLOSED",
+      "score": 12,
+      "best": 1,
+      "elapsed": 12,
+      "remaining": 18,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "cheekAnchorX": 737,
+      "cheekAnchorY": 871,
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": 1.597863545268774,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "+1"
+    },
+    "02": {
+      "mode": 2,
+      "status": "playing",
+      "phase": "JUMP",
+      "score": 7,
+      "best": 1,
+      "elapsed": 18,
+      "remaining": 12,
+      "hold": 0,
+      "success": false,
+      "boxX": 705.75,
+      "encounterOutcome": "SUCCESS",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "cheekAnchorX": 737,
+      "cheekAnchorY": 871,
+      "currentHat": "banana",
+      "phaseTime": 0.3,
+      "phaseDuration": 0.6,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "スカッ！"
+    },
+    "03": {
+      "mode": 3,
+      "status": "playing",
+      "phase": "WARNING",
+      "score": 0,
+      "best": 4.2,
+      "elapsed": 2.8,
+      "remaining": 0,
+      "hold": 2.8,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "cheekAnchorX": 737,
+      "cheekAnchorY": 871,
+      "currentHat": "banana",
+      "phaseTime": 0.25,
+      "phaseDuration": 0.65,
+      "punchAt": 3.2,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": ""
+    },
+    "04": {
+      "mode": 4,
+      "status": "playing",
+      "phase": "WEARING",
+      "score": 8,
+      "best": 2,
+      "elapsed": 6,
+      "remaining": 9,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "cheekAnchorX": 737,
+      "cheekAnchorY": 871,
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": 0.7,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "+1"
+    },
+    "05": {
+      "mode": 5,
+      "status": "playing",
+      "phase": "DRAGGING",
+      "score": 0,
+      "best": 0,
+      "elapsed": 0,
+      "remaining": 0,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 150.56,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "cheekAnchorX": 737,
+      "cheekAnchorY": 871,
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": null,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "むに〜"
+    },
+    "06": {
+      "mode": 6,
+      "status": "playing",
+      "phase": "PLAYING",
+      "score": 0,
+      "best": 0.2,
+      "elapsed": 9,
+      "remaining": 6,
+      "hold": 0,
+      "success": false,
+      "boxX": 470.5,
+      "encounterOutcome": "PENDING",
+      "catX": 715.16,
+      "catY": 635.36,
+      "toyX": 846.9,
+      "toyY": 300.96,
+      "cheekX": 0,
+      "cheekY": 0,
+      "cheekSide": "right",
+      "cheekAnchorX": 737,
+      "cheekAnchorY": 871,
+      "currentHat": "banana",
+      "phaseTime": 0,
+      "phaseDuration": null,
+      "punchAt": 0,
+      "effect": 0.25,
+      "pointerId": null,
+      "message": "おしい！"
+    }
+  },
+  "performance": {
+    "resources": [
+      {
+        "name": "/assets/index-djSydm4t.js",
+        "transferSize": 300,
+        "duration": 3
+      },
+      {
+        "name": "/assets/index-C-yOWhXd.css",
+        "transferSize": 300,
+        "duration": 4
+      },
+      {
+        "name": "/assets/mplus-rounded-800.woff2",
+        "transferSize": 0,
+        "duration": 0
+      },
+      {
+        "name": "/assets/thumb-01.webp",
+        "transferSize": 300,
+        "duration": 12
+      },
+      {
+        "name": "/assets/thumb-02.webp",
+        "transferSize": 300,
+        "duration": 12
+      },
+      {
+        "name": "/assets/thumb-03.webp",
+        "transferSize": 300,
+        "duration": 13
+      },
+      {
+        "name": "/assets/thumb-04.webp",
+        "transferSize": 300,
+        "duration": 14
+      },
+      {
+        "name": "/assets/thumb-05.webp",
+        "transferSize": 300,
+        "duration": 14
+      },
+      {
+        "name": "/assets/thumb-06.webp",
+        "transferSize": 300,
+        "duration": 14
+      },
+      {
+        "name": "/favicon.svg",
+        "transferSize": 300,
+        "duration": 4
+      }
+    ],
+    "navigation": [
+      {
+        "domContentLoadedMs": 57,
+        "loadMs": 91
+      }
+    ]
+  },
+  "limitations": [
+    "Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior."
+  ],
+  "httpErrors": [],
+  "expectedAssetFailure": [
+    "Game assets could not be loaded Error: [Loader.load] Failed to load http://127.0.0.1:5174/assets/m01-cat.webp.\nTypeError: Failed to fetch\n    at Es._loadAssetWithRetry (http://127.0.0.1:5174/assets/index-djSydm4t.js:251:14729)\n    at async http://127.0.0.1:5174/assets/index-djSydm4t.js:251:13535\n    at async Promise.all (index 0)\n    at async Es.load (http://127.0.0.1:5174/assets/index-djSydm4t.js:251:13676)\n    at async Id._mapLoadToResolve (http://127.0.0.1:5174/assets/index-djSydm4t.js:302:8365)\n    at async Id.load (http://127.0.0.1:5174/assets/index-djSydm4t.js:302:7119)\n    at async http://127.0.0.1:5174/assets/index-djSydm4t.js:302:28037\n    at async Promise.all (index 1)\n    at async Pr.init (http://127.0.0.1:5174/assets/index-djSydm4t.js:302:27986)\n    at async Pr.create (http://127.0.0.1:5174/assets/index-djSydm4t.js:302:27554)"
+  ],
+  "passed": 15,
+  "failed": 0
+}
