@@ -69,4 +69,4 @@ python scripts/compare.py
 
 動作レビューZIPには入箱・パンチ・頬の動画、まばたきと接触姿勢、2つの帽子の着地画面を収録しています。軽量版は主要な最終画面・比較・検証JSONを含み、動画や全制作過程は完全版または動作レビューZIPを参照してください。
 
-ソース、制作素材、参照画像、検証資料を公開リポジトリに収録しています。公開ゲームはVercelへ配信済みで、接続状態は `deployment.json`、設定の経緯は `docs/github-save-investigation.md` を参照してください。
+ソース、制作素材、参照画像、検証資料を公開リポジトリに収録しています。既存のVercelプロジェクトへGit接続し、`main` の更新を自動ビルド・公開する設定です。検証済みのGitソースとデプロイIDは `deployment.json`、保存・接続の経緯は `docs/github-save-investigation.md` を参照してください。

@@ -1,22 +1,22 @@
-# GitHub保存の再調査
+# GitHub保存とVercel接続の記録
 
-調査日: 2026-10-23。全操作は読み取り専用。保存先が確定しない既存リポジトリには一切書き込んでいない。
+更新日：2026-10-26。
 
-- CLI認証アカウントは `shumpeihasegawa-gif`。前工程の新規作成は `Resource not accessible by integration (createRepository)` で拒否された。権限変更を示す根拠がないため、同じ作成操作は再試行していない。
-- 接続済みGitHubプラグインの2つのプロフィールは `shumpeihasegawa-gif` と `shunpei1130`。前者とCLIは同一アカウントだが、後者には複数の既存リポジトリへのadmin/push権限がある。したがって「CLIの所有リポジトリ一覧が空」と「接続全体に保存可能な既存リポジトリがない」は同義ではない。
-- 両アカウントのインストール済みリポジトリ検索で `nekotsubushi` は0件。ゲーム用と確認できる保存先は見つからなかった。
-- 現在公開されているGitHubツールには、新規repository作成および汎用REST/GraphQL mutation実行の入口がない。`create_file`、`create_tree`、`create_commit`、`update_ref`等は既存repository内への保存用。
-- Vercelの `create_git_project` は既存のアクセス可能なremote repositoryをVercelへ接続する機能で、GitHub repository自体を作る機能ではない。
-- GitHubプラグインを検索し、既にインストール済みであることを確認。別の未接続GitHubプラグインは検索結果にない。接続ローカルブラウザを操作するツールも現在は公開されていない。
+## 現在の保存先と接続状態
 
-必要な外部操作は、希望するGitHubアカウントにゲーム専用の空の `nekotsubushi` repositoryを作成してURLを共有すること、または既存の保存先repository URLを明示すること。両プロフィールの主要GitHub Appインストールはall-repositories選択なので、新規repositoryは対象になる見込みだが、実際の書込可否は作成後に検査する。トークンやパスワードを共有する必要はない。
+ユーザーが指定した公開リポジトリ [shunpei1130/nekotsubushi](https://github.com/shunpei1130/nekotsubushi) の `main` へ、ソース、配信素材、PNGマスター、仕様、比較画像、動作動画、QA資料を含む318ファイルを保存した。
 
-保存先と書込権限が確認できれば、ローカルGitの最終ソース状態をpush、またはGitHub connectorのtree/commit/ref操作で保存できる。アカウント選択が曖昧なまま、別ユーザーや無関係なプロジェクトへ保存しない。
+- 初回の全ソース保存コミット：[bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba](https://github.com/shunpei1130/nekotsubushi/commit/bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba)
+- 保存ツリー：`407b7deea63c5adbcbd4b79fb47fde0ca726a38f`。ローカル `fcde2ae` のスナップショットと一致することを確認した。
+- GitHub repository ID：`1434026915`。公開設定、既定ブランチ `main`。
+- Vercelは既存の `nekotsubushi` プロジェクト `prj_b9KY9TnCKejq0A7fGpe6uoC0cPFE` を保持。ユーザーがCLI認証を完了し、同じリポジトリへの `git connect` が終了コード0と `Connected` を返した。
+- サーバー側でも、repository IDを指定したVercelプロジェクト検索が既存プロジェクト1件を返し、接続を確認した。
+- 公開URLは https://nekotsubushi.vercel.app 。Vite、`npm ci`、`npm run build`、出力 `dist` のビルド設定を使用する。
 
-## 公開リポジトリとVercel連携の許可後
+GitHubコミット `bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba` から本番デプロイ `dpl_G8SuEXHdGJzJuRQ8qc8D4RcoLuCh` を作成し、READYと既存公開URLへの反映を確認した。公開先を匿名ブラウザで操作し、全6モードの操作・結果・再プレイ・メニュー復帰を含む8項目成功、JavaScript／素材HTTPエラー0件。記録は `artifacts/production-report.json`、検証対象は `deployment.json` に保持する。
 
-ユーザーから公開リポジトリの作成とVercel接続の明示的な許可を受領。CLIで `shumpeihasegawa-gif/nekotsubushi` を公開設定で新規作成したが、GitHubは再び `Resource not accessible by integration (createRepository)` を返した。ユーザーの許可は有効であり、残る制約はGitHub連携の操作権限である。両アカウントの同名公開リポジトリも見つからなかった。
+## 解決済みの経緯
 
-既存のVercelプロジェクトはそのまま保持し、Git接続後のビルドをVite、`npm ci`、`npm run build`、出力`dist`へ設定。設定後も公開URLの匿名HTTP200を確認した。Vercel側で接続済みのGitHub namespaceは `shunpei1130` のため、そのアカウントで公開リポジトリを作るのが最も直接的。
+2026-10-23には、CLIアカウント `shumpeihasegawa-gif` からの新規リポジトリ作成が、非公開・公開の両設定で `Resource not accessible by integration (createRepository)` として拒否された。当時は両接続アカウントにゲーム専用の保存先も見つからず、ソースをローカルGitとZIPに保持した。公開作成についてのユーザーの許可は有効であり、拒否理由は連携の操作権限だった。
 
-現在のVercel連携ツールに既存プロジェクトのGitリポジトリ接続操作がないため、公式CLIの `vercel git connect` を代替手段として準備する。CLIの認証はアプリ連携とは別であり、必要なログインはユーザー自身の認証画面で行う。パスワードやAPIトークンのチャット共有は不要。
+その後、ユーザーが `shunpei1130/nekotsubushi` を保存先に指定し、既存リポジトリへの書込機能で全ファイルの保存を完了した。VercelのGit接続操作が現在のMCPにない点は、公式CLIを使って解決した。CLIの認証はアプリ連携とは別だが、ユーザーによるログインも完了済み。保存先URLの再指定や追加の認証操作は、この接続記録のためには必要ない。パスワードやAPIトークンをチャットで共有する必要もない。

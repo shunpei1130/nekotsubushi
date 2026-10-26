@@ -69,4 +69,6 @@
 
 ## GitHub保存の状態
 
-CLIのGitHub連携で `createRepository` が `Resource not accessible by integration` として拒否された。CLIアカウントの所有一覧は空だったが、別の接続アカウントには既存リポジトリの書込権限がある。両アカウントを読み取り調査してもゲーム専用の保存先は見つからず、現在公開された連携ツールには新規作成機能がない。別プロジェクトへは書き込んでいない。全ソースとマスター・QA資料はローカルGitとZIPに保持。GitHub保存にはゲーム専用リポジトリを作成してURLを共有するか、既存の保存先URLの指定が必要。詳細は [再調査記録](../docs/github-save-investigation.md)。
+2026-10-26、公開リポジトリ [shunpei1130/nekotsubushi](https://github.com/shunpei1130/nekotsubushi) の `main` へ、ソース・全PNGマスター・素材・仕様・QA資料を含む318ファイルの保存を完了した。初回保存コミットは `bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba`、ツリー `407b7deea63c5adbcbd4b79fb47fde0ca726a38f` はローカル `fcde2ae` のスナップショットと一致した。
+
+ユーザーのCLI認証後、既存のVercelプロジェクトを同リポジトリへ接続した。CLI終了コード0とサーバー側のリポジトリ検索で接続を確認し、既存公開URLを保持している。GitHubコミット `bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba` をソースとする本番ビルド `dpl_G8SuEXHdGJzJuRQ8qc8D4RcoLuCh` はREADYとなり、公開URLに反映した。Gitビルド後の匿名ブラウザ検査も全6モードを含む8項目成功、JavaScript／素材HTTPエラー0件。`artifacts/production-report.json` にGitソースと検証対象IDを保存した。以前の新規作成拒否・保存先未定・CLI未認証は解決済みの経緯であり、保存先URLや認証の追加操作は不要。詳細は [保存・接続記録](../docs/github-save-investigation.md)。

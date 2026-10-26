@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-23T17:22:29.512Z",
+  "date": "2026-10-26T07:47:24.161Z",
   "url": "https://nekotsubushi.vercel.app",
   "browser": "154.0.8037.57",
   "anonymous": true,
@@ -39,5 +39,15 @@
     }
   ],
   "errors": [],
-  "passed": 8
+  "passed": 8,
+  "sourceVerification": {
+    "provider": "github",
+    "repository": "https://github.com/shunpei1130/nekotsubushi",
+    "commit": "bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba",
+    "tree": "407b7deea63c5adbcbd4b79fb47fde0ca726a38f",
+    "sourceFiles": 318,
+    "deploymentId": "dpl_G8SuEXHdGJzJuRQ8qc8D4RcoLuCh",
+    "state": "READY",
+    "localSnapshotTreeIdentical": true
+  }
 }
