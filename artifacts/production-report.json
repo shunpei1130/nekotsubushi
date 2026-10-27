@@ -1,9 +1,9 @@
 {
-  "date": "2026-10-26T07:47:24.161Z",
+  "date": "2026-10-27T02:33:51.979Z",
   "url": "https://nekotsubushi.vercel.app",
   "browser": "154.0.8037.57",
   "anonymous": true,
-  "entryAsset": "/assets/index-89Ph273l.js",
+  "entryAsset": "/assets/index-cdHTuW4C.js",
   "checks": [
     {
       "name": "Anonymous public menu and six cards",
@@ -41,13 +41,14 @@
   "errors": [],
   "passed": 8,
   "sourceVerification": {
-    "provider": "github",
     "repository": "https://github.com/shunpei1130/nekotsubushi",
-    "commit": "bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba",
-    "tree": "407b7deea63c5adbcbd4b79fb47fde0ca726a38f",
-    "sourceFiles": 318,
-    "deploymentId": "dpl_G8SuEXHdGJzJuRQ8qc8D4RcoLuCh",
-    "state": "READY",
-    "localSnapshotTreeIdentical": true
+    "branch": "main",
+    "sha": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
+    "commit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
+    "tree": "ad0bca28f88e6edd410951d677fb9ff3d46f486e",
+    "deploymentId": "dpl_8Ma2cBeLKTZcoKEoRyKMEYY97LaH",
+    "deploymentState": "READY",
+    "entryAsset": "/assets/index-cdHTuW4C.js",
+    "method": "Anonymous Chromium verified the expected public entry and all six actual input/outcome/retry/menu flows against the production deployment reported READY for this exact Git source."
   }
 }

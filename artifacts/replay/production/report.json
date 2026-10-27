@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-27T02:41:12.321Z",
+  "baseURL": "https://nekotsubushi.vercel.app",
+  "entryAsset": "/assets/index-cdHTuW4C.js",
+  "browser": "chromium",
+  "browserVersion": "154.0.8037.57",
+  "checks": [
+    {
+      "name": "UI: six modes, daily entry, twelve reactions and desktop layout",
+      "passed": true,
+      "elapsedMs": 38721
+    },
+    {
+      "name": "METRICS: poke streak and caught reset, box perfect, hat rhythm",
+      "passed": true,
+      "elapsedMs": 40893
+    },
+    {
+      "name": "METRICS: punch remaining time and feather near-miss without debug persistence",
+      "passed": true,
+      "elapsedMs": 13023
+    },
+    {
+      "name": "COLLECTION: real cheek gesture unlocks, previews and survives reload",
+      "passed": true,
+      "elapsedMs": 32218
+    },
+    {
+      "name": "DAILY: Japan midnight changes next course, retry retains the started course",
+      "passed": true,
+      "elapsedMs": 10544
+    },
+    {
+      "name": "SAVE: v1 remains intact, old punch record separated, concrete new best delta",
+      "passed": true,
+      "elapsedMs": 26536
+    },
+    {
+      "name": "SOCIAL: real result, copied same-course link, PNG and friend reply",
+      "passed": true,
+      "elapsedMs": 28846
+    },
+    {
+      "name": "RETRY: twenty real rounds keep one canvas and reuse essential textures",
+      "passed": true,
+      "elapsedMs": 96325
+    },
+    {
+      "name": "LINKS: unsupported rules and malformed challenges show an explanation",
+      "passed": true,
+      "elapsedMs": 2709
+    },
+    {
+      "name": "STORAGE: unavailable local storage still permits real play and replay",
+      "passed": true,
+      "elapsedMs": 9116
+    },
+    {
+      "name": "SHARE: cancelling the native sheet keeps the result and permits retry",
+      "passed": true,
+      "elapsedMs": 9764
+    },
+    {
+      "name": "ERRORS: no JavaScript, asset HTTP or console errors",
+      "passed": true,
+      "elapsedMs": 0
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "menu-mobile.png",
+    "collection-mobile.png",
+    "menu-desktop.png",
+    "hat-rhythm.png",
+    "punch-close.png",
+    "cheek-discovery.png",
+    "collection-live-preview.png",
+    "collection-unlocked.png",
+    "daily-course.png",
+    "new-best.png",
+    "challenge-card.png",
+    "friend-comparison.png",
+    "retry-round-20.png"
+  ],
+  "measurements": {
+    "renderBuffer": {
+      "initial": {
+        "buffer": 390,
+        "display": 390,
+        "dpr": 1
+      },
+      "resized": {
+        "buffer": 445,
+        "display": 444.609375,
+        "dpr": 1
+      }
+    },
+    "collectionLayout": {
+      "containerWidth": 320,
+      "canvasWidth": 294,
+      "hintWidth": 194
+    },
+    "collectionReload": {
+      "previewOpenDuringReload": true,
+      "waitUntil": "domcontentloaded",
+      "appReady": true,
+      "persistenceVerified": true
+    },
+    "daily": {
+      "before": {
+        "kind": "daily",
+        "mode": 4,
+        "seed": 1576595987,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-26"
+      },
+      "after": {
+        "kind": "daily",
+        "mode": 6,
+        "seed": 23183726,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-27"
+      }
+    },
+    "newBest": {
+      "firstRemaining": 2496,
+      "targetRemaining": 1496,
+      "improvedRemaining": 1148
+    },
+    "social": {
+      "sourceContext": {
+        "kind": "normal",
+        "mode": 3,
+        "seed": 931639488,
+        "rulesVersion": 2
+      },
+      "targetContext": {
+        "kind": "challenge",
+        "rulesVersion": 2,
+        "mode": 3,
+        "seed": 931639488,
+        "target": {
+          "mode": 3,
+          "rulesVersion": 2,
+          "success": true,
+          "count": 0,
+          "maxStreak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": 3273,
+          "survivalMs": 0,
+          "nearMissMs": 0
+        }
+      },
+      "link": "https://nekotsubushi.vercel.app/?challenge=eyJ2IjoyLCJtIjozLCJzIjo5MzE2Mzk0ODgsInIiOlsxLDAsMCwwLDAsMCwzMjczLDAsMF19",
+      "reply": "https://nekotsubushi.vercel.app/?challenge=eyJ2IjoyLCJtIjozLCJzIjo5MzE2Mzk0ODgsInIiOlsxLDAsMCwwLDAsMCwxODcyLDAsMF19"
+    },
+    "retry": {
+      "rounds": 20,
+      "readyMilliseconds": [
+        1621,
+        1594,
+        1678,
+        1933,
+        2236,
+        1208,
+        956,
+        961,
+        1800,
+        960,
+        1541,
+        1650,
+        2606,
+        1063,
+        1325,
+        1448,
+        1067,
+        1577,
+        917,
+        1214
+      ],
+      "essentialTextureRequests": 0
+    }
+  },
+  "passed": 12,
+  "failed": 0,
+  "method": "Trusted Playwright mouse pointer input. Only test=1 metric checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Viewports are emulated.",
+  "limitations": [
+    "Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised."
+  ],
+  "singleRun": true,
+  "consolidated": false,
+  "sourceVerification": {
+    "repository": "https://github.com/shunpei1130/nekotsubushi",
+    "branch": "main",
+    "sha": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
+    "commit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
+    "tree": "ad0bca28f88e6edd410951d677fb9ff3d46f486e",
+    "deploymentId": "dpl_8Ma2cBeLKTZcoKEoRyKMEYY97LaH",
+    "deploymentState": "READY",
+    "entryAsset": "/assets/index-cdHTuW4C.js",
+    "method": "One complete twelve-check Chromium run against the anonymous public production URL, asserting the exact expected entry asset. The deployment was reported READY for this exact Git source; all normal saved/shared runs use trusted real pointer input and real elapsed time."
+  }
+}

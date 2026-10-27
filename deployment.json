@@ -7,15 +7,31 @@
   "sourceRepository": "https://github.com/shunpei1130/nekotsubushi",
   "build": "npm run build",
   "output": "dist",
-  "sourceStatus": "GitHub source and artwork saved; existing Vercel project connected; GitHub-source production build READY",
+  "sourceStatus": "All six improved modes and replay features publicly verified; GitHub Actions passed",
   "url": "https://nekotsubushi.vercel.app",
-  "runtimeCommit": "32ff3541ae259f4e44b8096869ebd838ed7a9eb3",
+  "runtimeCommit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
   "anonymousPublicAccessVerified": true,
   "status": "READY",
-  "entryAsset": "/assets/index-89Ph273l.js",
+  "entryAsset": "/assets/index-cdHTuW4C.js",
   "sourceBranch": "main",
   "gitIntegrationConnected": true,
-  "verifiedGitSourceCommit": "bb28f86a7714e108c1cc70bc21d6d7b18dbe88ba",
-  "verifiedDeploymentId": "dpl_G8SuEXHdGJzJuRQ8qc8D4RcoLuCh",
-  "verificationNote": "Deployment ID and Git commit identify the verified release; later main updates may create newer deployments."
+  "verifiedGitSourceCommit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
+  "verifiedDeploymentId": "dpl_8Ma2cBeLKTZcoKEoRyKMEYY97LaH",
+  "verificationNote": "The commit and deployment identify the publicly tested runtime. Later evidence-only commits may create deployments with identical src/public trees; verify the unchanged entry asset before delivery.",
+  "rulesVersion": 2,
+  "cssAsset": "/assets/index-Bhu8JXUe.css",
+  "verificationReport": "artifacts/replay/production/report.json",
+  "publicCoreChecks": 8,
+  "publicReplayChecks": 12,
+  "publicErrors": 0,
+  "ci": {
+    "runId": 40438796202,
+    "commit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
+    "conclusion": "success",
+    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40438796202"
+  },
+  "runtimeTrees": {
+    "src": "00c886b17b6a9f63c37c1588b93e03084905c868",
+    "public": "debe0ba379a0fe58c2e17196626bd82c9690e1de"
+  }
 }
