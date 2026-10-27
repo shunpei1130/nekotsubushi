@@ -2,7 +2,9 @@ import './style.css';
 import { GameEngine, W, H } from './engine';
 import { GameScene } from './scene';
 import { modes, asset, icons } from './data';
-import { save, persist, sound } from './store';
+import { save, persist, sound, bestResult, previousResult, recordRun, collectCheek, unlockReaction } from './store';
+import { COLLECTION, normalContext, dailyContext, parseChallenge, encodeChallenge, resultFromEngine, compareResults, formatResult, type RunContext, type RunResult, type ModeId } from './progression';
+import { prepareShareCard, sharePrepared, copyChallenge, downloadShareCard, revokeShareCard, type ShareCard } from './share';
 
 declare global {
   interface Window {
@@ -13,6 +15,8 @@ declare global {
       step: (ms: number) => ReturnType<GameEngine['snapshot']>;
       fixture: () => ReturnType<GameEngine['snapshot']>;
       visual: () => ReturnType<GameScene['visual']>;
+      context: RunContext;
+      result: () => RunResult | null;
     };
   }
 }
@@ -22,7 +26,9 @@ const params = new URLSearchParams(location.search);
 const capture = params.get('capture') === '1';
 const fixtureMode = params.get('fixture') === 'reference' || params.get('fixture') === '1';
 const testMode = params.get('test') === '1';
-const seed = Number(params.get('seed') || 627041);
+const requestedSeed = Number(params.get('seed') ?? 627041);
+const invalidSeed = !Number.isInteger(requestedSeed) || requestedSeed < 0 || requestedSeed > 0xffff_ffff;
+const seed = invalidSeed ? 627041 : requestedSeed;
 let engine: GameEngine | null = null;
 let scene: GameScene | null = null;
 let resizeObserver: ResizeObserver | null = null;
@@ -36,19 +42,82 @@ let previousPhase = '';
 let modalState = '';
 let loading = false;
 let resultRevealsAt = 0;
+let runContext: RunContext | null = null;
+let runResult: RunResult | null = null;
+let resultRecord: ReturnType<typeof recordRun> | null = null;
+let startingBest: RunResult | null = null;
+let startingPrevious: RunResult | null = null;
+let lastEventId = 0;
+let notice = '';
+let noticeUntil = 0;
+let shareCard: ShareCard | null = null;
+let shareJob: Promise<ShareCard | null> | null = null;
+let shareGeneration = 0;
+let challengeUrl = '';
+let runTainted = false;
+let collectionPaused = false;
+let collectionScene: GameScene | null = null;
+let collectionGeneration = 0;
+let collectionLoading = false;
+let toastTimer: ReturnType<typeof setTimeout> | undefined;
+const previewRun = capture || fixtureMode || testMode || params.has('time') || params.has('seed');
 window.__ready = false;
 
 const two = (v: number) => String(v).padStart(2, '0');
-const bestFor = (id: number) => (save.records[String(id)] || 0) / (id === 3 || id === 6 ? 1000 : 1);
-const recordLabel = (id: number) => id === 5 ? 'いつでも・気ままに' : bestFor(id) > 0 ? `最高 ${id === 3 || id === 6 ? bestFor(id).toFixed(1) + ' 秒' : bestFor(id) + ' 回'}` : 'はじめての、ねこあそび';
+const bestFor = (id: number) => id === 3 ? 0 : (save.records[String(id)] || 0) / (id === 6 ? 1000 : 1);
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+const recordLabel = (id: number) => {
+  if (id === 5) return `みつけた表情 ${save.unlocked.filter(s => s.startsWith('cheek-')).length} / 6`;
+  const record = bestResult(normalContext(id as ModeId, 0));
+  if (record) return `自己ベスト ${formatResult(record)}`;
+  if (id === 3 && save.legacyRecords['3']) return `旧記録 ${(save.legacyRecords['3'] / 1000).toFixed(1)}秒・長押し`;
+  return bestFor(id) > 0 ? `最高 ${id === 6 ? bestFor(id).toFixed(1) + ' 秒' : bestFor(id) + ' 回'}` : 'はじめての、ねこあそび';
+};
 const soundIcon = () => save.sound ? icons.sound : icons.muted;
+
+function clearShare() {
+  shareGeneration++;
+  if (shareCard) revokeShareCard(shareCard);
+  shareCard = null; shareJob = null;
+  challengeUrl = '';
+  const dialog = document.querySelector<HTMLDialogElement>('#share-dialog');
+  if (dialog) {
+    if (dialog.open) dialog.close();
+    const img = dialog.querySelector<HTMLImageElement>('#share-card-preview')!;
+    img.removeAttribute('src'); img.hidden = true;
+    dialog.querySelector<HTMLInputElement>('#challenge-url')!.value = '';
+    dialog.querySelectorAll<HTMLButtonElement>('[data-action="native-share"],[data-action="copy-challenge"],[data-action="download-card"]').forEach(button => button.disabled = true);
+    dialog.querySelector<HTMLElement>('.share-status')!.textContent = '挑戦状を準備しています…';
+  }
+}
+
+function collectionDialogHtml() {
+  return `<dialog id="collection-dialog" class="collection-dialog" aria-labelledby="collection-title"><button class="dialog-close" data-action="close-collection" aria-label="閉じる">×</button><header><span class="menu-eyebrow">あそぶほど、いろんな顔。</span><h2 id="collection-title">ねこのきろく</h2><p class="collection-progress">みつけた表情 <strong>${save.unlocked.length}</strong> / ${COLLECTION.length}</p></header><section class="collection-grid" aria-label="表情コレクション">${COLLECTION.map(item => `<button class="collection-item ${save.unlocked.includes(item.id) ? 'is-unlocked' : 'is-locked'}" data-collection-id="${item.id}" aria-label="${item.name}。${save.unlocked.includes(item.id) ? '発見済み' : '未発見。' + item.hint}"><img src="${item.asset}" alt="" loading="lazy"><h3>${item.name}</h3><span>${save.unlocked.includes(item.id) ? 'みつけた！' : 'まだひみつ'}</span></button>`).join('')}</section><div class="collection-preview" id="collection-preview" aria-live="polite"><p>表情をタップすると、見つけ方を見られます。</p></div><button class="primary-button" data-action="close-collection">あそびにもどる</button></dialog>`;
+}
+
+function shareDialogHtml() {
+  return `<dialog id="share-dialog" class="share-dialog" aria-labelledby="share-title"><button class="dialog-close" data-action="close-share" aria-label="閉じる">×</button><h2 id="share-title">この記録、超えられる？</h2><p>同じ条件で、友だちとひと勝負。</p><img id="share-card-preview" alt="猫と今回の記録の挑戦状" hidden><p class="share-status" aria-live="polite">挑戦状を準備しています…</p><label for="challenge-url">挑戦リンク</label><input id="challenge-url" type="text" readonly autocomplete="off"><button class="primary-button" data-action="native-share" disabled>友だちに送る</button><button class="secondary-button" data-action="copy-challenge" disabled>リンクをコピー</button><button class="secondary-button" data-action="download-card" disabled>画像を保存</button><p class="settings-footnote">画像を長押しして保存することもできます。記録はこの端末から共有したものです。</p></dialog>`;
+}
+
+function showDiscovery(ids: string[]) {
+  const item = COLLECTION.find(c => c.id === ids[ids.length - 1]);
+  if (!item) return;
+  app.querySelector('#discovery-toast')?.remove();
+  clearTimeout(toastTimer);
+  app.insertAdjacentHTML('beforeend', `<aside id="discovery-toast" class="discovery-toast" role="status"><img src="${item.asset}" alt=""><div><strong>新しい表情、みつけた！</strong><span>${item.name}${ids.length > 1 ? ` ほか${ids.length - 1}つ` : ''}</span></div><button data-action="close-discovery" aria-label="通知を閉じる">×</button></aside>`);
+  toastTimer = setTimeout(() => app.querySelector('#discovery-toast')?.remove(), 4500);
+}
 
 function cleanup() {
   generation++;
+  clearShare();
+  clearTimeout(toastTimer);
+  disposeCollectionScene();
   abort?.abort(); abort = null;
   resizeObserver?.disconnect(); resizeObserver = null;
   scene?.destroy(); scene = null;
   engine = null;
+  runContext = null; runResult = null; resultRecord = null;
   delete window.__game;
   modalState = '';
   loading = false;
@@ -59,9 +128,11 @@ async function menu() {
   window.__ready = false;
   document.body.className = 'menu-page';
   const menuParams = new URLSearchParams(location.search);
-  menuParams.delete('mode'); menuParams.delete('fixture'); menuParams.delete('capture'); menuParams.delete('time');
+  for (const key of ['mode','fixture','capture','time','challenge','daily']) menuParams.delete(key);
   history.replaceState({}, '', location.pathname + (menuParams.size ? '?' + menuParams : ''));
   document.title = '猫つぶし｜ひとゆび、ねこあそび。';
+  const daily = dailyContext();
+  const dailyBest = bestResult(daily);
   app.innerHTML = `<main class="menu-shell">
     <header class="menu-header">
       <span class="menu-eyebrow">ちょっと、猫とひと休み。</span>
@@ -69,6 +140,8 @@ async function menu() {
       <p class="menu-subtitle">ひとゆび、ねこあそび。</p>
       <button class="icon-button menu-settings" data-action="settings" aria-label="音と動きの設定">${icons.settings}</button>
     </header>
+    <button class="daily-card" data-action="daily"><img src="${asset(`thumb-${two(daily.mode)}`)}" alt=""><span class="daily-copy"><small>${daily.dailyDate}・今日のねこチャレンジ</small><strong>${modes[daily.mode - 1].name}</strong><span>${dailyBest ? `今日のベスト ${formatResult(dailyBest)}` : 'みんな同じお題で、ひと勝負。'}</span></span><span class="daily-arrow" aria-hidden="true">›</span></button>
+    <button class="collection-entry" data-action="collection"><span>${icons.paw}</span><strong>ねこのきろく</strong><span>表情 ${save.unlocked.length} / ${COLLECTION.length}</span><span aria-hidden="true">›</span></button>
     <div class="menu-section-label"><span>今日は、どの猫とあそぶ？</span><span>6つのあそび</span></div>
     <section class="mode-grid" aria-label="ゲームを選ぶ">${modes.map(m => `
       <button class="mode-card mode-card-${m.id}" data-mode="${m.id}" aria-label="${m.name}。${m.operation}。${m.time}">
@@ -81,7 +154,7 @@ async function menu() {
     </section>
     <footer class="menu-footer"><span>${icons.paw}</span><p>ふわふわを、ひとりじめ。<small>登録いらず。スマホでも、パソコンでも。</small></p></footer>
     <dialog id="settings-dialog" aria-labelledby="settings-title"><form method="dialog"><button class="dialog-close" aria-label="閉じる">×</button><span class="dialog-paw">${icons.paw}</span><h2 id="settings-title">あそびの設定</h2><label class="setting-row"><span>音をならす<small>ぷに、ぽふ。小さな音で。</small></span><input type="checkbox" name="sound" ${save.sound ? 'checked' : ''}><span class="switch" aria-hidden="true"></span></label><label class="setting-row"><span>動きをひかえめに<small>大きな揺れやきらめきを減らす</small></span><input type="checkbox" name="reduced" ${save.reduced ? 'checked' : ''}><span class="switch" aria-hidden="true"></span></label><button class="primary-button" value="close">これであそぶ</button><p class="settings-footnote">記録と設定は、この端末に保存されます。</p></form></dialog>
-  </main>`;
+  </main>${collectionDialogHtml()}`;
   const dialog = document.querySelector<HTMLDialogElement>('#settings-dialog')!;
   dialog.addEventListener('change', () => {
     save.sound = dialog.querySelector<HTMLInputElement>('[name="sound"]')!.checked;
@@ -89,7 +162,7 @@ async function menu() {
     persist();
     document.body.classList.toggle('reduced-motion', save.reduced);
   });
-  await Promise.allSettled(Array.from(app.querySelectorAll('img')).map(img => img.decode()));
+  await Promise.allSettled(Array.from(app.querySelectorAll<HTMLImageElement>('.mode-card img,.daily-card img')).map(img => img.decode()));
   await document.fonts.ready;
   window.__ready = true;
 }
@@ -100,35 +173,43 @@ function hudHtml(id: number) {
   const title = `<div class="game-title">${paw}<span><em>${two(id)}</em> ${m.name}</span>${paw}</div>`;
   const score = [1, 2, 4].includes(id) ? '<div class="score-plate"><strong data-hud="score">0</strong><span>回</span></div>' : '';
   const timer = [1, 2, 4, 6].includes(id) ? '<div class="time-plate"><span>あと</span><strong data-hud="time">30</strong><span>秒</span></div>' : '';
-  const hold = id === 3 ? '<div class="best-plate"><span class="crown" aria-hidden="true">♛</span> 最高 <b data-hud="best">0.0</b> 秒</div><div class="hold-value"><strong data-hud="hold">0.0</strong><span>秒</span></div>' : '';
+  const hold = id === 3 ? `<div class="best-plate">${fixtureMode ? '<span class="crown" aria-hidden="true">♛</span> 最高 ' : '最接近 '}<b data-hud="best">—</b> 秒</div><div class="hold-value"><strong data-hud="hold">0.0</strong><span>秒</span></div>` : '';
   const special = id === 5 ? `<button class="stage-icon reset-button" data-action="reset" aria-label="ほっぺを元に戻す">${icons.reset}</button>` : id === 6 ? `<button class="stage-icon pause-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>` : '';
   const desc = id === 3 ? '<span class="yellow">長押し</span>でちょっかい<br>パンチの前に離す' : m.desc;
-  return `${title}${score}${timer}${hold}${special}<p class="game-description">${id === 6 ? `<span class="description-paw">${icons.paw}</span>` : ''}<span>${desc}</span></p><div class="live-feedback" data-hud="feedback" aria-live="polite"></div><div class="ready-hint" data-hud="ready">${m.ready}</div>`;
+  const progress = id === 1 || id === 2 ? '<span data-hud="streak">0 連続</span>' : id === 4 ? '<span data-hud="perfect">ぴったり 0 回</span>' : id === 6 ? '<span data-hud="near">ひやひや 0.0 秒</span>' : '';
+  return `${title}${score}${timer}${hold}${special}<p class="game-description">${id === 6 ? `<span class="description-paw">${icons.paw}</span>` : ''}<span>${desc}</span></p><div class="play-records">${progress}<span data-hud="last-record"></span></div><div class="live-feedback" data-hud="feedback" aria-live="polite"></div><div class="ready-hint" data-hud="ready">${m.ready}</div>`;
 }
 
-async function startMode(id: number) {
+async function startMode(id: number, context?: RunContext) {
   cleanup();
   window.__ready = false;
   loading = true;
   const request = generation;
   const playSeed = params.has('seed') || fixtureMode || testMode ? seed : Math.floor(Math.random() * 0x100000000);
-  const current = new GameEngine(id, { seed: playSeed, best: bestFor(id) });
+  runContext = context ?? normalContext(id as ModeId, playSeed);
+  runTainted = previewRun;
+  startingBest = bestResult(runContext); startingPrevious = previousResult(runContext);
+  const current = new GameEngine(id, { seed: runContext.seed, best: bestFor(id) });
   engine = current;
   recorded = false;
   previousScore = 0;
   previousPhase = current.phase;
   resultRevealsAt = 0;
+  lastEventId = 0; notice = ''; noticeUntil = 0;
   document.body.className = `game-page${capture ? ' capture-page' : ''}${save.reduced ? ' reduced-motion' : ''}`;
   document.title = `${modes[id - 1].name}｜猫つぶし`;
   const gameParams = new URLSearchParams(location.search);
+  for (const key of ['challenge','daily']) if (runContext.kind === 'normal') gameParams.delete(key);
+  if (runContext.kind === 'daily') gameParams.set('daily', runContext.dailyDate!);
   gameParams.set('mode', String(id));
   history.replaceState({}, '', location.pathname + '?' + gameParams);
   app.innerHTML = `<main class="game-view">
-    ${capture ? '' : `<nav class="game-nav" aria-label="ゲームの操作"><button class="nav-back" data-action="menu">${icons.back}<span>メニューへ</span></button><span class="nav-brand">猫つぶし</span><div class="nav-right"><button class="icon-button" data-action="sound" aria-label="${save.sound ? '音を消す' : '音を出す'}" aria-pressed="${save.sound}">${soundIcon()}</button>${id === 6 || id === 5 ? '' : `<button class="icon-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>`}</div></nav>`}
+    ${capture ? '' : `<nav class="game-nav" aria-label="ゲームの操作"><button class="nav-back" data-action="menu">${icons.back}<span>メニューへ</span></button><span class="nav-brand">猫つぶし</span><div class="nav-right"><button class="icon-button" data-action="sound" aria-label="${save.sound ? '音を消す' : '音を出す'}" aria-pressed="${save.sound}">${soundIcon()}</button>${id === 5 ? `<button class="icon-button" data-action="collection" aria-label="表情コレクション">${icons.paw}</button>` : id === 6 ? '' : `<button class="icon-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>`}</div></nav>`}
+    ${!capture && runContext.kind !== 'normal' ? `<aside class="challenge-banner"><small>${runContext.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題' : '友だちからの挑戦状'}</small><strong>${runContext.target ? '友だちの記録 ' + escapeHtml(formatResult(runContext.target)) : '今日のねこチャレンジ'}</strong><span>同じ条件で、何度でも。</span></aside>` : ''}
     <div class="game-viewport"><div id="stage" class="stage mode-${id}" role="application" aria-label="${modes[id - 1].name}。${modes[id - 1].operation}"><div class="hud" aria-label="ゲームの状態">${hudHtml(id)}</div></div></div>
     <div class="load-layer"><span class="loading-paw">${icons.paw}</span><p>猫がおめかし中…</p><span>ふわふわを準備しています</span></div>
     <div id="modal-host"></div>
-  </main>`;
+  </main>${collectionDialogHtml()}${shareDialogHtml()}`;
   const stage = document.querySelector<HTMLDivElement>('#stage')!;
   const viewport = document.querySelector<HTMLDivElement>('.game-viewport')!;
   const fit = () => {
@@ -138,6 +219,7 @@ async function startMode(id: number) {
     stage.style.setProperty('--stage-scale', String(scale));
     stage.style.setProperty('--hit-size', `${44 / scale}px`);
     stage.querySelector<HTMLElement>('.hud')!.style.transform = `scale(${scale})`;
+    scene?.resizeResolution();
   };
   resizeObserver = new ResizeObserver(fit);
   resizeObserver.observe(viewport);
@@ -150,16 +232,18 @@ async function startMode(id: number) {
     if (generation !== request) return;
     if (fixtureMode) current.fixture();
     else if (params.has('time')) current.update(Number(params.get('time')) * 1000);
-    if (!save.seen.includes(id)) { save.seen.push(id); persist(); }
+    if (!runTainted && !save.seen.includes(id)) { save.seen.push(id); persist(); }
     loading = false;
     document.querySelector('.load-layer')?.remove();
     bindInput(stage);
     window.__game = {
       engine: current,
       snapshot: () => current.snapshot(),
-      step: ms => { current.update(ms); draw(); return current.snapshot(); },
-      fixture: () => { current.fixture(); draw(); return current.snapshot(); },
-      visual: () => readyScene.visual()
+      step: ms => { runTainted = true; current.update(ms); draw(); return current.snapshot(); },
+      fixture: () => { runTainted = true; current.fixture(); draw(); return current.snapshot(); },
+      visual: () => readyScene.visual(),
+      context: structuredClone(runContext),
+      result: () => runResult ? { ...runResult } : null
     };
     lastNow = performance.now();
     draw();
@@ -177,7 +261,7 @@ function advance() {
   const now = performance.now();
   const dt = now - lastNow;
   lastNow = now;
-  if (engine && !fixtureMode && !testMode && !loading) engine.update(Math.max(0, dt));
+  if (engine && !fixtureMode && !testMode && !loading && !document.querySelector<HTMLDialogElement>('#collection-dialog')?.open) engine.update(Math.max(0, dt));
 }
 
 function bindInput(stage: HTMLDivElement) {
@@ -221,17 +305,43 @@ function bindInput(stage: HTMLDivElement) {
 function saveResult() {
   if (!engine || recorded || fixtureMode || engine.status !== 'result') return;
   recorded = true;
-  if (engine.mode !== 5) {
-    const unit = engine.mode === 3 || engine.mode === 6 ? 1000 : 1;
-    const record = Math.floor(engine.best * unit + 1e-6);
-    save.records[String(engine.mode)] = Math.max(save.records[String(engine.mode)] || 0, record);
-    if (engine.mode === 6 && engine.success) save.clears++;
-    persist();
+  runResult = resultFromEngine(engine.snapshot());
+  if (runContext && !runTainted && engine.mode !== 5) {
+    resultRecord = recordRun(runContext, runResult);
+    showDiscovery(resultRecord.unlocked);
+    if (resultRecord.newBest && resultRecord.previousBest) scene?.playReaction('personal-best');
+    challengeUrl = encodeChallenge(runContext, runResult);
+  }
+}
+
+function processEvents() {
+  if (!engine || !scene || fixtureMode) return;
+  const milestones: Record<string, string> = { 'poke-streak':'streak-1', 'box-streak':'streak-2', 'punch-close':'close-3', 'hat-rhythm':'rhythm-4', 'escape-clear':'clear-6' };
+  for (const event of engine.events) {
+    if (event.id <= lastEventId) continue;
+    lastEventId = event.id;
+    if (event.type === 'cheek' && event.tag) {
+      scene.playReaction(`cheek-${event.tag}`);
+      if (!runTainted) showDiscovery(collectCheek(event.tag));
+    }
+    if (event.type === 'milestone' && event.tag && milestones[event.tag]) {
+      const id = milestones[event.tag]; scene.playReaction(id);
+      if (!runTainted) showDiscovery(unlockReaction(id));
+    }
+    if (event.type === 'timing' || event.type === 'success' && event.tag === 'close') {
+      const labels: Record<string,string> = {early:'早め！',perfect:'ぴったり！',close:'ギリギリ！',late:'次はもう少し早く',miss:'次のジャンプを待とう'};
+      if (event.tag && labels[event.tag]) {
+        notice = event.tag === 'early' && (engine.mode === 4 || engine.encounterOutcome === 'EARLY') ? 'まだ待って。外れたら、もう一度！' : labels[event.tag];
+        if (engine.mode === 2 && engine.encounterOutcome === 'EARLY') notice = '早かったニャ。ジャンプしてから！';
+        noticeUntil = performance.now() + 850;
+      }
+    }
   }
 }
 
 function draw() {
   if (!engine || !scene) return;
+  processEvents();
   scene.render();
   const e = engine;
   const text = (key: string, value: string) => {
@@ -241,7 +351,13 @@ function draw() {
   text('score', String(e.score));
   text('time', String(Math.ceil(Math.max(0, e.remaining - 1e-9))));
   text('hold', (Math.floor(e.hold * 10 + 1e-6) / 10).toFixed(1));
-  text('best', e.best.toFixed(1));
+  text('best', fixtureMode ? e.best.toFixed(1) : startingBest?.remainingMs !== null && startingBest?.remainingMs !== undefined ? (startingBest.remainingMs / 1000).toFixed(3) : '—');
+  text('streak', `${e.metrics.streak} 連続`);
+  text('perfect', `ぴったり ${e.metrics.perfectCount} 回`);
+  text('near', `ひやひや ${(e.metrics.nearMissMs / 1000).toFixed(1)} 秒`);
+  text('last-record', startingPrevious ? `前回 ${formatResult(startingPrevious)}` : '');
+  const previousPill = document.querySelector<HTMLElement>('[data-hud="last-record"]');
+  if (previousPill) previousPill.hidden = !startingPrevious;
   const ready = document.querySelector<HTMLElement>('[data-hud="ready"]');
   if (ready) {
     ready.hidden = fixtureMode || e.status !== 'ready';
@@ -249,9 +365,10 @@ function draw() {
   }
   const feedback = document.querySelector<HTMLElement>('[data-hud="feedback"]');
   if (feedback) {
-    const show = !fixtureMode && e.status === 'playing' && ((e.mode === 1 && ['WARNING', 'OPEN', 'OPEN_GRACE', 'CAUGHT'].includes(e.phase)) || (e.mode === 2 && ['CROUCH', 'JUMP'].includes(e.phase)) || (e.mode === 3 && e.phase === 'WARNING'));
+    const recent = performance.now() < noticeUntil;
+    const show = !fixtureMode && e.status === 'playing' && (recent || (e.mode === 1 && ['WARNING', 'OPEN', 'OPEN_GRACE', 'CAUGHT'].includes(e.phase)) || (e.mode === 2 && ['CROUCH', 'JUMP'].includes(e.phase)) || (e.mode === 3 && e.phase === 'WARNING'));
     feedback.hidden = !show;
-    if (show) feedback.textContent = e.message;
+    if (show) feedback.textContent = recent ? notice : e.message;
   }
   document.querySelector('#stage')?.setAttribute('data-phase', e.phase);
   document.querySelector('#stage')?.setAttribute('data-status', e.status);
@@ -271,22 +388,170 @@ function draw() {
 }
 
 function resultHtml(e: GameEngine) {
-  const countMode = [1, 2, 4].includes(e.mode);
-  const value = countMode ? String(e.score) : e.mode === 3 ? (e.success ? e.score.toFixed(1) : '—') : (Math.floor(e.elapsed * 10 + 1e-6) / 10).toFixed(1);
-  const label = countMode ? '回' : '秒';
+  const result = runResult ?? resultFromEngine(e.snapshot());
+  const countMode = [1, 2, 4].includes(e.mode), best = runTainted ? startingBest : bestResult(runContext!);
+  const value = countMode ? String(result.count) : e.mode === 3 ? (result.remainingMs !== null ? (result.remainingMs / 1000).toFixed(3) : '—') : (result.survivalMs / 1000).toFixed(3);
+  const label = countMode ? '回' : e.mode === 3 ? '秒前' : '秒';
   const title = e.mode === 3 ? e.success ? '寸止め、成功！' : '猫パンチ、一本！' : e.mode === 6 ? e.success ? '逃げきったニャ！' : 'つかまえたニャ！' : 'いい、ひまつぶし。';
-  const caption = e.mode === 3 ? e.success ? 'おみごと。その間合い、覚えておこう。' : '次はもう少し早く、手を離してみて。' : e.mode === 6 ? e.success ? '15秒の大逃走。猫も感心しています。' : 'あとちょっと。もうひと勝負する？' : 'また、ちょっかいを出してみる？';
-  return `<div class="modal-scrim"><section class="game-modal result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><span class="dialog-paw">${icons.paw}</span><span class="result-eyebrow">${two(e.mode)} ${modes[e.mode - 1].name}</span><h2 id="result-title">${title}</h2><div class="result-value">${value}<span>${label}</span></div><div class="result-best">最高記録 <strong>${countMode ? e.best : e.best.toFixed(1)}</strong> ${label}</div><p>${caption}</p><button class="primary-button" data-action="retry">もう一回あそぶ</button><button class="secondary-button" data-action="menu">メニューへ</button></section></div>`;
+  const details = e.mode === 1 || e.mode === 2 ? [['最大連続',`${result.maxStreak} 回`],[e.mode === 1 ? 'ギリギリ' : 'ぴったり',`${e.mode === 1 ? result.specialCount : result.perfectCount} 回`]] : e.mode === 4 ? [['ぴったり',`${result.perfectCount} 回`],['ぴったり連続',`${result.maxPerfectStreak} 回`]] : e.mode === 6 ? [['ひやひや時間',`${(result.nearMissMs / 1000).toFixed(3)} 秒`],['逃げ切り',e.success ? '成功！' : '次こそ！']] : [['残り時間',result.remainingMs !== null ? `${result.remainingMs} ms` : 'パンチの前に離そう'],['記録のねらい','小さいほど上手！']];
+  const portrait = COLLECTION.find(c => c.id === resultRecord?.unlocked.at(-1))?.asset ?? asset(`thumb-${two(e.mode)}`);
+  const target = runContext?.target;
+  const comparison = target ? compareResults(result, target) : 0;
+  return `<div class="modal-scrim"><section class="game-modal result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-cat"><img src="${portrait}" alt=""></div><span class="result-eyebrow">${runContext?.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題・' : ''}${two(e.mode)} ${modes[e.mode - 1].name}</span><h2 id="result-title">${title}</h2>${resultRecord?.newBest && resultRecord.previousBest ? '<span class="new-record">自己ベスト更新！</span>' : ''}<div class="result-value" data-result="own">${value}<span>${label}</span></div><div class="result-details">${details.map(([name,detail]) => `<div class="result-detail"><span>${name}</span><strong>${detail}</strong></div>`).join('')}</div><p id="result-delta" class="result-delta">${resultGap(result, startingBest)}</p><div class="result-history">${best ? `<span>${runContext?.kind === 'normal' ? '自己ベスト' : 'このお題のベスト'}：${formatResult(best)}</span>` : ''}${startingPrevious ? `<span>前回：${formatResult(startingPrevious)}</span>` : ''}</div>${target ? `<div class="result-comparison"><strong>${comparison > 0 ? '友だちの記録を超えた！' : comparison === 0 ? '友だちと同じ記録！' : 'もう一度、挑んでみよう。'}</strong><span data-result="target">友だち：${formatResult(target)}</span><span>あなた：${formatResult(result)}</span><small>${comparisonDetail(result)}</small></div>` : ''}<button class="primary-button" data-action="retry">もう1回！</button><div class="result-actions">${runTainted ? '<p class="settings-footnote">プレビューの記録は保存・共有されません。</p>' : '<button class="secondary-button" data-action="share">この記録で、友だちに挑戦状</button>'}<button class="text-button" data-action="menu">メニューへ</button></div></section></div>`;
+}
+
+function comparisonDetail(result: RunResult) {
+  return result.mode === 3 ? '成功して、残り時間が小さいほど上位。' : result.mode === 6 ? '生存時間が同じなら、ひやひや時間で勝負。' : result.mode === 4 ? '回数が同じなら、ぴったり回数と連続数で勝負。' : '回数が同じなら、最大連続数と特別判定で勝負。';
+}
+
+function resultGap(result: RunResult, best: RunResult | null) {
+  if (result.mode === 3 && !result.success) return '次は、パンチの合図を見て少し早めに離そう。';
+  if (!best || result.mode === 3 && !best.success) return 'はじめての記録！ 次はこの記録を超えてみよう。';
+  if (compareResults(result, best) > 0) return '自己ベスト更新！ その調子、もうひと勝負。';
+  if (compareResults(result, best) === 0) return '自己ベストと同じ！ あと少し、攻めてみよう。';
+  if (result.mode === 3) return `自己ベストまであと ${((result.remainingMs! - best.remainingMs!) / 1000).toFixed(3)} 秒。もう少しだけ、ぎりぎりへ。`;
+  if (result.mode === 6) return result.survivalMs < best.survivalMs ? `自己ベストまであと ${((best.survivalMs - result.survivalMs) / 1000).toFixed(3)} 秒！` : `生存時間は同じ！ ひやひや時間をあと ${((best.nearMissMs - result.nearMissMs + 1) / 1000).toFixed(3)} 秒。`;
+  return `あと ${Math.max(1, best.count - result.count + 1)} 回で自己ベスト更新！`;
+}
+
+function retryMode() {
+  if (!engine || !runContext) return;
+  const context = runContext.kind === 'normal' && !previewRun ? normalContext(engine.mode as ModeId) : structuredClone(runContext);
+  if (!scene || loading) { void startMode(engine.mode, context); return; }
+  clearShare();
+  const current = new GameEngine(context.mode, {seed:context.seed,best:bestFor(context.mode)});
+  runTainted = previewRun;
+  engine = current; runContext = context; runResult = null; resultRecord = null;
+  startingBest = bestResult(context); startingPrevious = previousResult(context);
+  recorded = false; previousScore = 0; previousPhase = current.phase; lastEventId = 0;
+  notice = ''; noticeUntil = 0; resultRevealsAt = 0; modalState = '';
+  document.querySelector('#modal-host')!.replaceChildren();
+  document.querySelector('#discovery-toast')?.remove();
+  scene.reset(current);
+  const activeScene = scene;
+  window.__game = {engine:current,context:structuredClone(context),snapshot:()=>current.snapshot(),step:ms=>{runTainted=true;current.update(ms);draw();return current.snapshot();},fixture:()=>{runTainted=true;current.fixture();draw();return current.snapshot();},visual:()=>activeScene.visual(),result:()=>runResult ? {...runResult}:null};
+  lastNow = performance.now(); window.__ready = true; draw();
+}
+
+async function openShare() {
+  const dialog = document.querySelector<HTMLDialogElement>('#share-dialog');
+  if (!dialog || runTainted || !runResult || !runContext) return;
+  if (!dialog.open) dialog.showModal();
+  dialog.querySelector<HTMLInputElement>('#challenge-url')!.value = challengeUrl;
+  dialog.querySelector<HTMLButtonElement>('[data-action="copy-challenge"]')!.disabled = !challengeUrl;
+  dialog.querySelector<HTMLButtonElement>('[data-action="native-share"]')!.disabled = !challengeUrl;
+  // Keep result/retry fast: draw the export only when the player opens sharing.
+  // The native-share button remains a separate, direct user gesture.
+  if (!shareJob) {
+    const context = structuredClone(runContext), result = { ...runResult }, token = shareGeneration;
+    const portrait = COLLECTION.find(c => c.id === resultRecord?.unlocked.at(-1))?.asset;
+    shareJob = prepareShareCard(context, result, portrait).then(card => {
+      if (token !== shareGeneration) { revokeShareCard(card); return null; }
+      shareCard = card; return card;
+    }).catch(() => null);
+  }
+  const card = shareCard ?? await shareJob;
+  if (!dialog.isConnected || !dialog.open) return;
+  const status = dialog.querySelector<HTMLElement>('.share-status')!;
+  if (!card) { status.textContent = '画像を準備できませんでした。挑戦リンクはそのまま送れます。'; return; }
+  const img = dialog.querySelector<HTMLImageElement>('#share-card-preview')!;
+  img.src = card.objectUrl; img.hidden = false;
+  dialog.querySelector<HTMLInputElement>('#challenge-url')!.value = card.url;
+  dialog.querySelectorAll<HTMLButtonElement>('button[disabled]').forEach(button => button.disabled = false);
+  status.textContent = '友だちも、同じお題で遊べます。';
+}
+
+function openCollection() {
+  disposeCollectionScene();
+  const existing = document.querySelector<HTMLDialogElement>('#collection-dialog');
+  existing?.remove();
+  app.insertAdjacentHTML('beforeend', collectionDialogHtml());
+  const dialog = document.querySelector<HTMLDialogElement>('#collection-dialog')!;
+  collectionPaused = !!engine && engine.status !== 'paused' && engine.status !== 'result';
+  if (collectionPaused) { advance(); engine?.pause(); }
+  dialog.addEventListener('close', () => { disposeCollectionScene(); if (collectionPaused && engine?.status === 'paused') engine.resume(); collectionPaused = false; lastNow = performance.now(); draw(); }, {once:true});
+  dialog.showModal();
+}
+
+function showCollectionItem(id: string) {
+  disposeCollectionScene();
+  const item = COLLECTION.find(c => c.id === id);
+  const preview = document.querySelector('#collection-preview');
+  if (!item || !preview) return;
+  const unlocked = save.unlocked.includes(id);
+  preview.innerHTML = `${unlocked ? `<img src="${item.asset}" alt="${item.name}">` : ''}<h3>${item.name}</h3><p>${item.hint}</p>${unlocked ? `<button class="secondary-button" data-action="play-reaction" data-reaction-id="${id}">仕草をみる</button>` : '<span>あそんで、表情をみつけよう。</span>'}`;
+  preview.scrollIntoView({block:'nearest',behavior:save.reduced ? 'instant' : 'smooth'});
+}
+
+function disposeCollectionScene() {
+  collectionGeneration++;
+  collectionLoading = false;
+  collectionScene?.destroy(); collectionScene = null;
+}
+
+async function previewReaction(id: string) {
+  if (!save.unlocked.includes(id)) return;
+  if (collectionScene) { collectionScene.playReaction(id); return; }
+  if (collectionLoading) return;
+  const preview = document.querySelector<HTMLElement>('#collection-preview');
+  if (!preview) return;
+  const token = collectionGeneration;
+  const viewport = document.createElement('div');
+  viewport.className = 'collection-live-preview';
+  viewport.setAttribute('aria-label','猫の目と耳の仕草');
+  viewport.style.cssText='position:relative;width:100%;aspect-ratio:941/1000;overflow:hidden;border-radius:20px;margin:12px 0;background:#f6e7ce';
+  const host = document.createElement('div');
+  host.style.cssText='position:absolute;width:941px;height:1672px;left:0;top:0;transform-origin:0 0';
+  viewport.append(host); preview.append(viewport);
+  host.style.transform = `scale(${viewport.clientWidth / 941}) translateY(-350px)`;
+  collectionLoading = true;
+  try {
+    const next = await GameScene.create(host, new GameEngine(5), {fixture:false,reduced:save.reduced});
+    if (token !== collectionGeneration || !host.isConnected) { next.destroy(); return; }
+    collectionScene = next; next.playReaction(id);
+    viewport.scrollIntoView({block:'nearest',behavior:save.reduced ? 'instant' : 'smooth'});
+  } catch { viewport.textContent = '仕草を読み込めませんでした。表情を選び直しておためしください。'; }
+  finally { if (token === collectionGeneration) collectionLoading = false; }
 }
 
 app.addEventListener('click', event => {
   const target = event.target as Element;
+  const collectionItem = target.closest<HTMLButtonElement>('[data-collection-id]');
+  if (collectionItem) { showCollectionItem(collectionItem.dataset.collectionId!); return; }
   const mode = target.closest<HTMLButtonElement>('[data-mode]');
   if (mode) { sound(); void startMode(Number(mode.dataset.mode)); return; }
   const button = target.closest<HTMLButtonElement>('[data-action]');
   if (!button) return;
   event.stopPropagation();
   const action = button.dataset.action;
+  if (action === 'daily') { const today = dailyContext(); void startMode(today.mode, today); return; }
+  if (action === 'collection') { openCollection(); return; }
+  if (action === 'close-collection') { document.querySelector<HTMLDialogElement>('#collection-dialog')?.close(); return; }
+  if (action === 'close-share') { document.querySelector<HTMLDialogElement>('#share-dialog')?.close(); return; }
+  if (action === 'close-discovery') { document.querySelector('#discovery-toast')?.remove(); return; }
+  if (action === 'play-reaction') {
+    const id = button.dataset.reactionId!;
+    if (!save.unlocked.includes(id)) return;
+    scene?.playReaction(id);
+    void previewReaction(id);
+    return;
+  }
+  if (action === 'share') { void openShare(); return; }
+  if (action === 'native-share' && challengeUrl) {
+    const job = shareCard ? sharePrepared(shareCard) : typeof navigator.share === 'function' ? navigator.share({title:'猫つぶしの挑戦状',text:'この記録、超えられる？',url:challengeUrl}).then(() => 'shared' as const).catch(error => error?.name === 'AbortError' ? 'cancelled' as const : 'fallback' as const) : Promise.resolve('fallback' as const);
+    void job.then(outcome => {
+      const status = document.querySelector<HTMLElement>('.share-status');
+      if (status) status.textContent = outcome === 'fallback' ? '下の「リンクをコピー」や「画像を保存」から送れます。' : outcome === 'cancelled' ? 'いつでも、また送れます。' : '挑戦状を送りました。もうひと勝負する？';
+    }); return;
+  }
+  if (action === 'copy-challenge' && challengeUrl) {
+    void copyChallenge(challengeUrl).then(ok => {
+      const status = document.querySelector<HTMLElement>('.share-status');
+      if (status) status.textContent = ok ? '挑戦リンクをコピーしました。' : 'リンクを長押ししてコピーしてください。';
+      if (!ok) document.querySelector<HTMLInputElement>('#challenge-url')?.select();
+    }); return;
+  }
+  if (action === 'download-card' && shareCard) { downloadShareCard(shareCard); return; }
   if (action === 'menu') { void menu(); return; }
   if (action === 'settings') { document.querySelector<HTMLDialogElement>('#settings-dialog')?.showModal(); return; }
   if (action === 'sound') {
@@ -297,11 +562,11 @@ app.addEventListener('click', event => {
     return;
   }
   if (!engine) return;
-  if (action === 'retry') { void startMode(engine.mode); return; }
+  if (action === 'retry') { retryMode(); return; }
   advance();
   if (action === 'pause') engine.pause();
   if (action === 'resume') { engine.resume(); lastNow = performance.now(); }
-  if (action === 'reset') { engine.reset(); sound('spring'); }
+  if (action === 'reset') { engine.reset(); lastEventId = 0; scene?.reset(engine); sound('spring'); }
   draw();
 });
 
@@ -327,8 +592,15 @@ window.addEventListener('keydown', event => {
   }
 });
 
-function frame() { advance(); if (engine && scene && !loading) draw(); requestAnimationFrame(frame); }
+function frame() { advance(); if (engine && scene && !loading) draw(); collectionScene?.render(); requestAnimationFrame(frame); }
 requestAnimationFrame(frame);
 const initialMode = Number(params.get('mode'));
-if (Number.isInteger(initialMode) && initialMode >= 1 && initialMode <= 6) void startMode(initialMode);
+const shared = parseChallenge(params);
+if (shared.context) void startMode(shared.context.mode, shared.context);
+else if (shared.error || invalidSeed) void menu().then(() => {
+  const banner = document.createElement('aside'); banner.className = 'game-banner'; banner.setAttribute('role', 'alert');
+  banner.textContent = shared.error ?? 'お題を読み込めませんでした。メニューからあそんでください。';
+  document.querySelector('.menu-header')?.after(banner);
+});
+else if (Number.isInteger(initialMode) && initialMode >= 1 && initialMode <= 6) void startMode(initialMode);
 else void menu();

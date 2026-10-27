@@ -135,7 +135,7 @@ test('02 placing finger early is allowed, then correct airborne swipe commits on
   assert.equal(g.score, 1);
 });
 
-test('02 late distance cannot be turned into success and cancel restarts only unresolved encounter', () => {
+test('02 late distance cannot be turned into success and cancel preserves unresolved encounter', () => {
   const g = new GameEngine(2);
   tap(g, 470, 1050); until(g, 'JUMP');
   g.down(470, 1050); g.update(530); g.move(730, 1050); g.up();
@@ -145,8 +145,12 @@ test('02 late distance cannot be turned into success and cancel restarts only un
   tap(h, 470, 1050); until(h, 'JUMP');
   h.down(470, 1050); h.move(500, 1050);
   const elapsed = h.elapsed;
+  const phaseTime = h.phaseTime;
+  const boxX = h.boxX;
   h.cancel(); h.resume();
-  assert.equal(h.phase, 'APPROACH');
+  assert.equal(h.phase, 'JUMP');
+  assert.equal(h.phaseTime, phaseTime);
+  assert.equal(h.boxX, boxX);
   assert.equal(h.elapsed, elapsed);
   assert.equal(h.score, 0);
 });

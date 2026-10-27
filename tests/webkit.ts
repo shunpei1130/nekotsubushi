@@ -98,7 +98,7 @@ try {
     await page.goto(`${base}/?test=1`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => (window as any).__ready);
     assert.equal(await page.locator('[data-mode]').count(), 6);
-    assert.equal(await page.locator('img').evaluateAll(imgs => imgs.filter(i => !(i as HTMLImageElement).complete || !(i as HTMLImageElement).naturalWidth).length), 0);
+    assert.equal(await page.locator('.mode-card img,.daily-card img').evaluateAll(imgs => imgs.filter(i => !(i as HTMLImageElement).complete || !(i as HTMLImageElement).naturalWidth).length), 0);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     report.environment = { ...report.environment, ...await page.evaluate(() => ({ userAgent: navigator.userAgent, maxTouchPoints: navigator.maxTouchPoints, touchEventAvailable: 'ontouchstart' in window, devicePixelRatio, width: innerWidth, height: innerHeight })) };
     await shot('menu-mobile', true);

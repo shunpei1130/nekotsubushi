@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-27T02:15:16.048Z",
+  "base": "http://127.0.0.1:5176",
+  "checks": [
+    {
+      "name": "warm-reset-2",
+      "passed": true,
+      "sameCanvas": true,
+      "status": "ready"
+    },
+    {
+      "name": "warm-reset-3",
+      "passed": true,
+      "sameCanvas": true,
+      "status": "ready"
+    },
+    {
+      "name": "warm-reset-4",
+      "passed": true,
+      "sameCanvas": true,
+      "status": "ready"
+    },
+    {
+      "name": "warm-reset-5",
+      "passed": true,
+      "sameCanvas": true,
+      "status": "playing"
+    },
+    {
+      "name": "warm-reset-6",
+      "passed": true,
+      "sameCanvas": true,
+      "status": "ready"
+    },
+    {
+      "name": "reference-fixture-1",
+      "passed": true,
+      "reactionInactive": true
+    },
+    {
+      "name": "reference-fixture-2",
+      "passed": true,
+      "reactionInactive": true
+    },
+    {
+      "name": "reference-fixture-3",
+      "passed": true,
+      "reactionInactive": true
+    },
+    {
+      "name": "reference-fixture-4",
+      "passed": true,
+      "reactionInactive": true
+    },
+    {
+      "name": "reference-fixture-5",
+      "passed": true,
+      "reactionInactive": true
+    },
+    {
+      "name": "reference-fixture-6",
+      "passed": true,
+      "reactionInactive": true
+    },
+    {
+      "name": "normal-clock-gesture-video",
+      "passed": true,
+      "video": "gesture-choreography.webm"
+    }
+  ],
+  "errors": [],
+  "method": "Production GameScene; real mouse input; deterministic engine clock only for keyframe/round boundaries. Eye keyframes freeze the presentation after a real observed blink. Separate gesture-choreography.webm uses normal game/presentation clocks. Chromium390x844; referencefixtures941x1672.",
+  "priorEvidence": "partial-report.json",
+  "entryScript": "/assets/index-cdHTuW4C.js",
+  "normalClockGestures": [
+    {
+      "name": "right",
+      "passed": true
+    },
+    {
+      "name": "left",
+      "passed": true
+    },
+    {
+      "name": "up",
+      "passed": true
+    },
+    {
+      "name": "down",
+      "passed": true
+    },
+    {
+      "name": "inward",
+      "passed": true
+    },
+    {
+      "name": "gentle",
+      "passed": true
+    }
+  ],
+  "passed": 12,
+  "failed": 0,
+  "coverage": {
+    "currentBuild": "/assets/index-cdHTuW4C.js",
+    "currentBatchChecks": 12,
+    "currentNormalClockGestureAssertions": 6,
+    "priorEvidence": "partial-report.json",
+    "priorPassedChecks": 7,
+    "aggregateDistinctPrimaryScenarios": 19,
+    "allScenariosOneBatch": false,
+    "note": "The prior batch verified six real-input eyelid keyframes and warmreset01 before the display-density optimization. This final build verifies warmreset02..06, all six native fullresolution fixtures, and the normal-clock video with assertions for all six gesture classifications. Do not describe this aggregate as a single nineteen-check run against one build."
+  }
+}

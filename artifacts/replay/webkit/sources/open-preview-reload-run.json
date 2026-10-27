@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-27T02:09:23.648Z",
+  "baseURL": "http://127.0.0.1:5176",
+  "entryAsset": "/assets/index-cdHTuW4C.js",
+  "browser": "webkit",
+  "browserVersion": "26.0",
+  "checks": [
+    {
+      "name": "COLLECTION: real cheek gesture unlocks, previews and survives reload",
+      "passed": true,
+      "elapsedMs": 20637
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "cheek-discovery.png",
+    "collection-live-preview.png",
+    "collection-unlocked.png"
+  ],
+  "measurements": {
+    "collectionLayout": {
+      "containerWidth": 320,
+      "canvasWidth": 294,
+      "hintWidth": 194
+    },
+    "collectionReload": {
+      "previewOpenDuringReload": true,
+      "waitUntil": "domcontentloaded",
+      "appReady": true,
+      "persistenceVerified": true
+    }
+  },
+  "passed": 1,
+  "failed": 0,
+  "method": "Trusted Playwright mouse pointer input. Only test=1 metric checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Viewports are emulated.",
+  "limitations": [
+    "Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised."
+  ]
+}

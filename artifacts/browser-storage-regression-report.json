@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-27T02:11:02.773Z",
+  "baseURL": "http://127.0.0.1:5176",
+  "browser": "154.0.8037.57",
+  "platform": "linux",
+  "method": "Chromium with real mouse/pointer browser input. Mechanics use window.__game.step; persistence uses a normal real-clock trial. Device viewports are emulation, not physical-device certification.",
+  "checks": [
+    {
+      "name": "ASSET: menu images decode and no horizontal overflow is present",
+      "passed": true,
+      "elapsedMs": 2663
+    },
+    {
+      "name": "SAVE-01: successful record persists; corrupt and unavailable storage remain playable",
+      "passed": true,
+      "elapsedMs": 11648
+    },
+    {
+      "name": "CONSOLE: no uncaught JavaScript or browser console errors",
+      "passed": true,
+      "elapsedMs": 2
+    }
+  ],
+  "errors": [],
+  "screenshots": [],
+  "snapshots": {
+    "persistedRemainingMs": 3931
+  },
+  "performance": {
+    "resources": [
+      {
+        "name": "/assets/index-cdHTuW4C.js",
+        "transferSize": 300,
+        "duration": 7
+      },
+      {
+        "name": "/assets/index-Bhu8JXUe.css",
+        "transferSize": 300,
+        "duration": 6
+      },
+      {
+        "name": "/assets/mplus-rounded-800.woff2",
+        "transferSize": 0,
+        "duration": 0
+      },
+      {
+        "name": "/assets/thumb-06.webp",
+        "transferSize": 300,
+        "duration": 6
+      },
+      {
+        "name": "/assets/thumb-01.webp",
+        "transferSize": 300,
+        "duration": 9
+      },
+      {
+        "name": "/assets/thumb-02.webp",
+        "transferSize": 300,
+        "duration": 11
+      },
+      {
+        "name": "/assets/thumb-03.webp",
+        "transferSize": 300,
+        "duration": 29
+      },
+      {
+        "name": "/assets/thumb-04.webp",
+        "transferSize": 300,
+        "duration": 31
+      },
+      {
+        "name": "/assets/thumb-05.webp",
+        "transferSize": 300,
+        "duration": 35
+      },
+      {
+        "name": "/favicon.svg",
+        "transferSize": 300,
+        "duration": 5
+      }
+    ],
+    "navigation": [
+      {
+        "domContentLoadedMs": 152,
+        "loadMs": 233
+      }
+    ]
+  },
+  "limitations": [
+    "Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior."
+  ],
+  "httpErrors": [],
+  "passed": 3,
+  "failed": 0
+}

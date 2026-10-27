@@ -3,11 +3,21 @@ export const W = 941;
 export const H = 1672;
 export type GameStatus = 'ready' | 'playing' | 'paused' | 'result';
 export type EncounterOutcome = 'PENDING' | 'SUCCESS' | 'EARLY' | 'MISS';
+export type CheekGesture = 'right' | 'left' | 'up' | 'down' | 'inward' | 'gentle';
+export type ReplayMetrics = {
+  maxStreak: number; streak: number; specialCount: number; perfectCount: number;
+  perfectStreak: number; maxPerfectStreak: number; remainingMs: number | null;
+  survivalMs: number; nearMissMs: number; cheekGesture: CheekGesture | null;
+};
+export type GameEvent = { id: number; type: 'success' | 'caught' | 'timing' | 'cheek' | 'milestone'; tag?: string; at: number };
+const emptyMetrics = (): ReplayMetrics => ({maxStreak:0,streak:0,specialCount:0,perfectCount:0,perfectStreak:0,maxPerfectStreak:0,remainingMs:null,survivalMs:0,nearMissMs:0,cheekGesture:null});
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 const tenth = (s: number) => Math.floor((s + 1e-9) * 10) / 10;
 
 export class GameEngine {
   readonly mode: number;
+  readonly metrics: ReplayMetrics = emptyMetrics();
+  readonly events: GameEvent[] = [];
   status: GameStatus = 'ready';
   phase = 'READY';
   score = 0;
@@ -62,6 +72,9 @@ export class GameEngine {
   private resumeDelay = 0;
   private resumeToy = false;
   private pausedFrom: GameStatus = 'playing';
+  private eventId = 0;
+  private fixtureRun = false;
+  private nearMissSeconds = 0;
 
   constructor(mode: number, config: { seed?: number; best?: number } = {}) {
     if (!Number.isInteger(mode) || mode < 1 || mode > 6) throw new Error('Unknown game mode');
@@ -83,6 +96,25 @@ export class GameEngine {
     this.phaseDuration = duration;
   }
 
+  private emit(type: GameEvent['type'], tag?: string) {
+    if (this.fixtureRun) return;
+    this.events.push({ id: ++this.eventId, type, tag, at: this.clock });
+    if (this.events.length > 128) this.events.shift();
+  }
+
+  private countStreak(milestone: number) {
+    this.metrics.streak++;
+    this.metrics.maxStreak = Math.max(this.metrics.maxStreak, this.metrics.streak);
+    if (this.metrics.streak === milestone) this.emit('milestone', this.mode === 1 ? 'poke-streak' : 'box-streak');
+  }
+
+  private boxFailure(outcome: 'EARLY' | 'MISS') {
+    if (this.encounterOutcome !== 'PENDING') return;
+    this.encounterOutcome = outcome;
+    this.metrics.streak = 0;
+    this.emit('timing', outcome === 'EARLY' ? 'early' : 'miss');
+  }
+
   private closed() {
     this.enter('CLOSED', 1.4 + this.random() * 0.8);
     this.message = '目を閉じている間につんつん';
@@ -99,6 +131,11 @@ export class GameEngine {
 
   reset() {
     this.rng = this.seed;
+    Object.assign(this.metrics, emptyMetrics());
+    this.events.length = 0;
+    this.eventId = 0;
+    this.fixtureRun = false;
+    this.nearMissSeconds = 0;
     this.status = this.mode === 5 ? 'playing' : 'ready';
     this.score = this.elapsed = this.hold = this.effect = 0;
     this.success = false;
@@ -119,7 +156,8 @@ export class GameEngine {
     this.cheekAnchorX = 737;
     this.cheekAnchorY = 871;
     this.currentHat = 'banana';
-    this.punchAt = 0;
+    // A reset is a new trial; invalid taps and cancellation retain its deadline.
+    this.punchAt = this.mode === 3 ? 3.2 + this.random() * 2 : 0;
     if (this.mode === 1) this.closed();
     if (this.mode === 2) this.encounter();
     if (this.mode === 3) this.enter('READY');
@@ -164,11 +202,11 @@ export class GameEngine {
     if (this.mode === 3) {
       this.status = 'playing';
       this.elapsed = this.hold = 0;
-      this.punchAt = 3.2 + this.random() * 2;
       this.enter('HOLDING', this.punchAt - 0.65);
       this.message = '前足が上がったら、そろそろ離して';
     }
     if (this.mode === 5) {
+      this.metrics.cheekGesture = null;
       this.cheekSide = x < 400 ? 'left' : 'right';
       this.cheekAnchorX = clamp(x, this.cheekSide === 'left' ? 40 : 540, this.cheekSide === 'left' ? 280 : 820);
       this.cheekAnchorY = clamp(y, 760, 1100);
@@ -198,7 +236,7 @@ export class GameEngine {
         this.dragStarted = true;
         this.dragWasAirborne = this.phase === 'JUMP';
         if (!this.dragWasAirborne) {
-          this.encounterOutcome = 'EARLY';
+          this.boxFailure('EARLY');
           this.message = '早かったニャ';
         }
       }
@@ -208,6 +246,12 @@ export class GameEngine {
           this.encounterOutcome = 'SUCCESS';
           this.boxX = 0.5 * W + Math.sign(dx) * 0.25 * W;
           this.score++;
+          this.countStreak(3);
+          const grade = this.phaseTime < 0.30 - 1e-9 ? 'early' : this.phaseTime < 0.44 - 1e-9 ? 'perfect' : 'close';
+          if (grade === 'perfect') this.metrics.perfectCount++;
+          if (grade === 'close') this.metrics.specialCount++;
+          this.emit('success', grade);
+          this.emit('timing', grade);
           this.effect = 0.65;
           this.message = 'スカッ！';
         }
@@ -235,6 +279,10 @@ export class GameEngine {
       if (tap && (pressedPhase === 'CLOSED' || pressedPhase === 'WARNING') && ['CLOSED', 'WARNING', 'OPEN_GRACE'].includes(this.phase)) {
         this.status = 'playing';
         this.score++;
+        this.countStreak(10);
+        const close = this.phase === 'OPEN_GRACE' || (this.phase === 'WARNING' && this.phaseTime >= 0.30 - 1e-9);
+        if (close) this.metrics.specialCount++;
+        this.emit('success', close ? 'close' : 'poke');
         this.effect = 0.32;
         this.message = '+1';
         return true;
@@ -244,7 +292,7 @@ export class GameEngine {
         this.status = 'playing';
         return true;
       }
-      if (this.encounterOutcome === 'PENDING' && this.dragWasAirborne) this.encounterOutcome = 'MISS';
+      if (this.encounterOutcome === 'PENDING' && this.dragWasAirborne) this.boxFailure('MISS');
     } else if (this.mode === 3 && this.status === 'playing') {
       if (this.hold < 0.2 - 1e-9) {
         this.status = 'ready';
@@ -254,6 +302,9 @@ export class GameEngine {
         this.score = tenth(this.hold);
         this.best = Math.max(this.best, this.score);
         this.success = true;
+        this.metrics.remainingMs = Math.max(1, Math.ceil((this.punchAt - this.hold) * 1000 - 1e-7));
+        this.emit('success', 'punch-release');
+        if (this.metrics.remainingMs <= 100) this.emit('milestone', 'punch-close');
         this.enter('SUCCESS');
         this.status = 'result';
         this.effect = 0.6;
@@ -262,15 +313,30 @@ export class GameEngine {
       }
     } else if (this.mode === 4) {
       if (tap && pressedPhase === 'BARE' && this.phase === 'BARE') {
+        const reapplication = this.score > 0;
+        const perfect = reapplication && this.phaseTime <= 0.18 + 1e-9;
+        if (reapplication) {
+          this.metrics.perfectStreak = perfect ? this.metrics.perfectStreak + 1 : 0;
+          if (perfect) this.metrics.perfectCount++;
+          this.metrics.maxPerfectStreak = Math.max(this.metrics.maxPerfectStreak, this.metrics.perfectStreak);
+          this.emit('timing', perfect ? 'perfect' : 'late');
+          if (this.metrics.perfectStreak === 3) this.emit('milestone', 'hat-rhythm');
+        }
         this.status = 'playing';
         this.score++;
+        this.emit('success', perfect ? 'perfect' : 'hat');
         this.currentHat = this.score % 2 ? 'banana' : 'fish';
         this.enter('PUTTING_ON', 0.08);
         this.effect = 0.6;
         this.message = '+1';
         return true;
       }
+      if (tap && pressedPhase !== 'BARE') {
+        this.metrics.perfectStreak = 0;
+        this.emit('timing', 'early');
+      }
     } else if (this.mode === 5) {
+      this.resolveCheekGesture();
       this.springBack();
     } else if (this.mode === 6) {
       // Releasing stops the wand but does not stop the game clock or cat.
@@ -281,10 +347,26 @@ export class GameEngine {
   }
 
   private caught() {
+    this.metrics.streak = 0;
+    this.emit('caught', 'poke');
     this.tapCandidate = false;
     this.enter('CAUGHT', 1.5);
     this.effect = 0.45;
     this.message = '見つかったニャ！';
+  }
+
+  private resolveCheekGesture() {
+    const x = this.cheekX, y = this.cheekY, ax = Math.abs(x), ay = Math.abs(y);
+    const distance = Math.hypot(x, y);
+    let gesture: CheekGesture | null = null;
+    if (distance >= 20 && distance < 60 && this.clock - this.downClock >= 1 - 1e-9) gesture = 'gentle';
+    else if (ay >= 40 && ay / 40 >= ax / 60) gesture = y < 0 ? 'up' : 'down';
+    else if (ax >= 60) {
+      const inward = this.cheekSide === 'left' ? x > 0 : x < 0;
+      gesture = inward ? 'inward' : this.cheekSide;
+    }
+    this.metrics.cheekGesture = gesture;
+    if (gesture) this.emit('cheek', gesture);
   }
 
   private springBack() {
@@ -313,7 +395,7 @@ export class GameEngine {
   pause() {
     if (this.mode === 3 || this.mode === 5) { this.cancel(); return; }
     if (this.status === 'paused' || this.status === 'result') { this.clearPointer(); return; }
-    if (this.mode === 2 && this.pointerId !== null && this.encounterOutcome === 'PENDING') this.encounter();
+    // Keep the phase, displacement and RNG state so pausing never redraws an encounter.
     this.clearPointer();
     this.pausedFrom = this.status;
     this.status = 'paused';
@@ -337,7 +419,11 @@ export class GameEngine {
 
   private finish(success = true) {
     this.success = success;
-    if (this.mode === 6) this.score = tenth(this.elapsed);
+    if (this.mode === 6) {
+      this.score = tenth(this.elapsed);
+      this.metrics.survivalMs = Math.floor(this.elapsed * 1000 + 1e-6);
+      this.emit(success ? 'milestone' : 'caught', success ? 'escape-clear' : 'feather');
+    }
     this.best = Math.max(this.best, this.score);
     this.status = 'result';
     this.clearPointer();
@@ -393,13 +479,13 @@ export class GameEngine {
   }
 
   private stepBox() {
-    if (this.phase === 'JUMP' && this.phaseTime > 0.52 && this.encounterOutcome === 'PENDING') this.encounterOutcome = 'MISS';
+    if (this.phase === 'JUMP' && this.phaseTime > 0.52 && this.encounterOutcome === 'PENDING') this.boxFailure('MISS');
     if (this.phaseTime < this.phaseDuration - 1e-9) return;
     const overflow = this.phaseTime - this.phaseDuration;
     if (this.phase === 'APPROACH') { this.enter('CROUCH', 0.45); this.message = '構えた…'; }
     else if (this.phase === 'CROUCH') { this.enter('JUMP', 0.6); this.message = this.encounterOutcome === 'EARLY' ? '早かったニャ' : 'いま！ 箱をスワイプ'; }
     else if (this.phase === 'JUMP') {
-      if (this.encounterOutcome === 'PENDING') this.encounterOutcome = 'MISS';
+      if (this.encounterOutcome === 'PENDING') this.boxFailure('MISS');
       this.enter('REACTION', 0.45);
       this.message = this.encounterOutcome === 'SUCCESS' ? 'スカッ！' : '入れたニャ';
     } else if (this.phase === 'REACTION') { this.clearPointer(); this.encounter(); }
@@ -413,6 +499,7 @@ export class GameEngine {
       this.enter('PUNCH');
       this.status = 'result';
       this.success = false;
+      this.emit('caught', 'punch');
       this.score = 0;
       this.effect = 0.7;
       this.message = '猫パンチ！ 次は少し早めに';
@@ -470,6 +557,21 @@ export class GameEngine {
         if (t >= 0 && t <= 1) contact = t;
       }
     }
+    // Integrate the swept relative segment, clipped at first contact. Counting
+    // only an endpoint would award time after a fast crossing or miss a pass.
+    const end = Math.min(1, contact);
+    const insideFraction = (radius: number) => {
+      const c = ax * ax + ay * ay - radius * radius;
+      if (aa < 1e-12) return c <= 0 ? end : 0;
+      const disc = bb * bb - 4 * aa * c;
+      if (disc < 0) return 0;
+      const root = Math.sqrt(disc);
+      const low = (-bb - root) / (2 * aa), high = (-bb + root) / (2 * aa);
+      return Math.max(0, Math.min(end, high) - Math.max(0, low));
+    };
+    this.nearMissSeconds += dt * Math.max(0, insideFraction(W * 0.22) - insideFraction(this.captureDistance));
+    this.metrics.nearMissMs = Math.floor(this.nearMissSeconds * 1000 + 1e-6);
+    this.metrics.survivalMs = Math.floor(this.elapsed * 1000 + 1e-6);
     if (contact !== Infinity) {
       const contactTime = this.elapsed - dt + dt * contact;
       if (contactTime < 15 - 1e-9) {
@@ -486,6 +588,7 @@ export class GameEngine {
   /** Reference pose injected into the same live renderer, never a screenshot substitute. */
   fixture() {
     this.reset();
+    this.fixtureRun = true;
     this.status = 'playing';
     this.effect = 0.25;
     if (this.mode === 1) { this.elapsed = 12; this.remaining = 18; this.score = 12; this.phase = 'CLOSED'; this.message = '+1'; this.pointerX = 687; this.pointerY = 752; }
@@ -498,6 +601,6 @@ export class GameEngine {
   }
 
   snapshot() {
-    return { mode: this.mode, status: this.status, phase: this.phase, score: this.score, best: this.best, elapsed: this.elapsed, remaining: this.remaining, hold: this.hold, success: this.success, boxX: this.boxX, encounterOutcome: this.encounterOutcome, catX: this.catX, catY: this.catY, toyX: this.toyX, toyY: this.toyY, cheekX: this.cheekX, cheekY: this.cheekY, cheekSide: this.cheekSide, cheekAnchorX: this.cheekAnchorX, cheekAnchorY: this.cheekAnchorY, currentHat: this.currentHat, phaseTime: this.phaseTime, phaseDuration: this.phaseDuration, punchAt: this.punchAt, effect: this.effect, pointerId: this.pointerId, message: this.message };
+    return { mode: this.mode, status: this.status, phase: this.phase, score: this.score, best: this.best, elapsed: this.elapsed, remaining: this.remaining, hold: this.hold, success: this.success, boxX: this.boxX, encounterOutcome: this.encounterOutcome, catX: this.catX, catY: this.catY, toyX: this.toyX, toyY: this.toyY, cheekX: this.cheekX, cheekY: this.cheekY, cheekSide: this.cheekSide, cheekAnchorX: this.cheekAnchorX, cheekAnchorY: this.cheekAnchorY, currentHat: this.currentHat, phaseTime: this.phaseTime, phaseDuration: this.phaseDuration, punchAt: this.punchAt, effect: this.effect, pointerId: this.pointerId, message: this.message, metrics: { ...this.metrics } };
   }
 }

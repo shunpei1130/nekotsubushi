@@ -35,3 +35,16 @@ python scripts/prepare-hand.py --check
 元PNGのSHA-256、マスターのRGBA画素、配信WebPの復号画素、および配信WebPのバイト列が一致することを検証する。`--check` は素材・メタデータを変更しない。Pillow等のバージョンは `requirements-art.txt` に固定している。
 
 実画面の照合はブラウザ撮影後に `python scripts/compare.py` で行う。原画に対する横並び・50%重ね合わせ・増幅差分・記述的な画像指標を保存し、指標の数値だけで猫や動作の品質を合格にしない。
+
+## 表情コレクションと実際の反応
+
+`masters/reaction-portraits-generated.png` は、選択済みの `m05-cat.png` と `m03-body.png` を画像生成の参照に使った4列×3行の表情集。額の縞、白い頬、鼻、琥珀色の目、耳、細かい毛並みと暖かい光を引き継いでいる。12枚の配信用画像は等分セルをそのまま抽出したもので、顔の幾何変形や文字の焼き込みは行わない。各セルとSHA-256は `reactions.json` に保存している。
+
+```sh
+python scripts/prepare-reaction-portraits.py
+python scripts/prepare-reaction-portraits.py --check
+```
+
+ゲーム中の頬の反応は、同じ猫の描画を維持し、登録済みの `m05-blink` の左右の瞼を個別に使う。左右のウインク、両目の短い閉眼、交互の閉眼、長めの穏やかな閉眼と、小さな耳の動きを組み合わせる。鼻・目の位置・頭蓋を変形させず、顔全体をコレクション画像へ差し替えない。耳の追加変位はステージ上で最大約5px、顔の領域には影響しない。動きを減らす設定では耳を動かさず表情を残す。参考画像の照合状態では追加反応を無効にする。
+
+実ポインター操作、瞼の合成、通常時計での動画、6モードの同じキャンバスでの再プレイは `artifacts/replay/art-motion/` に検証資料を保存する。

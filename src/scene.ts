@@ -1,9 +1,10 @@
-import {Application, Assets, Container, Graphics, MeshPlane, Sprite, Texture} from 'pixi.js';
+import {Application, Assets, Graphics, MeshPlane, Rectangle, Sprite, Texture} from 'pixi.js';
 import {GameEngine, W, H} from './engine';
 import {asset} from './data';
 import {boxCatPose, type BoxCatPose} from './choreography';
 import {deformCheek} from './cheek';
 import {HatChoreography, type HatFrame, type HatPose} from './hat';
+import {reactionFrame,earReactionOffset,type ReactionFrame} from './reactions';
 
 type Placement={x:number;y:number;w:number;h:number};
 type Rig={mesh:MeshPlane;base:Float32Array;place:Placement};
@@ -52,6 +53,10 @@ export class GameScene {
  private cheekContact={x:737,y:871,strength:1};
  private hatMotion=new HatChoreography();
  private hatFrame:HatFrame|null=null;
+ private reactionId:string|null=null;
+ private reactionStarted=0;
+ private lastReactionEvent=0;
+ private reactionState:ReactionFrame=reactionFrame(null,Infinity);
  private constructor(host:HTMLElement,engine:GameEngine,options:{fixture:boolean;reduced:boolean}){this.host=host;this.engine=engine;this.options=options}
  static async create(host:HTMLElement,engine:GameEngine,options:{fixture:boolean;reduced:boolean}){
   const scene=new GameScene(host,engine,options);try{await scene.init();return scene}catch(error){scene.destroy();throw error}
@@ -68,7 +73,10 @@ export class GameScene {
   this.acquired=names;
   await Promise.all(names.map(async name=>{this.textures[name]=await retainTexture(name)}));
   this.app=new Application();
-  await this.app.init({width:W,height:H,resolution:1,autoStart:false,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true});
+  // Keep the original logical stage and mesh, while drawing only the pixels
+  // the display can show. Native reference captures retain full resolution.
+  const density=this.resolutionForDisplay();
+  await this.app.init({width:W,height:H,resolution:density,autoDensity:true,autoStart:false,antialias:true,backgroundAlpha:0,preference:'webgl',preserveDrawingBuffer:true});
   const canvas=this.app.canvas;canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none';canvas.setAttribute('aria-hidden','true');
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();this.contextLost=true;this.engine.pause();this.host.dispatchEvent(new CustomEvent('neko:graphicslost',{bubbles:true}));});
   this.host.prepend(canvas);
@@ -94,11 +102,54 @@ export class GameScene {
   if(m===2)prop('m02-box-front','boxFront');
   if(m===3){prop('m03-paw','paw');prop('m03-hand','hand')}
   if(m===4){prop('m04-banana','hat');prop('m04-banana','fallBanana');prop('m04-fish','fallFish')}
-  if(m===5){prop('m05-blink','blink');prop('m05-hand-clean','hand')}
+  if(m===5){
+   prop('m05-blink','blink');
+   // These are crops of the existing aligned eyelid painting, not new eyes or
+   // face replacements. Both retain the original nose, pupils and skull below.
+   for(const [key,frame] of [['reactionLeftEye',new Rectangle(0,460,345,235)],['reactionRightEye',new Rectangle(395,565,340,220)]] as const){
+    const eyelid=new Sprite(new Texture({source:this.textures['m05-blink'].source,frame}));
+    eyelid.visible=false;this.app.stage.addChild(eyelid);this.props[key]=eyelid;
+   }
+   prop('m05-hand-clean','hand');
+  }
   if(m===6)prop('m06-wand','wand');
   this.app.stage.addChild(this.fx);
   this.effectText=document.createElement('div');this.effectText.className='scene-effects';this.effectText.style.cssText='position:absolute;inset:0;pointer-events:none';this.host.append(this.effectText);
   this.render();
+ }
+ private resolutionForDisplay(){
+  const width=this.host.getBoundingClientRect().width||this.host.clientWidth;
+  return this.options.fixture?1:Math.min(1,Math.max(.35,width*(globalThis.devicePixelRatio||1)/W));
+ }
+ resizeResolution(){
+  if(this.destroyed||this.contextLost||!this.app?.renderer)return;
+  const density=this.resolutionForDisplay();
+  if(Math.abs(this.app.renderer.resolution-density)>.005)this.app.renderer.resize(W,H,density);
+ }
+ /** Reuse decoded textures and WebGL resources for an immediate same-mode retry. */
+ reset(engine:GameEngine){
+  if(this.destroyed||this.contextLost)throw new Error('Scene must be recreated after graphics loss');
+  if(engine.mode!==this.engine.mode)throw new Error('A scene can only reset to the same game mode');
+  this.engine=engine;
+  this.idleClock=0;this.presentationClock=0;this.wallTime=performance.now();
+  this.bodyOffset={x:0,y:0};this.raisedPaw=0;this.releasedPaw=0;
+  this.previousPhase='';this.phaseEntered=0;this.boxPose=null;
+  this.hatMotion=new HatChoreography();this.hatFrame=null;
+  this.cheekContact={x:737,y:871,strength:1};
+  this.reactionId=null;this.reactionStarted=0;this.lastReactionEvent=0;
+  this.reactionState=reactionFrame(null,Infinity);
+  for(const prop of Object.values(this.props)){
+   prop.visible=false;prop.alpha=1;prop.rotation=0;
+   prop.pivot.set(0,0);prop.position.set(0,0);prop.scale.set(1);
+  }
+  this.cat.pivot.set(0,0);this.cat.alpha=1;this.cat.rotation=0;
+  this.rig.mesh.geometry.positions.set(this.rig.base);
+  this.effectText.replaceChildren();this.fx.clear();this.shadow.clear();
+  this.render();
+ }
+ playReaction(id:string){
+  if(this.options.fixture||!reactionFrame(id,0).active)return;
+  this.reactionId=id;this.reactionStarted=this.presentationClock;
  }
  private texture(name:string){if(this._texture!==name){this._texture=name;this.cat.texture=this.textures[name]}}
  private fit(sprite:Sprite,x:number,y:number,w:number,h:number){sprite.position.set(x,y);sprite.width=w;sprite.height=h;sprite.visible=true}
@@ -117,6 +168,15 @@ export class GameScene {
    if(!this.options.reduced)this.idleClock+=Math.min(.05,delta);
   }
   this.wallTime=now;
+  if(!this.options.fixture){
+   const events=(e as GameEngine & {events?:readonly {id:number;type:string;tag?:string}[]}).events??[];
+   for(const event of events)if(event.id>this.lastReactionEvent){
+    this.lastReactionEvent=event.id;
+    if(event.type==='cheek'&&event.tag)this.playReaction(`cheek-${event.tag}`);
+    else if(event.type==='milestone'&&event.tag)this.playReaction(event.tag);
+   }
+  }
+  this.reactionState=reactionFrame(this.reactionId,this.presentationClock-this.reactionStarted,this.options.reduced);
   const real=this.idleClock;
   if(this.previousPhase!==e.phase){
    if(e.phase==='SUCCESS'||e.phase==='PUNCH')this.releasedPaw=this.raisedPaw;
@@ -204,6 +264,13 @@ export class GameScene {
    tx=e.cheekX;ty=e.cheekY;
    const blink=this.props.blink,cycle=real%5.4;
    this.fit(blink,p.x,p.y+breath*.87,p.w,p.h);blink.visible=e.phase==='IDLE'&&cycle>4.7&&cycle<4.82;
+   const reaction=this.reactionState;
+   const left=this.props.reactionLeftEye,right=this.props.reactionRightEye;
+   this.fit(left,p.x,p.y+460*p.h/1672+breath*.87,345*p.w/941,235*p.h/1672);
+   this.fit(right,p.x+395*p.w/941,p.y+565*p.h/1672+breath*.87,340*p.w/941,220*p.h/1672);
+   left.visible=reaction.active&&reaction.closeLeft;
+   right.visible=reaction.active&&reaction.closeRight;
+   if(left.visible||right.visible)blink.visible=false;
    const pulling=Math.abs(tx)+Math.abs(ty)>1;
    this.props.hand.visible=e.phase==='DRAGGING';
    if(pulling&&e.phase==='SPRING_BACK')this.label('ぷるん',713,680,43);
@@ -255,6 +322,10 @@ export class GameScene {
     }
    }
    if(real&&m!==2&&m!==6){dy+=breath*Math.sin(Math.PI*clamp((ny-.1)/.88,0,1));}
+   if(!this.options.fixture&&this.reactionState.active){
+    const ear=earReactionOffset(nx,ny,this.reactionState);
+    dx+=ear.x*tw/p.w;dy+=ear.y*th/p.h;
+   }
    vertices[i]=(m===5?vertices[i]:x)+dx;vertices[i+1]=(m===5?vertices[i+1]:y)+dy;
   }
   if(m===5&&this.props.hand.visible){
@@ -267,7 +338,7 @@ export class GameScene {
  }
  visual(){
   const hand=this.props.hand,paw=this.props.paw;
-  return{mode:this.engine.mode,cat:{x:this.cat.x,y:this.cat.y,width:this.cat.width,height:this.cat.height,alpha:this.cat.alpha},box:this.boxPose?{...this.boxPose,opening:{x:572.9167+this.engine.boxX-W*.5,y:919.3223}}:null,hand:hand?{visible:hand.visible,x:hand.x,y:hand.y}:null,paw:paw?{x:paw.x,y:paw.y,rotation:paw.rotation}:null,cheek:{...this.cheekContact,contact:{x:this.cheekContact.x,y:this.cheekContact.y}},hats:this.hatFrame,eyesClosed:this.props.blink?.visible??false,layers:this.engine.mode===2?['background','shadow','ghost','boxBack','cat','boxFront','effects']:[]};
+  return{mode:this.engine.mode,cat:{x:this.cat.x,y:this.cat.y,width:this.cat.width,height:this.cat.height,alpha:this.cat.alpha},box:this.boxPose?{...this.boxPose,opening:{x:572.9167+this.engine.boxX-W*.5,y:919.3223}}:null,hand:hand?{visible:hand.visible,x:hand.x,y:hand.y}:null,paw:paw?{x:paw.x,y:paw.y,rotation:paw.rotation}:null,cheek:{...this.cheekContact,contact:{x:this.cheekContact.x,y:this.cheekContact.y}},hats:this.hatFrame,eyesClosed:this.props.blink?.visible??false,reaction:{...this.reactionState,leftEyeClosed:this.props.reactionLeftEye?.visible??false,rightEyeClosed:this.props.reactionRightEye?.visible??false},layers:this.engine.mode===2?['background','shadow','ghost','boxBack','cat','boxFront','effects']:[]};
  }
  reactionComplete(){
   if(this.engine.mode!==3)return true;

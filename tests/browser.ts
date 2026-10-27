@@ -1,4 +1,4 @@
-/** Browser QA: real DOM navigation and pointer input; deterministic clock advancement only. */
+/** Real DOM/pointer QA; deterministic mechanics and a real-clock persistence trial. */
 import { chromium, webkit, type Browser, type Page } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { spawn, type ChildProcess } from 'node:child_process';
@@ -13,7 +13,7 @@ const base = process.env.BASE_URL ?? 'http://127.0.0.1:5173';
 const report: any = {
   date: new Date().toISOString(), baseURL: base,
   browser: '', platform: process.platform,
-  method: 'Chromium with real mouse/pointer browser input; window.__game.step advances only game time. Device viewports are emulation, not physical-device certification.',
+  method: 'Chromium with real mouse/pointer browser input. Mechanics use window.__game.step; persistence uses a normal real-clock trial. Device viewports are emulation, not physical-device certification.',
   checks: [], errors: [], screenshots: [], snapshots: {}, performance: {},
   limitations: ['Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior.'],
 };
@@ -362,7 +362,9 @@ try {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(base, { waitUntil: 'networkidle' });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-    const broken = await page.locator('img').evaluateAll((imgs) => imgs.filter((img) => !(img as HTMLImageElement).complete || (img as HTMLImageElement).naturalWidth === 0).length);
+    // Collection portraits are lazy-loaded inside a closed dialog. Only the
+    // images presented by the menu must already be decoded here.
+    const broken = await page.locator('.mode-card img,.daily-card img').evaluateAll((imgs) => imgs.filter((img) => !(img as HTMLImageElement).complete || (img as HTMLImageElement).naturalWidth === 0).length);
     assert.equal(broken, 0);
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('[data-mode]').count(), 6);
@@ -392,25 +394,42 @@ try {
   });
 
   await check('SAVE-01: successful record persists; corrupt and unavailable storage remain playable', async () => {
-    await openMode(page, 3);
+    await page.goto(base, { waitUntil: 'networkidle' });
+    await page.evaluate(() => { localStorage.removeItem('nekotsubushi:v1'); localStorage.removeItem('nekotsubushi:v2'); });
+    // Preview/test clocks deliberately cannot save. Exercise a normal trial
+    // using real elapsed time and trusted pointer input instead.
+    await page.goto(`${base}/?mode=3`, { waitUntil: 'networkidle' });
+    await settle(page);
     await down(page, 470, 850);
-    await step(page, 1200);
+    await page.waitForTimeout(350);
     await page.mouse.up();
-    const achieved = (await snapshot(page)).best;
-    assert.ok(achieved >= 1.2);
+    await page.waitForFunction(() => (window as any).__game?.snapshot().status === 'result');
+    const result = await snapshot(page);
+    const achieved = result.metrics.remainingMs;
+    assert.equal(result.success, true);
+    assert.ok(Number.isInteger(achieved) && achieved > 0 && achieved <= 5200, 'a successful release records the remaining milliseconds');
+    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('nekotsubushi:v2') || 'null'));
+    assert.equal(stored.schemaVersion, 2);
+    assert.equal(stored.runs['v2:normal:3'].best.remainingMs, achieved);
+    assert.equal(stored.runs['v2:normal:3'].best.success, true);
     await page.reload({ waitUntil: 'networkidle' });
     await settle(page);
-    assert.ok((await snapshot(page)).best >= achieved, 'successful best is restored');
-    await page.evaluate(() => localStorage.setItem('nekotsubushi:v1', '{broken'));
+    assert.equal(await page.locator('[data-hud="best"]').textContent(), (achieved / 1000).toFixed(3), 'the HUD restores the new remaining-time best, not the old hold duration');
+    report.snapshots.persistedRemainingMs = achieved;
+    await page.evaluate(() => { localStorage.setItem('nekotsubushi:v1', '{broken'); localStorage.setItem('nekotsubushi:v2', '{broken'); });
     await page.goto(base, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('[data-mode]').count(), 6);
     const disabled = await context.newPage();
     disabled.on('pageerror', (e) => runtimeErrors.push(e.message));
-    await disabled.addInitScript(() => {
-      Object.defineProperty(Storage.prototype, 'getItem', { value() { throw new DOMException('Storage disabled', 'SecurityError'); } });
-      Object.defineProperty(Storage.prototype, 'setItem', { value() { throw new DOMException('Storage disabled', 'SecurityError'); } });
-    });
-    await openMode(disabled, 1);
+    // Raw JavaScript avoids transpiler-generated __name helpers in serialized
+    // function expressions when simulating a denied browser storage API.
+    await disabled.addInitScript({content: `
+      Object.defineProperty(Storage.prototype, 'getItem', { value: function () { throw new DOMException('Storage disabled', 'SecurityError'); } });
+      Object.defineProperty(Storage.prototype, 'setItem', { value: function () { throw new DOMException('Storage disabled', 'SecurityError'); } });
+    `});
+    await disabled.goto(`${base}/?mode=1`, { waitUntil: 'networkidle' });
+    await settle(disabled);
+    await disabled.locator('[data-action="sound"]').click();
     await tap(disabled, 650, 850);
     assert.equal((await snapshot(disabled)).score, 1);
     await disabled.close();

@@ -1,0 +1,66 @@
+{
+  "runtimeEntry": "/assets/index-cdHTuW4C.js",
+  "method": "Final built preview native941x1672 production reference fixtures. Original reference SHA256 verified unchanged. Metrics describe differences, not quality thresholds. Baseline regression MAE compares current screenshots to previous shipped actual-NN.png.",
+  "modes": {
+    "01": {
+      "reference": "docs/references/01_neko_tsuntun.webp",
+      "referenceSha256": "f783d4f34e55235f416a44eb70b855a65592af9cb8a13d311cbb69a8619d980e",
+      "actual": "artifacts/replay/art-motion/reference-01.png",
+      "actualSha256": "52ad22bde7cdb327abbd24170ec85a205ca73e1d94ae753651dcb9d7abec40ef",
+      "baselineRegressionMAE": 0.0,
+      "mae_rgb_0_255": 21.55958,
+      "rmse_rgb_0_255": 38.5169,
+      "ssim_luminance": 0.6078516
+    },
+    "02": {
+      "reference": "docs/references/02_hako_zurase.webp",
+      "referenceSha256": "7e4c9f6f01dbc7d9f90ebb4d1a4fac8e561e006e02b51196c740c25448ae7c70",
+      "actual": "artifacts/replay/art-motion/reference-02.png",
+      "actualSha256": "c7c94b3831403988891724e7eef4f97873a165629e845e38fdc0b874332dea29",
+      "baselineRegressionMAE": 0.0,
+      "mae_rgb_0_255": 18.41311,
+      "rmse_rgb_0_255": 40.19326,
+      "ssim_luminance": 0.7558573
+    },
+    "03": {
+      "reference": "docs/references/03_neko_punch.webp",
+      "referenceSha256": "eaa7f7217e1b20b8b890dce90435d3a38834abd7c6692a809642d1373e8b5fc4",
+      "actual": "artifacts/replay/art-motion/reference-03.png",
+      "actualSha256": "f1c84d7c990fc1127509f8350398884e87b2095af299cfdf98be60b483b07d0d",
+      "baselineRegressionMAE": 0.0,
+      "mae_rgb_0_255": 24.87555,
+      "rmse_rgb_0_255": 44.76641,
+      "ssim_luminance": 0.6018832
+    },
+    "04": {
+      "reference": "docs/references/04_boushi.webp",
+      "referenceSha256": "a65fab4a9986adb0a520c8e77b1735f5a0cf11c465e24b787f062909ee6b0132",
+      "actual": "artifacts/replay/art-motion/reference-04.png",
+      "actualSha256": "c40b21d3a8a2dc42500a206bfa3afe5185c3a06bd3661b461bdbfbabdc24f3b1",
+      "baselineRegressionMAE": 0.0,
+      "mae_rgb_0_255": 19.09492,
+      "rmse_rgb_0_255": 38.0213,
+      "ssim_luminance": 0.7107162
+    },
+    "05": {
+      "reference": "docs/references/05_hoppe.webp",
+      "referenceSha256": "36844ce89cf64d9634234cbfe8448c6b06c2ead835e6337e17dcdfe0a6f15ab2",
+      "actual": "artifacts/replay/art-motion/reference-05.png",
+      "actualSha256": "b3e4eb168bf879397c96492aaf6808e27912e67fa964f091ff85ac2593b6ed0a",
+      "baselineRegressionMAE": 0.0,
+      "mae_rgb_0_255": 10.21262,
+      "rmse_rgb_0_255": 24.6144,
+      "ssim_luminance": 0.8116311
+    },
+    "06": {
+      "reference": "docs/references/06_nekojyarashi.webp",
+      "referenceSha256": "e8c308a6a4fcf6b867367de6e0ed2f8ec26dd71d0708bd01b8c6da90737df3cf",
+      "actual": "artifacts/replay/art-motion/reference-06.png",
+      "actualSha256": "051ceba84d704fa0062ed7b99605741c5974246694c8d3884562c7b99265779e",
+      "baselineRegressionMAE": 0.0,
+      "mae_rgb_0_255": 17.33645,
+      "rmse_rgb_0_255": 33.62505,
+      "ssim_luminance": 0.6541931
+    }
+  }
+}

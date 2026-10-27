@@ -1,0 +1,211 @@
+{
+  "source": "art/masters/reaction-portraits-generated.png",
+  "sourceSha256": "8a6f193a510f46f0f1cd04f5e5d569708fee25637166de880f268aa3048919ce",
+  "references": [
+    "art/masters/m05-cat.png",
+    "art/masters/m03-body.png"
+  ],
+  "method": "image_gen reference-guided 4x3 portrait contact sheet, cell extraction only; no face warps or geometric placeholder characters. Live scenes keep original cat textures with registered original eyelid patches and bounded ear influence fields.",
+  "dimensions": [
+    1448,
+    1086
+  ],
+  "grid": [
+    4,
+    3
+  ],
+  "items": [
+    {
+      "id": "cheek-right",
+      "asset": "public/assets/reaction-cheek-right.webp",
+      "crop": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "f83131cd7e032374fc1367013d685f73e400114216ffadf7ff099d1a38e2cf7a",
+      "bytes": 37474
+    },
+    {
+      "id": "cheek-left",
+      "asset": "public/assets/reaction-cheek-left.webp",
+      "crop": [
+        362,
+        0,
+        724,
+        362
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "bd2413fd965749d525c0ddc8440aaf805e32df9ba9d08abd5d1fc7746bb7f3db",
+      "bytes": 38192
+    },
+    {
+      "id": "cheek-up",
+      "asset": "public/assets/reaction-cheek-up.webp",
+      "crop": [
+        724,
+        0,
+        1086,
+        362
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "2e7ecb04351b75892b96023c532bb06584eb734c58ba5214a12d392694438ad7",
+      "bytes": 37248
+    },
+    {
+      "id": "cheek-down",
+      "asset": "public/assets/reaction-cheek-down.webp",
+      "crop": [
+        1086,
+        0,
+        1448,
+        362
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "fb8edea862aeafd883f6ce2fdaedad1502d719f12603349f2ab7dc7d33c40e5c",
+      "bytes": 37918
+    },
+    {
+      "id": "cheek-inward",
+      "asset": "public/assets/reaction-cheek-inward.webp",
+      "crop": [
+        0,
+        362,
+        362,
+        724
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "e8034466c0d726dadf21f2d45b40814b88273b330c6dcee2305777c432f6d352",
+      "bytes": 40328
+    },
+    {
+      "id": "cheek-gentle",
+      "asset": "public/assets/reaction-cheek-gentle.webp",
+      "crop": [
+        362,
+        362,
+        724,
+        724
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "e782ce13d9b7545115237417edbeb730df8cc062bc50f84b659d8e4e1b2ae35a",
+      "bytes": 38174
+    },
+    {
+      "id": "streak-1",
+      "asset": "public/assets/reaction-streak-1.webp",
+      "crop": [
+        724,
+        362,
+        1086,
+        724
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "9e632250662743d1aab9ca8ce71914501285b7984fc30b863a795a7bbc10677a",
+      "bytes": 38594
+    },
+    {
+      "id": "streak-2",
+      "asset": "public/assets/reaction-streak-2.webp",
+      "crop": [
+        1086,
+        362,
+        1448,
+        724
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "d4455a401ad6a2b642283daac7d4af64529c02d0a0ab93e91c16009ad839a808",
+      "bytes": 38836
+    },
+    {
+      "id": "close-3",
+      "asset": "public/assets/reaction-close-3.webp",
+      "crop": [
+        0,
+        724,
+        362,
+        1086
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "3f5bc88adfea4438d65b7fa924ec18be1940b2833ac712d71b475965bf26e6f4",
+      "bytes": 42298
+    },
+    {
+      "id": "rhythm-4",
+      "asset": "public/assets/reaction-rhythm-4.webp",
+      "crop": [
+        362,
+        724,
+        724,
+        1086
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "537d507d06a50d87bb6a52bf2aa2f3cf3dfc4acb3e590fcce0a004447f1c68db",
+      "bytes": 44900
+    },
+    {
+      "id": "clear-6",
+      "asset": "public/assets/reaction-clear-6.webp",
+      "crop": [
+        724,
+        724,
+        1086,
+        1086
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "a2635c043e389755d6f7db7dc168063df818fbd1c48dd172490d02e80c617912",
+      "bytes": 41292
+    },
+    {
+      "id": "personal-best",
+      "asset": "public/assets/reaction-personal-best.webp",
+      "crop": [
+        1086,
+        724,
+        1448,
+        1086
+      ],
+      "dimensions": [
+        362,
+        362
+      ],
+      "sha256": "57f0a654c0293ece1c4d82cf83f93e2667853064ce9fde646c1a5d1fa8478187",
+      "bytes": 41528
+    }
+  ]
+}

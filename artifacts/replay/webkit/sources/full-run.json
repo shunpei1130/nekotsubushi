@@ -1,0 +1,187 @@
+{
+  "date": "2026-10-27T02:02:43.326Z",
+  "baseURL": "http://127.0.0.1:5176",
+  "entryAsset": "/assets/index-cdHTuW4C.js",
+  "browser": "webkit",
+  "browserVersion": "26.0",
+  "checks": [
+    {
+      "name": "UI: six modes, daily entry, twelve reactions and desktop layout",
+      "passed": true,
+      "elapsedMs": 27462
+    },
+    {
+      "name": "METRICS: poke streak and caught reset, box perfect, hat rhythm",
+      "passed": true,
+      "elapsedMs": 12535
+    },
+    {
+      "name": "METRICS: punch remaining time and feather near-miss without debug persistence",
+      "passed": true,
+      "elapsedMs": 5959
+    },
+    {
+      "name": "COLLECTION: real cheek gesture unlocks, previews and survives reload",
+      "passed": false,
+      "elapsedMs": 79483,
+      "error": "page.reload: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for navigation until \"load\"\u001b[22m\n\u001b[2m    - navigated to \"http://127.0.0.1:5176/\"\u001b[22m\n\n    at <anonymous> (/workspace/sites/nekotsubushi/tests/replay-browser.ts:226:18)\n    at async usingPage (/workspace/sites/nekotsubushi/tests/replay-browser.ts:44:8)\n    at async <anonymous> (/workspace/sites/nekotsubushi/tests/replay-browser.ts:190:5)\n    at async check (/workspace/sites/nekotsubushi/tests/replay-browser.ts:89:8)\n    at async <anonymous> (/workspace/sites/nekotsubushi/tests/replay-browser.ts:189:3)"
+    },
+    {
+      "name": "DAILY: Japan midnight changes next course, retry retains the started course",
+      "passed": true,
+      "elapsedMs": 117690
+    },
+    {
+      "name": "SAVE: v1 remains intact, old punch record separated, concrete new best delta",
+      "passed": true,
+      "elapsedMs": 25928
+    },
+    {
+      "name": "SOCIAL: real result, copied same-course link, PNG and friend reply",
+      "passed": true,
+      "elapsedMs": 23269
+    },
+    {
+      "name": "RETRY: twenty real rounds keep one canvas and reuse essential textures",
+      "passed": true,
+      "elapsedMs": 28741
+    },
+    {
+      "name": "LINKS: unsupported rules and malformed challenges show an explanation",
+      "passed": true,
+      "elapsedMs": 2777
+    },
+    {
+      "name": "STORAGE: unavailable local storage still permits real play and replay",
+      "passed": true,
+      "elapsedMs": 4769
+    },
+    {
+      "name": "SHARE: cancelling the native sheet keeps the result and permits retry",
+      "passed": true,
+      "elapsedMs": 6214
+    },
+    {
+      "name": "ERRORS: no JavaScript, asset HTTP or console errors",
+      "passed": true,
+      "elapsedMs": 0
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "menu-mobile.png",
+    "collection-mobile.png",
+    "menu-desktop.png",
+    "hat-rhythm.png",
+    "punch-close.png",
+    "cheek-discovery.png",
+    "collection-live-preview.png",
+    "collection-unlocked.png",
+    "daily-course.png",
+    "new-best.png",
+    "challenge-card.png",
+    "friend-comparison.png",
+    "retry-round-20.png"
+  ],
+  "measurements": {
+    "renderBuffer": {
+      "initial": {
+        "buffer": 390,
+        "display": 390,
+        "dpr": 1
+      },
+      "resized": {
+        "buffer": 445,
+        "display": 444.609375,
+        "dpr": 1
+      }
+    },
+    "collectionLayout": {
+      "containerWidth": 320,
+      "canvasWidth": 294,
+      "hintWidth": 194
+    },
+    "daily": {
+      "before": {
+        "kind": "daily",
+        "mode": 4,
+        "seed": 1576595987,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-26"
+      },
+      "after": {
+        "kind": "daily",
+        "mode": 6,
+        "seed": 23183726,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-27"
+      }
+    },
+    "newBest": {
+      "firstRemaining": 3485,
+      "targetRemaining": 1800,
+      "improvedRemaining": 1666
+    },
+    "social": {
+      "sourceContext": {
+        "kind": "normal",
+        "mode": 3,
+        "seed": 282145630,
+        "rulesVersion": 2
+      },
+      "targetContext": {
+        "kind": "challenge",
+        "rulesVersion": 2,
+        "mode": 3,
+        "seed": 282145630,
+        "target": {
+          "mode": 3,
+          "rulesVersion": 2,
+          "success": true,
+          "count": 0,
+          "maxStreak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": 3258,
+          "survivalMs": 0,
+          "nearMissMs": 0
+        }
+      },
+      "link": "http://127.0.0.1:5176/?challenge=eyJ2IjoyLCJtIjozLCJzIjoyODIxNDU2MzAsInIiOlsxLDAsMCwwLDAsMCwzMjU4LDAsMF19",
+      "reply": "http://127.0.0.1:5176/?challenge=eyJ2IjoyLCJtIjozLCJzIjoyODIxNDU2MzAsInIiOlsxLDAsMCwwLDAsMCwyNjg5LDAsMF19"
+    },
+    "retry": {
+      "rounds": 20,
+      "readyMilliseconds": [
+        417,
+        335,
+        420,
+        478,
+        335,
+        387,
+        358,
+        426,
+        311,
+        294,
+        342,
+        420,
+        411,
+        629,
+        444,
+        328,
+        358,
+        283,
+        404,
+        354
+      ],
+      "essentialTextureRequests": 0
+    }
+  },
+  "passed": 11,
+  "failed": 1,
+  "method": "Trusted Playwright mouse pointer input. Only test=1 metric checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Viewports are emulated.",
+  "limitations": [
+    "Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised."
+  ]
+}

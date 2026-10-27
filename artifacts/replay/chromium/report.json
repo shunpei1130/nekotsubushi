@@ -1,0 +1,204 @@
+{
+  "date": "2026-10-27T01:55:12.255Z",
+  "baseURL": "http://127.0.0.1:5176",
+  "entryAsset": "/assets/index-cdHTuW4C.js",
+  "browser": "chromium",
+  "browserVersion": "154.0.8037.57",
+  "checks": [
+    {
+      "name": "UI: six modes, daily entry, twelve reactions and desktop layout",
+      "passed": true,
+      "elapsedMs": 27671,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "METRICS: poke streak and caught reset, box perfect, hat rhythm",
+      "passed": true,
+      "elapsedMs": 31621,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "METRICS: punch remaining time and feather near-miss without debug persistence",
+      "passed": true,
+      "elapsedMs": 12580,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "COLLECTION: real cheek gesture unlocks, previews and survives reload",
+      "passed": true,
+      "elapsedMs": 40538,
+      "sourceReport": "sources/focused-run.json"
+    },
+    {
+      "name": "DAILY: Japan midnight changes next course, retry retains the started course",
+      "passed": true,
+      "elapsedMs": 7452,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "SAVE: v1 remains intact, old punch record separated, concrete new best delta",
+      "passed": true,
+      "elapsedMs": 19854,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "SOCIAL: real result, copied same-course link, PNG and friend reply",
+      "passed": true,
+      "elapsedMs": 21698,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "RETRY: twenty real rounds keep one canvas and reuse essential textures",
+      "passed": true,
+      "elapsedMs": 72235,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "LINKS: unsupported rules and malformed challenges show an explanation",
+      "passed": true,
+      "elapsedMs": 4749,
+      "sourceReport": "sources/focused-run.json"
+    },
+    {
+      "name": "STORAGE: unavailable local storage still permits real play and replay",
+      "passed": true,
+      "elapsedMs": 7420,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "SHARE: cancelling the native sheet keeps the result and permits retry",
+      "passed": true,
+      "elapsedMs": 13475,
+      "sourceReport": "sources/full-run.json"
+    },
+    {
+      "name": "ERRORS: no JavaScript, asset HTTP or console errors",
+      "passed": true,
+      "elapsedMs": 0,
+      "sourceReport": "sources/full-run.json"
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "menu-mobile.png",
+    "collection-mobile.png",
+    "menu-desktop.png",
+    "hat-rhythm.png",
+    "punch-close.png",
+    "cheek-discovery.png",
+    "daily-course.png",
+    "new-best.png",
+    "challenge-card.png",
+    "friend-comparison.png",
+    "retry-round-20.png",
+    "collection-live-preview.png",
+    "collection-unlocked.png"
+  ],
+  "measurements": {
+    "renderBuffer": {
+      "initial": {
+        "buffer": 390,
+        "display": 390,
+        "dpr": 1
+      },
+      "resized": {
+        "buffer": 445,
+        "display": 444.609375,
+        "dpr": 1
+      }
+    },
+    "daily": {
+      "before": {
+        "kind": "daily",
+        "mode": 4,
+        "seed": 1576595987,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-26"
+      },
+      "after": {
+        "kind": "daily",
+        "mode": 6,
+        "seed": 23183726,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-27"
+      }
+    },
+    "newBest": {
+      "firstRemaining": 2896,
+      "targetRemaining": 1800,
+      "improvedRemaining": 1440
+    },
+    "social": {
+      "sourceContext": {
+        "kind": "normal",
+        "mode": 3,
+        "seed": 35347395,
+        "rulesVersion": 2
+      },
+      "targetContext": {
+        "kind": "challenge",
+        "rulesVersion": 2,
+        "mode": 3,
+        "seed": 35347395,
+        "target": {
+          "mode": 3,
+          "rulesVersion": 2,
+          "success": true,
+          "count": 0,
+          "maxStreak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": 2885,
+          "survivalMs": 0,
+          "nearMissMs": 0
+        }
+      },
+      "link": "http://127.0.0.1:5176/?challenge=eyJ2IjoyLCJtIjozLCJzIjozNTM0NzM5NSwiciI6WzEsMCwwLDAsMCwwLDI4ODUsMCwwXX0",
+      "reply": "http://127.0.0.1:5176/?challenge=eyJ2IjoyLCJtIjozLCJzIjozNTM0NzM5NSwiciI6WzEsMCwwLDAsMCwwLDIyMzIsMCwwXX0"
+    },
+    "retry": {
+      "rounds": 20,
+      "readyMilliseconds": [
+        1392,
+        595,
+        1243,
+        1080,
+        1320,
+        1282,
+        2104,
+        1031,
+        1060,
+        1188,
+        953,
+        792,
+        1050,
+        929,
+        841,
+        954,
+        1104,
+        951,
+        1296,
+        2159
+      ],
+      "essentialTextureRequests": 0
+    },
+    "collectionLayout": {
+      "containerWidth": 320,
+      "canvasWidth": 294,
+      "hintWidth": 194
+    }
+  },
+  "passed": 12,
+  "failed": 0,
+  "method": "Trusted Playwright mouse pointer input. Only test=1 metric checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Viewports are emulated.",
+  "limitations": [
+    "Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised."
+  ],
+  "consolidated": true,
+  "coverageNote": "Consolidates ten passed checks from the full run with focused collection and links checks on the identical final entry asset. This is not a single twelve-pass run. The full run retained one overly strict QA hint-width assertion; the corrected focused run validates readable two-column hints and full-width live canvas. The links rerun also covers invalid seed input.",
+  "sourceReports": [
+    "sources/full-run.json",
+    "sources/focused-run.json"
+  ]
+}

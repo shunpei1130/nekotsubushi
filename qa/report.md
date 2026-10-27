@@ -1,3 +1,5 @@
+> 2026-10-27更新：継続・再挑戦・友人比較を追加したルール版2の最新検証は [replay-report.md](replay-report.md) を参照してください。以下は初版の開発・検証履歴です。
+
 # 猫つぶし 検証・画像照合記録
 
 公開URL： **https://nekotsubushi.vercel.app**。Vercel production、匿名アクセスHTTP200、公開先で全6モードの操作・結果・再プレイ・メニュー復帰を確認。`artifacts/production-report.json` は8チェック成功・エラー0。

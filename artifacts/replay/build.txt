@@ -1,0 +1,19 @@
+
+> nekotsubushi@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v6.4.1 building for production...
+transforming...
+✓ 684 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.68 kB │ gzip:   0.47 kB
+dist/assets/index-Bhu8JXUe.css           34.24 kB │ gzip:   8.34 kB
+dist/assets/colorToUniform-C4rvS1Z6.js    2.54 kB │ gzip:   1.02 kB
+dist/assets/WebGPURenderer-DC7jt4Uc.js   37.54 kB │ gzip:  10.33 kB
+dist/assets/browserAll-DbTuP_mf.js       43.10 kB │ gzip:  11.30 kB
+dist/assets/SharedSystems-DhWe8I2x.js    51.30 kB │ gzip:  13.90 kB
+dist/assets/webworkerAll-CsSuaHL-.js     60.30 kB │ gzip:  17.00 kB
+dist/assets/WebGLRenderer-DA7txhti.js    63.38 kB │ gzip:  17.37 kB
+dist/assets/index-cdHTuW4C.js           370.59 kB │ gzip: 120.42 kB
+✓ built in 21.85s

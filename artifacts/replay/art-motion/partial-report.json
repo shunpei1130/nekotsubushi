@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-27T01:36:07.265178+00:00",
+  "status": "intentionally-interrupted-for-exclusive-QA-GPU",
+  "completedChecks": [
+    {
+      "name": "gesture-right",
+      "passed": true
+    },
+    {
+      "name": "gesture-left",
+      "passed": true
+    },
+    {
+      "name": "gesture-up",
+      "passed": true
+    },
+    {
+      "name": "gesture-down",
+      "passed": true
+    },
+    {
+      "name": "gesture-inward",
+      "passed": true
+    },
+    {
+      "name": "gesture-gentle",
+      "passed": true
+    },
+    {
+      "name": "warm-reset-1",
+      "passed": true
+    }
+  ],
+  "passed": 7,
+  "notRun": [
+    "warm-reset-2",
+    "warm-reset-3",
+    "warm-reset-4",
+    "warm-reset-5",
+    "warm-reset-6",
+    "reference-fixture-1..6",
+    "normal-clock-gesture-video"
+  ],
+  "interruption": "Parent requested that this owned browser/server close to remove softwareGPU contention during main Chromium/WebKit acceptance runs. SIGINT terminated own node process4720, all remaining closed-target errors are cancellation diagnostics, not gameplay failures.",
+  "screenshots": [
+    "gesture-right.png",
+    "gesture-left.png",
+    "gesture-up.png",
+    "gesture-down.png",
+    "gesture-inward.png",
+    "gesture-gentle.png"
+  ],
+  "method": "Six real browser drag/release gestures; deterministic engine clock only for hold time, presentation frozen after observing real eyelid state for the keyframe. Warmreset1 retained same canvas, score0, pointerIdnull, no reaction, ready."
+}
