@@ -43,6 +43,12 @@ jobs:
   simulator:
     runs-on: macos-26
     timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        device: [iphone, ipad]
+    env:
+      NEKO_DEVICE_KIND: ${{ matrix.device }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -64,32 +70,46 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/ios
-          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); phones=[x for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")]; print(next((x["udid"] for x in phones if "Max" in x["name"]),phones[0]["udid"]))')
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import os,sys,json; d=json.load(sys.stdin); prefix="iPhone" if os.environ["NEKO_DEVICE_KIND"]=="iphone" else "iPad"; devices=[x for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith(prefix)]; print(next((x["udid"] for x in devices if "Max" in x["name"]),devices[0]["udid"]))')
+          printf '%s' "$DEVICE_ID" > artifacts/ios/device-id.txt
           xcrun simctl boot "$DEVICE_ID" || true
           xcrun simctl bootstatus "$DEVICE_ID" -b
           xcrun simctl spawn "$DEVICE_ID" log stream --level debug --style compact --predicate 'process == "App" AND eventMessage CONTAINS "neko-"' > artifacts/ios/native-console.log 2>&1 &
           NEKO_LOG_PID=$!
           trap 'kill "$NEKO_LOG_PID" 2>/dev/null || true' EXIT
-          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" -skip-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Simulator.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/simulator.log
-          APP_DATA=$(xcrun simctl get_app_container "$DEVICE_ID" jp.shunpei1130.nekotsubushi data)
-          swift scripts/validate-ios-video.swift "$APP_DATA/Library/Caches"
-          python3 - "$APP_DATA/Library/Caches" <<'PY'
+          if [ "$NEKO_DEVICE_KIND" = iphone ]; then
+            NEKO_RESULT=Simulator
+            NEKO_TEST_SELECTION=(-skip-testing:AppUITests/GameUITests/test03TabletLayout)
+          else
+            NEKO_RESULT=Tablet
+            NEKO_TEST_SELECTION=(-only-testing:AppUITests/GameUITests/test03TabletLayout)
+          fi
+          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" "${NEKO_TEST_SELECTION[@]}" -derivedDataPath ios/DerivedData -resultBundlePath "artifacts/ios/${NEKO_RESULT}.xcresult" CODE_SIGNING_ALLOWED=NO | tee "artifacts/ios/${NEKO_RESULT}.log"
+          xcrun simctl io "$DEVICE_ID" screenshot "artifacts/ios/${NEKO_RESULT}.png"
+          if [ "$NEKO_DEVICE_KIND" = iphone ]; then
+            APP_DATA=$(xcrun simctl get_app_container "$DEVICE_ID" jp.shunpei1130.nekotsubushi data)
+            swift scripts/validate-ios-video.swift "$APP_DATA/Library/Caches"
+            python3 - "$APP_DATA/Library/Caches" <<'PY'
           from pathlib import Path
           import shutil,sys
           shutil.copy2(next(Path(sys.argv[1]).rglob('*.mp4')), 'artifacts/ios/tiktok-native.mp4')
           PY
-          xcrun simctl io "$DEVICE_ID" screenshot artifacts/ios/simulator.png
-          xcrun xcresulttool export attachments --path artifacts/ios/Simulator.xcresult --output-path artifacts/ios/phone-screenshots
-          xcrun simctl shutdown "$DEVICE_ID"
-          PAD_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); print(next(x["udid"] for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPad")))')
-          xcrun simctl boot "$PAD_ID"
-          xcrun simctl bootstatus "$PAD_ID" -b
-          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$PAD_ID" -only-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Tablet.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/tablet.log
-          xcrun xcresulttool export attachments --path artifacts/ios/Tablet.xcresult --output-path artifacts/ios/tablet-screenshots
+          fi
       - name: Export lightweight native diagnostics
         if: always()
         run: |
           mkdir -p artifacts/ios-review
+          if [ -f artifacts/ios/device-id.txt ]; then
+            NEKO_APP_DATA=$(xcrun simctl get_app_container "$(cat artifacts/ios/device-id.txt)" jp.shunpei1130.nekotsubushi data 2>/dev/null || true)
+            if [ -n "$NEKO_APP_DATA" ]; then
+              python3 - "$NEKO_APP_DATA/Library/Caches" <<'PY'
+          from pathlib import Path
+          import shutil,sys
+          movies=sorted(Path(sys.argv[1]).rglob('*.mp4'),key=lambda p:p.stat().st_mtime)
+          if movies: shutil.copy2(movies[-1], 'artifacts/ios-review/tiktok-native.mp4')
+          PY
+            fi
+          fi
           for NEKO_RESULT in Simulator Tablet; do
             if [ -d "artifacts/ios/${NEKO_RESULT}.xcresult" ]; then
               xcrun xcresulttool export attachments --path "artifacts/ios/${NEKO_RESULT}.xcresult" --output-path "$RUNNER_TEMP/neko-review-${NEKO_RESULT}" || true
@@ -113,10 +133,11 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: nekotsubushi-ios-review
+          name: nekotsubushi-ios-review-${{ matrix.device }}
           path: artifacts/ios-review/
           retention-days: 1
       - name: Build unsigned App Store archive
+        if: matrix.device == 'iphone'
         run: |
           set -euo pipefail
           xcodebuild archive -project ios/App/App.xcodeproj -scheme App -configuration Release -destination generic/platform=iOS -archivePath artifacts/ios/Nekotsubushi-unsigned.xcarchive CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/archive.log
@@ -124,14 +145,15 @@ jobs:
           python3 -c 'from pathlib import Path; assert b"NEKO_UI_TEST_SAVE" not in Path("artifacts/ios/Nekotsubushi-unsigned.xcarchive/Products/Applications/App.app/App").read_bytes(), "Debug fixture must not ship in Release"'
           ditto -c -k --sequesterRsrc --keepParent artifacts/ios/Nekotsubushi-unsigned.xcarchive artifacts/ios/Nekotsubushi-unsigned.xcarchive.zip
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: matrix.device == 'iphone'
         with:
           name: nekotsubushi-ios-unsigned-archive
           path: artifacts/ios/Nekotsubushi-unsigned.xcarchive.zip
           retention-days: 1
           compression-level: 0
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: always()
+        if: failure()
         with:
-          name: nekotsubushi-ios-build-and-tests
+          name: nekotsubushi-ios-build-and-tests-${{ matrix.device }}
           path: artifacts/ios/
           retention-days: 1

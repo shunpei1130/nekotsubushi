@@ -21,6 +21,15 @@ final class GameUITests: XCTestCase {
         XCTAssertTrue(app.wait(for:.notRunning,timeout:10))
     }
     func button(_ title: String) -> XCUIElement { app.buttons.matching(identifier:title).firstMatch }
+    func tapCentre(_ element: XCUIElement) {
+        // WebKit's accessibility activation point can lag a reflow. Use the
+        // actual visible frame for a trusted OS touch, never a JavaScript click.
+        let bounds=element.frame, window=app.frame
+        XCTAssertTrue(element.isEnabled)
+        XCTAssertTrue(window.contains(CGPoint(x:bounds.midX,y:bounds.midY)))
+        app.coordinate(withNormalizedOffset:.zero).withOffset(CGVector(dx:bounds.midX-window.minX,dy:bounds.midY-window.minY)).tap()
+    }
+    func tapButton(_ title: String) { tapCentre(button(title)) }
     func named(_ value: String) -> XCUIElement {
         app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", value)).firstMatch
     }
@@ -32,8 +41,13 @@ final class GameUITests: XCTestCase {
         let card = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", names[mode-1] + "。")).firstMatch
         XCTAssertTrue(card.waitForExistence(timeout: 40))
         XCTAssertFalse(card.label.contains("未解放"),"The explicit Debug precondition must be installed before testing locked modes")
-        for _ in 0..<5 { if card.isHittable { break }; app.swipeUp() }
-        card.tap()
+        let viewport=app.frame.insetBy(dx:0,dy:100)
+        for _ in 0..<8 {
+            let bounds=card.frame
+            if card.isHittable && viewport.contains(CGPoint(x:bounds.midX,y:bounds.midY)) { break }
+            if bounds.midY < viewport.minY { app.swipeDown() } else { app.swipeUp() }
+        }
+        tapCentre(card)
         XCTAssertTrue(button("メニューへ").waitForExistence(timeout: 40))
         let loading=named("猫がおめかし中…")
         let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"exists == false"),object:loading)
@@ -75,7 +89,7 @@ final class GameUITests: XCTestCase {
         }
         XCTAssertGreaterThanOrEqual(control.frame.minY,visible.minY)
         XCTAssertLessThanOrEqual(control.frame.maxY,visible.maxY)
-        control.tap()
+        tapCentre(control)
     }
     func assertNativeShare() {
         // Verify actual OS activities. UIActivityViewController's root view
@@ -100,7 +114,7 @@ final class GameUITests: XCTestCase {
             }
         }
         XCTAssertTrue(cancelled.waitForExistence(timeout:10),"Native cancellation must return to the game before the next round")
-        button("閉じる").tap()
+        tapButton("閉じる")
     }
     func test01FreshTouchPauseAndShare() {
         app.launchArguments=["--ui-testing"]
@@ -112,11 +126,11 @@ final class GameUITests: XCTestCase {
         // WebKit does not consistently expose a live status's aria-label.
         let started=XCTNSPredicateExpectation(predicate:NSPredicate(format:"exists == false"),object:named("猫をタップして、はじめる"))
         XCTAssertEqual(XCTWaiter.wait(for:[started],timeout:10),.completed,"The real touch must start the clock")
-        button("一時停止").tap()
+        tapButton("一時停止")
         XCTAssertTrue(named("ひと休み中。").waitForExistence(timeout:5))
-        button("つづける").tap()
+        tapButton("つづける")
         XCUIDevice.shared.orientation = .landscapeLeft; sleep(1); photo("ios-landscape"); XCUIDevice.shared.orientation = .portrait
-        if button("つづける").exists {button("つづける").tap()}
+        if button("つづける").exists {tapButton("つづける")}
         XCTAssertTrue(named("いい、ひまつぶし。").waitForExistence(timeout:45))
         app.swipeUp()
         XCTAssertTrue(button("Xで共有").exists)
@@ -133,7 +147,7 @@ final class GameUITests: XCTestCase {
     func test02AllSixResultsAndTikTokMovie() {
         for mode in 1...6 {
             launchUnlocked(); enter(mode); photo("ios-game-\(mode)")
-            if mode == 5 { button("おわる").tap() }
+            if mode == 5 { tapButton("おわる") }
             else if mode == 3 { point(mode,0.5,0.51).press(forDuration:0.6) }
             else if mode == 6 { point(mode,0.90,0.18).press(forDuration:0.3) }
             else {point(mode,mode==2 ? 0.5:0.69,mode==2 ? 0.63:0.51).tap()}
@@ -159,7 +173,7 @@ final class GameUITests: XCTestCase {
         XCTAssertTrue(button("音と動きの設定").waitForExistence(timeout:40))
         XCTAssertGreaterThanOrEqual(app.frame.width,700)
         photo("ios-ipad-menu")
-        enter(5); button("おわる").tap()
+        enter(5); tapButton("おわる")
         XCTAssertTrue(named("むにむに、おしまい。").waitForExistence(timeout:10))
         app.swipeUp();tapVisible("Instagramで共有")
         XCTAssertTrue(named("画像の用意ができました。共有先からInstagramを選んでください。").waitForExistence(timeout:30))

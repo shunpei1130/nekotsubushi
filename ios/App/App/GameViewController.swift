@@ -9,13 +9,6 @@ final class GameViewController: CAPBridgeViewController {
         bridge?.registerPluginInstance(SocialVideoPlugin())
     }
 
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        if viewControllerToPresent is UIActivityViewController {
-            viewControllerToPresent.view.accessibilityIdentifier = "neko-native-share-sheet"
-        }
-        super.present(viewControllerToPresent, animated: flag, completion: completion)
-    }
-
     override func webView(with frame: CGRect, configuration: WKWebViewConfiguration) -> WKWebView {
         // Capacitor replaces the content controller after webViewConfiguration.
         // Install scripts here, after that replacement and before navigation.
@@ -32,6 +25,8 @@ final class GameViewController: CAPBridgeViewController {
             let downAt = 0;
             addEventListener('pointerdown', e => { downAt = e.timeStamp; }, true);
             addEventListener('pointerup', e => setTimeout(() => {
+                const control = e.target?.closest?.('button');
+                if (control) report('BUTTON ' + JSON.stringify({mode:control.dataset.mode,action:control.dataset.action,x:e.clientX,y:e.clientY,trusted:e.isTrusted}));
                 const s = window.__game?.snapshot();
                 if (s) report('INPUT ' + JSON.stringify({mode:s.mode,score:s.score,status:s.status,elapsed:s.elapsed,gestureMs:e.timeStamp-downAt,queueMs:performance.now()-e.timeStamp}));
             }, 0), true);
