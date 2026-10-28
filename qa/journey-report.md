@@ -49,6 +49,14 @@
 
 構成した保存データや完了状態の注入は境界・配線の自動テストであり、上記の難度試走とは明確に分ける。05の6仕草は両ブラウザで通常時計・ポインター入力でも確認した。旧native touch／motion検証runnerは新しい開放準備に適合させたが、今回の44件には再実行を含めない。猫のエンジン・描画・アニメーション素材は今回変更していない。
 
+## 公開後の確認
+
+GitHubコミット `a5f694dff7bd0b05146f038e06f358b009da5bd6` を既存プロジェクトへ公開。Vercel production `dpl_3cTBFsoTpG5BkHhBQYHqg5TQ935e` はREADY、`https://nekotsubushi.vercel.app` への割り当てと同じentryを確認した。
+
+本番URLを新規ブラウザで開き、**構成した保存データ・時間スキップ・engine書換なし**で、01を通常時計のポインター入力でプレイした。1回目に50回・50連続、実測30.095秒でクリア。02を次へボタンから起動し、メニューとreload後も01・02だけが開放済みで、03〜06が未開放のままであることを確認。JS・HTTPエラー0、5項目成功。人間実機のプレイとは区別する。
+
+証拠：[本番試走レポート](../artifacts/journey/production-play/report.json)、[開放後の再読み込み](../artifacts/journey/production-play/after-unlock-reload.png)、[実際に起動した02](../artifacts/journey/production-play/opened-stage-2.png)。GitHub Actionsでも同じruntimeコミットの [run 40635648193](https://github.com/shunpei1130/nekotsubushi/actions/runs/40635648193) が成功。Chromium／WebKitの両jobで単体・ビルド・既存機能・開放ブラウザ検査を通過した。
+
 ## 制約
 
 人間のiPhone／Android実機は未検証。実端末のタッチ遅延、反応・学習による成功率、長時間の発熱やOS共有画面は未測定。高難度の初期設定は上記の試行とルールから調整したもので、人間全員にとって同じ難しさを保証するものではない。後から成功率を調べるサーバー計測やランキングは追加していない。

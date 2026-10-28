@@ -7,31 +7,33 @@
   "sourceRepository": "https://github.com/shunpei1130/nekotsubushi",
   "build": "npm run build",
   "output": "dist",
-  "sourceStatus": "All six improved modes and replay features publicly verified; GitHub Actions passed",
   "url": "https://nekotsubushi.vercel.app",
-  "runtimeCommit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
-  "anonymousPublicAccessVerified": true,
-  "status": "READY",
-  "entryAsset": "/assets/index-cdHTuW4C.js",
   "sourceBranch": "main",
   "gitIntegrationConnected": true,
-  "verifiedGitSourceCommit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
-  "verifiedDeploymentId": "dpl_8Ma2cBeLKTZcoKEoRyKMEYY97LaH",
-  "verificationNote": "The commit and deployment identify the publicly tested runtime. Later evidence-only commits may create deployments with identical src/public trees; verify the unchanged entry asset before delivery.",
+  "sourceStatus": "Progressive six-stage unlocks publicly verified with a fresh normal-clock player",
+  "runtimeCommit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
+  "anonymousPublicAccessVerified": true,
+  "status": "READY",
+  "entryAsset": "/assets/index-B1WKOo-7.js",
+  "cssAsset": "/assets/index-CN9oqsnf.css",
+  "verifiedGitSourceCommit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
+  "verifiedDeploymentId": "dpl_3cTBFsoTpG5BkHhBQYHqg5TQ935e",
   "rulesVersion": 2,
-  "cssAsset": "/assets/index-Bhu8JXUe.css",
-  "verificationReport": "artifacts/replay/production/report.json",
-  "publicCoreChecks": 8,
-  "publicReplayChecks": 12,
+  "journeyVersion": 1,
+  "verificationReport": "artifacts/journey/production-play/report.json",
+  "localUnitTests": 87,
+  "localBrowserChecks": 44,
+  "publicChecks": 5,
   "publicErrors": 0,
-  "ci": {
-    "runId": 40438796202,
-    "commit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
-    "conclusion": "success",
-    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40438796202"
-  },
   "runtimeTrees": {
-    "src": "00c886b17b6a9f63c37c1588b93e03084905c868",
-    "public": "debe0ba379a0fe58c2e17196626bd82c9690e1de"
-  }
+    "src": "3c76cb16060ad6083b05fa434bda26dbf5384ac8",
+    "public": "484e7ae1fa1c370862bef53828d88fab410b6cdb"
+  },
+  "ci": {
+    "runId": 40635648193,
+    "commit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
+    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40635648193",
+    "conclusion": "success"
+  },
+  "verificationNote": "The runtime commit/deployment identify the publicly played build. Later evidence-only commits may deploy identical src/public trees; verify the unchanged entry asset before delivery."
 }

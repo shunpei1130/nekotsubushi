@@ -1,0 +1,17 @@
+{
+  "runId": 40635648193,
+  "commit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40635648193",
+  "jobs": [
+    {
+      "name": "verify (webkit)",
+      "conclusion": "success"
+    },
+    {
+      "name": "verify (chromium)",
+      "conclusion": "success"
+    }
+  ]
+}

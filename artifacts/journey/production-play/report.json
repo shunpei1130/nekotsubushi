@@ -1,0 +1,37 @@
+{
+  "baseURL": "https://nekotsubushi.vercel.app",
+  "date": "2026-10-28T05:03:17.955Z",
+  "commit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
+  "method": "Fresh anonymous browser context, no constructed records or engine manipulation. AI-operated trusted mouse input, normal clock and visible current phase. This is not human/physical-device validation.",
+  "checks": [
+    "Fresh production player has only stage 1",
+    "Actual normal-clock pointer run clears stage 1",
+    "The newly opened stage 2 actually starts",
+    "Reload preserves exactly stages 1 and 2",
+    "No public JavaScript or HTTP errors"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "taps": 50,
+      "wallMs": 30095,
+      "result": {
+        "mode": 1,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 50,
+        "maxStreak": 50,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    }
+  ],
+  "errors": [],
+  "entryAsset": "/assets/index-B1WKOo-7.js",
+  "passed": 5,
+  "failed": 0
+}
