@@ -5,6 +5,12 @@ import {boxCatPose, type BoxCatPose} from './choreography';
 import {deformCheek} from './cheek';
 import {HatChoreography, type HatFrame, type HatPose} from './hat';
 import {reactionFrame,earReactionOffset,type ReactionFrame} from './reactions';
+import {isNative} from './native';
+
+// WKWebView's capacitor:// bundle is served by a URL-scheme handler. Fetches
+// from Pixi's image worker cannot use that handler; native <img> decoding can.
+// Keep the same source pixels and GPU meshes, without the worker fetch path.
+if(isNative())Assets.setPreferences({preferWorkers:false,preferCreateImageBitmap:false,crossOrigin:null});
 
 type Placement={x:number;y:number;w:number;h:number};
 type Rig={mesh:MeshPlane;base:Float32Array;place:Placement};

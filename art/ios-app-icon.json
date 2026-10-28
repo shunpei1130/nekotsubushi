@@ -1,0 +1,15 @@
+{
+  "source": "Generated from the existing orange cat; no other character used",
+  "reference": "public/assets/thumb-01.webp",
+  "referenceSHA256": "1240e9a6ef88b69459498b45f51210a954497ed93d4f32adda4a016329490bcc",
+  "master": "art/masters/ios-app-icon-generated.png",
+  "masterSHA256": "c6b27d883c106dd582332cf25b307b5107316403bcfb4a026d58a9a50c77c11c",
+  "iOSIcon": "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+  "iOSIconSHA256": "7515b8a67f6a07beb4ba9451b8818d1007060a4f7a4ce22e38af7a88bbb04f5b",
+  "size": [
+    1024,
+    1024
+  ],
+  "alpha": false,
+  "packaging": "ffmpeg Lanczos downsample to App Store size; RGB PNG without rounded corners"
+}

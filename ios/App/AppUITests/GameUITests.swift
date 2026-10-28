@@ -20,7 +20,10 @@ final class GameUITests: XCTestCase {
         for _ in 0..<5 { if card.isHittable { break }; app.swipeUp() }
         card.tap()
         XCTAssertTrue(button("メニューへ").waitForExistence(timeout: 40))
-        sleep(2)
+        let loading=named("猫がおめかし中…")
+        let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"exists == false"),object:loading)
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:40),.completed,"Game textures must finish loading")
+        XCTAssertFalse(named("猫が、かくれんぼ中です。").exists,"Native game assets failed to load")
     }
     func point(_ mode: Int, _ x: Double, _ y: Double) -> XCUICoordinate {
         let stage = named(names[mode-1] + "。" + operations[mode-1])
@@ -47,6 +50,7 @@ final class GameUITests: XCTestCase {
         control.tap()
     }
     func test01FreshTouchPauseAndShare() {
+        app.launchArguments=["--ui-testing"]
         app.launch()
         XCTAssertTrue(button("音と動きの設定").waitForExistence(timeout:40)); photo("fresh-ios-menu")
         enter(1)

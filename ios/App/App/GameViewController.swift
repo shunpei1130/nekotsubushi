@@ -19,6 +19,17 @@ final class GameViewController: CAPBridgeViewController {
     override func webViewConfiguration(for instanceConfiguration: InstanceConfiguration) -> WKWebViewConfiguration {
         let configuration = super.webViewConfiguration(for: instanceConfiguration)
         #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("--ui-testing") {
+            configuration.userContentController.add(UIErrorLogger(), name: "nekoUIError")
+            let logger = """
+            const report = value => window.webkit.messageHandlers.nekoUIError.postMessage(String(value));
+            const original = console.error;
+            console.error = (...args) => { report(args.map(x => x?.stack || x?.message || String(x)).join(' ')); original(...args); };
+            addEventListener('error', e => report(e.error?.stack || e.message));
+            addEventListener('unhandledrejection', e => report(e.reason?.stack || e.reason));
+            """
+            configuration.userContentController.addUserScript(WKUserScript(source: logger, injectionTime: .atDocumentStart, forMainFrameOnly: true))
+        }
         // Simulator integration fixtures are available only in Debug builds,
         // require an explicit XCTest launch argument, and never ship in Release.
         if ProcessInfo.processInfo.arguments.contains("--ui-testing"),
@@ -32,3 +43,11 @@ final class GameViewController: CAPBridgeViewController {
         return configuration
     }
 }
+
+#if DEBUG
+private final class UIErrorLogger: NSObject, WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        NSLog("neko-ui-error: %@", String(describing: message.body))
+    }
+}
+#endif
