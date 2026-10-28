@@ -132,6 +132,9 @@ export class AppleStoreClient {
       relationships: { app: relation('apps', app.id) } } }));
     const info = asList(await this.api(`/v1/apps/${app.id}/appInfos?limit=200`)).find(item => editable.includes(item.attributes.state ?? item.attributes.appStoreState));
     if (!info) throw new StoreError('No editable app information is available. Existing store information was preserved.');
+    const category = asOne(await this.api('/v1/appCategories/' + encodeURIComponent(metadata.primaryCategory ?? 'GAMES')));
+    await this.api('/v1/appInfos/' + info.id, 'PATCH', { data: { type: 'appInfos', id: info.id,
+      relationships: { primaryCategory: relation('appCategories', category.id) } } });
     await this.locale('appInfos', 'appInfoLocalizations', metadata.locale, { name: metadata.name, subtitle: metadata.subtitle, privacyPolicyUrl: metadata.privacyPolicyURL }, 'appInfo', info.id);
     const localized = await this.locale('appStoreVersions', 'appStoreVersionLocalizations', metadata.locale,
       { description, supportUrl: metadata.supportURL }, 'appStoreVersion', version.id);

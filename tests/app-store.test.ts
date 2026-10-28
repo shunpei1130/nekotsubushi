@@ -12,6 +12,7 @@ const listing: Listing = { metadata, description: 'Prepared Japanese description
 function apple(options: { missing?: boolean; state?: string; bundle?: string; invalidRange?: boolean } = {}) {
   const calls: { path: string; method: string; data?: any; headers: Headers; bytes?: Buffer }[] = [];
   const resources: any[] = [];
+  const info = { id: 'info', type: 'appInfos', attributes: { state: 'PREPARE_FOR_SUBMISSION' } };
   const response = (data: any, status = 200) => new Response(JSON.stringify({ data }), { status });
   const transport = async (url: any, init: RequestInit = {}) => {
     const u = new URL(String(url)), method = init.method ?? 'GET', headers = new Headers(init.headers);
@@ -31,7 +32,8 @@ function apple(options: { missing?: boolean; state?: string; bundle?: string; in
       assert.equal(u.searchParams.get('filter[versionString]'), '1.0.0');
       return response(options.state ? [{ id: 'version', type: 'appStoreVersions', attributes: { appVersionState: options.state } }] : resources.filter(r => r.type === 'appStoreVersions'));
     }
-    if (u.pathname === '/v1/apps/app/appInfos') return response([{ id: 'info', type: 'appInfos', attributes: { state: 'PREPARE_FOR_SUBMISSION' } }]);
+    if (u.pathname === '/v1/apps/app/appInfos') return response([info]);
+    if (u.pathname === '/v1/appCategories/GAMES') return response({ id: 'GAMES', type: 'appCategories', attributes: {} });
     if (method === 'GET' && /\/appStoreReviewDetail$/.test(u.pathname)) {
       const review = resources.find(r => r.type === 'appStoreReviewDetails');
       return review ? response(review) : response(null, 404);
@@ -60,7 +62,7 @@ function apple(options: { missing?: boolean; state?: string; bundle?: string; in
       resources.push(item); return response(item, 201);
     }
     if (method === 'PATCH') {
-      const item = resources.find(r => r.id === data.id);
+      const item = data.type === 'appInfos' ? info : resources.find(r => r.id === data.id);
       assert.ok(item);
       Object.assign(item.attributes, data.attributes);
       if (item.type === 'appScreenshots') item.attributes.assetDeliveryState = { state: 'COMPLETE' };
@@ -116,6 +118,8 @@ test('Prepared listing, review notes and multipart screenshot bytes follow the A
   const info = mock.resources.find(r => r.type === 'appInfoLocalizations');
   assert.equal(info.relationships.appInfo.data.type, 'appInfos');
   assert.equal(info.attributes.privacyPolicyUrl, metadata.privacyPolicyURL);
+  assert.deepEqual(mock.calls.find(c => c.method === 'PATCH' && c.path === '/v1/appInfos/info')?.data.relationships,
+    { primaryCategory: { data: { type: 'appCategories', id: 'GAMES' } } });
   const review = mock.resources.find(r => r.type === 'appStoreReviewDetails');
   assert.equal(review.attributes.demoAccountRequired, false);
   assert.equal(review.attributes.notes, metadata.reviewNotes);
