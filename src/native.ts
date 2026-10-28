@@ -6,6 +6,8 @@ export function sharingOrigin(origin = globalThis.location?.origin ?? PUBLIC_ORI
   return /^https?:\/\//.test(origin) ? origin : PUBLIC_ORIGIN;
 }
 export const isNative = () => Capacitor.isNativePlatform();
+/** Preserve the WKWebView custom-scheme host before third-party URL resolution. */
+export const bundledAssetURL = (path: string, base = location.href) => new URL(path, base).href;
 type NativeAsset = { uri: string };
 const Video = registerPlugin<{ exportVideo(options: { imagePath: string }): Promise<NativeAsset> }>('SocialVideo');
 const assets = new WeakMap<Blob, { image: Promise<NativeAsset>; video?: Promise<NativeAsset> }>();

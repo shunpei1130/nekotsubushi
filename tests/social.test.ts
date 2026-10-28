@@ -1,6 +1,7 @@
 import test,{afterEach} from 'node:test';
 import assert from 'node:assert/strict';
-import {sharingOrigin,wasCancelled} from '../src/native.ts';
+import {sharingOrigin,wasCancelled,bundledAssetURL} from '../src/native.ts';
+import {path as pixiPath} from 'pixi.js';
 import {shareLink,shareCaption,xIntent,shareSocial,type ShareCard} from '../src/share.ts';
 import {normalContext,type RunResult} from '../src/progression.ts';
 const locationDescriptor=Object.getOwnPropertyDescriptor(globalThis,'location');
@@ -9,6 +10,12 @@ const result=(mode:RunResult['mode']):RunResult=>({mode,rulesVersion:2,success:t
 const file=new File(['cat'],'cat.png',{type:'image/png'});
 const card:ShareCard={url:'https://nekotsubushi.vercel.app/?mode=5',blob:file,file,objectUrl:'blob:card',text:'猫のほっぺ'};
 afterEach(()=>{for(const [key,descriptor] of [['location',locationDescriptor],['navigator',navigatorDescriptor]] as const){if(descriptor)Object.defineProperty(globalThis,key,descriptor);else Reflect.deleteProperty(globalThis,key);}});
+test('Pixi resolves bundled textures under the actual Capacitor host',()=>{
+  for(const base of ['capacitor://localhost/','https://nekotsubushi.vercel.app/']){
+    const url=bundledAssetURL('/assets/m01-cat.webp',base);
+    assert.equal(pixiPath.toAbsolute(url,base),base+'assets/m01-cat.webp');
+  }
+});
 test('native origins always export an HTTPS playable public URL',()=>{
   assert.equal(sharingOrigin('capacitor://localhost'),'https://nekotsubushi.vercel.app');
   assert.equal(sharingOrigin('null'),'https://nekotsubushi.vercel.app');

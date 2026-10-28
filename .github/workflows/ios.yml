@@ -73,6 +73,11 @@ jobs:
           xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" -skip-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Simulator.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/simulator.log
           APP_DATA=$(xcrun simctl get_app_container "$DEVICE_ID" jp.shunpei1130.nekotsubushi data)
           swift scripts/validate-ios-video.swift "$APP_DATA/Library/Caches"
+          python3 - "$APP_DATA/Library/Caches" <<'PY'
+          from pathlib import Path
+          import shutil,sys
+          shutil.copy2(next(Path(sys.argv[1]).rglob('*.mp4')), 'artifacts/ios/tiktok-native.mp4')
+          PY
           xcrun simctl io "$DEVICE_ID" screenshot artifacts/ios/simulator.png
           xcrun xcresulttool export attachments --path artifacts/ios/Simulator.xcresult --output-path artifacts/ios/phone-screenshots
           xcrun simctl shutdown "$DEVICE_ID"

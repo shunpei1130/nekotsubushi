@@ -5,7 +5,7 @@ import {boxCatPose, type BoxCatPose} from './choreography';
 import {deformCheek} from './cheek';
 import {HatChoreography, type HatFrame, type HatPose} from './hat';
 import {reactionFrame,earReactionOffset,type ReactionFrame} from './reactions';
-import {isNative} from './native';
+import {isNative,bundledAssetURL} from './native';
 
 // WKWebView's capacitor:// bundle is served by a URL-scheme handler. Fetches
 // from Pixi's image worker cannot use that handler; native <img> decoding can.
@@ -21,12 +21,12 @@ const leases=new Map<string,{count:number;promise:Promise<Texture>}>();
 const retirements=new Map<string,Promise<void>>();
 function retainTexture(name:string):Promise<Texture>{
  const held=leases.get(name);if(held){held.count++;return held.promise;}
- const promise=(retirements.get(name)||Promise.resolve()).then(()=>Assets.load<Texture>(asset(name)));
+ const promise=(retirements.get(name)||Promise.resolve()).then(()=>Assets.load<Texture>(bundledAssetURL(asset(name))));
  leases.set(name,{count:1,promise});return promise;
 }
 function releaseTexture(name:string){
  const held=leases.get(name);if(!held||--held.count>0)return;leases.delete(name);
- const pending=held.promise.then(()=>Assets.unload(asset(name))).then(()=>{if(retirements.get(name)===pending)retirements.delete(name)}).catch(()=>{});
+ const pending=held.promise.then(()=>Assets.unload(bundledAssetURL(asset(name)))).then(()=>{if(retirements.get(name)===pending)retirements.delete(name)}).catch(()=>{});
  retirements.set(name,pending);
 }
 

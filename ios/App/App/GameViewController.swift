@@ -16,8 +16,9 @@ final class GameViewController: CAPBridgeViewController {
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 
-    override func webViewConfiguration(for instanceConfiguration: InstanceConfiguration) -> WKWebViewConfiguration {
-        let configuration = super.webViewConfiguration(for: instanceConfiguration)
+    override func webView(with frame: CGRect, configuration: WKWebViewConfiguration) -> WKWebView {
+        // Capacitor replaces the content controller after webViewConfiguration.
+        // Install scripts here, after that replacement and before navigation.
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--ui-testing") {
             configuration.userContentController.add(UIErrorLogger(), name: "nekoUIError")
@@ -40,7 +41,7 @@ final class GameViewController: CAPBridgeViewController {
             configuration.userContentController.addUserScript(WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true))
         }
         #endif
-        return configuration
+        return super.webView(with: frame, configuration: configuration)
     }
 }
 
