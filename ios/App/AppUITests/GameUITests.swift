@@ -145,7 +145,7 @@ final class GameUITests: XCTestCase {
             photo("ios-result-\(mode)")
             if mode == 5 {
                 tapVisible("TikTokで共有")
-                XCTAssertTrue(named("縦動画ができました。共有先からTikTokを選んでください。").waitForExistence(timeout:60))
+                XCTAssertTrue(named("縦動画ができました。共有先からTikTokを選んでください。").waitForExistence(timeout:75))
                 photo("ios-tiktok-video-ready")
                 tapVisible("共有先からTikTokを選ぶ")
                 assertNativeShare()

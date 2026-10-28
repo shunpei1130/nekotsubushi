@@ -67,7 +67,7 @@ jobs:
           DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); phones=[x for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")]; print(next((x["udid"] for x in phones if "Max" in x["name"]),phones[0]["udid"]))')
           xcrun simctl boot "$DEVICE_ID" || true
           xcrun simctl bootstatus "$DEVICE_ID" -b
-          xcrun simctl spawn "$DEVICE_ID" log stream --level debug --style compact --predicate 'process == "App"' > artifacts/ios/native-console.log 2>&1 &
+          xcrun simctl spawn "$DEVICE_ID" log stream --level debug --style compact --predicate 'process == "App" AND eventMessage CONTAINS "neko-"' > artifacts/ios/native-console.log 2>&1 &
           NEKO_LOG_PID=$!
           trap 'kill "$NEKO_LOG_PID" 2>/dev/null || true' EXIT
           xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" -skip-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Simulator.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/simulator.log
