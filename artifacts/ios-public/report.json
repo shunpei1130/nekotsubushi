@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-28T08:35:40.988Z",
+  "url": "https://nekotsubushi.vercel.app",
+  "sourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+  "entry": "/assets/index-1drYmYmA.js",
+  "browser": "154.0.8037.57",
+  "method": "Anonymous real public deployment; no stored achievement fixtures, clock stepping or engine writes. The normal-round check verifies a first real touch, not a full stage clear.",
+  "passed": 5,
+  "failed": 0,
+  "checks": [
+    "Anonymous fresh state exposes exactly stage 1",
+    "Normal-clock trusted mobile tap starts stage 1 and scores 1, without fixtures or stepping",
+    "A fresh direct stage-6 URL stays locked",
+    "Public /privacy.html responds 200",
+    "Public /licenses.html responds 200"
+  ],
+  "errors": []
+}

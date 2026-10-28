@@ -1,9 +1,10 @@
 {
-  "date": "2026-10-27T02:33:51.979Z",
+  "date": "2026-10-28T08:32:59.568Z",
   "url": "https://nekotsubushi.vercel.app",
   "browser": "154.0.8037.57",
   "anonymous": true,
-  "entryAsset": "/assets/index-cdHTuW4C.js",
+  "entryAsset": "/assets/index-1drYmYmA.js",
+  "precondition": "Constructed qualifying NEW journey proofs in localStorage prepare an already-cleared regression player. This does not verify fresh-player access; journey-browser independently verifies initial one-stage access.",
   "checks": [
     {
       "name": "Anonymous public menu and six cards",
@@ -39,16 +40,5 @@
     }
   ],
   "errors": [],
-  "passed": 8,
-  "sourceVerification": {
-    "repository": "https://github.com/shunpei1130/nekotsubushi",
-    "branch": "main",
-    "sha": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
-    "commit": "48616385a03953cc8b3ed376783e1078cd9ad2aa",
-    "tree": "ad0bca28f88e6edd410951d677fb9ff3d46f486e",
-    "deploymentId": "dpl_8Ma2cBeLKTZcoKEoRyKMEYY97LaH",
-    "deploymentState": "READY",
-    "entryAsset": "/assets/index-cdHTuW4C.js",
-    "method": "Anonymous Chromium verified the expected public entry and all six actual input/outcome/retry/menu flows against the production deployment reported READY for this exact Git source."
-  }
+  "passed": 8
 }

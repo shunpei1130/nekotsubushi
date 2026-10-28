@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-28T08:32:59.568Z",
+  "url": "https://nekotsubushi.vercel.app",
+  "browser": "154.0.8037.57",
+  "anonymous": true,
+  "entryAsset": "/assets/index-1drYmYmA.js",
+  "precondition": "Constructed qualifying NEW journey proofs in localStorage prepare an already-cleared regression player. This does not verify fresh-player access; journey-browser independently verifies initial one-stage access.",
+  "checks": [
+    {
+      "name": "Anonymous public menu and six cards",
+      "passed": true
+    },
+    {
+      "name": "Production mode 1: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 2: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 3: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 4: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 5: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "Production mode 6: input, outcome, retry and menu",
+      "passed": true
+    },
+    {
+      "name": "No public JavaScript or HTTP asset errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 8
+}

@@ -23,6 +23,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci && npm test && npm run ios:sync
+      - name: Prepare Xcode signing tools
+        run: gem install xcodeproj --user-install --no-document --version 1.27.0
       - name: Import owner-provided signing material
         env:
           IOS_DISTRIBUTION_P12_BASE64: ${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}
@@ -41,8 +43,7 @@ jobs:
           security list-keychain -d user -s "$NEKO_KEYCHAIN_PATH"
       - name: Configure the app target for manual distribution signing
         run: |
-          gem install xcodeproj --user-install --no-document --version 1.27.0
-          ruby -r xcodeproj -e 'p=Xcodeproj::Project.open("ios/App/App.xcodeproj");t=p.targets.find{|x|x.name=="App"};t.build_configurations.each{|c|c.build_settings["CODE_SIGN_STYLE"]="Manual";c.build_settings["DEVELOPMENT_TEAM"]=ENV.fetch("NEKO_TEAM_ID");c.build_settings["PROVISIONING_PROFILE_SPECIFIER"]=ENV.fetch("NEKO_PROFILE_UUID");c.build_settings["CODE_SIGN_IDENTITY"]="Apple Distribution"};p.save'
+          ruby -r xcodeproj -e 'p=Xcodeproj::Project.open("ios/App/App.xcodeproj");t=p.targets.find{|x|x.name=="App"};t.build_configurations.each{|c|c.build_settings["CODE_SIGN_STYLE"]="Manual";c.build_settings["DEVELOPMENT_TEAM"]=ENV.fetch("NEKO_TEAM_ID");c.build_settings["PROVISIONING_PROFILE_SPECIFIER"]=ENV.fetch("NEKO_PROFILE_UUID");c.build_settings["CODE_SIGN_IDENTITY"]="Apple Distribution"};p.save;s=Xcodeproj::XCScheme.new;s.add_build_target(t);s.set_launch_target(t);s.save_as("ios/App/App.xcodeproj","App",true)'
       - name: Archive and export the signed IPA
         run: |
           set -euo pipefail

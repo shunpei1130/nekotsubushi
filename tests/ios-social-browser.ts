@@ -6,9 +6,10 @@ import {dirname,join} from 'node:path';
 import {seedHistoricalScript} from './journey-fixtures.ts';
 const kind=process.env.BROWSER==='webkit'?'webkit':'chromium';
 const base=process.env.BASE_URL||'http://127.0.0.1:5180';
+const proxy=base.startsWith('https://')&&process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined;
 const out=`artifacts/ios-web/${kind}`;await mkdir(out,{recursive:true});
 const wk=join(dirname(webkit.executablePath()),'minibrowser-wpe');
-const browser=kind==='webkit'?await webkit.launch({headless:true,...(process.env.WEBKIT_QA_LIBS?{executablePath:join(wk,'bin/MiniBrowser'),env:{...process.env,LD_LIBRARY_PATH:`${process.env.WEBKIT_QA_LIBS}:${wk}/lib:${wk}/sys/lib`,WEBKIT_EXEC_PATH:join(wk,'bin'),WEBKIT_INJECTED_BUNDLE_PATH:join(wk,'lib'),WEBKIT_INSPECTOR_RESOURCES_PATH:join(wk,'share')}}:{})}):await chromium.launch({headless:true,executablePath:process.env.CI?undefined:'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});
+const browser=kind==='webkit'?await webkit.launch({headless:true,proxy,...(process.env.WEBKIT_QA_LIBS?{executablePath:join(wk,'bin/MiniBrowser'),env:{...process.env,LD_LIBRARY_PATH:`${process.env.WEBKIT_QA_LIBS}:${wk}/lib:${wk}/sys/lib`,WEBKIT_EXEC_PATH:join(wk,'bin'),WEBKIT_INJECTED_BUNDLE_PATH:join(wk,'lib'),WEBKIT_INSPECTOR_RESOURCES_PATH:join(wk,'share')}}:{})}):await chromium.launch({headless:true,proxy,executablePath:process.env.CI?undefined:'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});
 const errors:string[]=[],checks:any[]=[];let entry:string|null=null;
 async function check(name:string,run:()=>Promise<void>){const start=Date.now();try{await run();checks.push({name,passed:true,ms:Date.now()-start});console.log('PASS '+name);}catch(e){checks.push({name,passed:false,error:e instanceof Error?e.stack:String(e)});console.error('FAIL '+name+': '+e);}}
 async function using(run:(p:Page)=>Promise<void>,viewport={width:393,height:852}){

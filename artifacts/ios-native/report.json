@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-28",
+  "runtimeCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+  "ciRunId": 40652501519,
+  "ciURL": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40652501519",
+  "unitTests": {
+    "passed": 94,
+    "failed": 0
+  },
+  "mobileBrowsers": {
+    "chromium": {
+      "passed": 10,
+      "failed": 0
+    },
+    "webkit": {
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "native": {
+    "platform": "iOS Simulator",
+    "os": "26.4.1",
+    "phone": "iPhone 17 Pro Max",
+    "phoneMethodsPassed": 2,
+    "tablet": "iPad Pro 13-inch (M5)",
+    "tabletMethodsPassed": 1,
+    "failed": 0,
+    "coverage": "Fresh one-stage menu, real tap/pause/resume/rotation/result, six modes start and finish, three social buttons, PNG sharing, clipboard, native MP4 export and real OS image/video share activities; iPad layout and sharing. All-stage preconditions are explicit constructed Debug fixtures; not human achievement evidence."
+  },
+  "video": {
+    "codec": "h264",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "frames": 150,
+    "durationSeconds": 5,
+    "bytes": 2469043,
+    "visualReview": "Decoded actual native first frame: upright, readable Japanese, complete consistent cat portrait. Five-second card zoom, not gameplay footage."
+  },
+  "archive": {
+    "CFBundleIdentifier": "jp.shunpei1130.nekotsubushi",
+    "CFBundleDisplayName": "猫つぶし",
+    "CFBundleShortVersionString": "1.0.0",
+    "CFBundleVersion": "1",
+    "MinimumOSVersion": "16.0",
+    "DTXcode": "2660",
+    "DTXcodeBuild": "17F113",
+    "DTSDKName": "iphoneos26.5",
+    "CFBundleSupportedPlatforms": [
+      "iPhoneOS"
+    ],
+    "archiveSHA256": "e7a4a9a1f477e4a25309ff8d1ba90ac7391c37fe10fe4fd4086740294cbf76b8",
+    "archiveBytes": 21096252,
+    "debugFixtureInRelease": false,
+    "signedForDistribution": false
+  },
+  "scoreRulesVersion": 2,
+  "journeyVersion": 1,
+  "notVerified": [
+    "Physical iPhone/iPad and iOS 16 hardware",
+    "Installed SNS apps and actual posts",
+    "Signed distribution IPA and App Store Connect upload",
+    "TestFlight, App Store review and public store release"
+  ],
+  "storeStatus": "Owner signing and App Store Connect authorization required",
+  "production": {
+    "url": "https://nekotsubushi.vercel.app",
+    "deploymentId": "dpl_2rvY9VBxEtbWCpWxpWX1BxFTcLi9",
+    "sourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+    "passed": 23,
+    "failed": 0,
+    "errors": 0,
+    "entry": "/assets/index-1drYmYmA.js"
+  }
+}

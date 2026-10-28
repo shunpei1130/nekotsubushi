@@ -19,3 +19,12 @@ ios/**/xcuserdata/
 
 ios/App/AppUITests/qualifying-history.json
 artifacts/ios/*.xcresult/
+
+# Local diagnostic runs; curated iOS evidence is saved separately.
+/artifacts/ios-web/
+/artifacts/ios-regression/
+
+# Local Apple signing material. CI reads protected secrets outside the checkout.
+*.p12
+*.p8
+*.mobileprovision

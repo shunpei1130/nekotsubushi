@@ -10,30 +10,41 @@
   "url": "https://nekotsubushi.vercel.app",
   "sourceBranch": "main",
   "gitIntegrationConnected": true,
-  "sourceStatus": "Progressive six-stage unlocks publicly verified with a fresh normal-clock player",
-  "runtimeCommit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
+  "sourceStatus": "iOS app and social sharing verified; website publicly verified; store signing and submission pending",
+  "runtimeCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
   "anonymousPublicAccessVerified": true,
   "status": "READY",
-  "entryAsset": "/assets/index-B1WKOo-7.js",
-  "cssAsset": "/assets/index-CN9oqsnf.css",
-  "verifiedGitSourceCommit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
-  "verifiedDeploymentId": "dpl_3cTBFsoTpG5BkHhBQYHqg5TQ935e",
+  "entryAsset": "/assets/index-1drYmYmA.js",
+  "cssAsset": "/assets/index-C7OJerx7.css",
+  "verifiedGitSourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+  "verifiedDeploymentId": "dpl_2rvY9VBxEtbWCpWxpWX1BxFTcLi9",
   "rulesVersion": 2,
   "journeyVersion": 1,
-  "verificationReport": "artifacts/journey/production-play/report.json",
-  "localUnitTests": 87,
-  "localBrowserChecks": 44,
-  "publicChecks": 5,
+  "verificationReport": "qa/ios-report.md",
+  "localUnitTests": 94,
+  "localBrowserChecks": 20,
+  "publicChecks": 23,
   "publicErrors": 0,
   "runtimeTrees": {
-    "src": "3c76cb16060ad6083b05fa434bda26dbf5384ac8",
-    "public": "484e7ae1fa1c370862bef53828d88fab410b6cdb"
+    "src": "d8e0f012cd76657f9938aff5187232232a42efb1",
+    "public": "7620b077df345951925a3bdcdb176f6d7bff5c33",
+    "ios": "bee8a67e9c39aad136addec34fdb3f0241b7c001"
   },
   "ci": {
-    "runId": 40635648193,
-    "commit": "a5f694dff7bd0b05146f038e06f358b009da5bd6",
-    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40635648193",
+    "runId": 40652501519,
+    "commit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40652501519",
     "conclusion": "success"
   },
-  "verificationNote": "The runtime commit/deployment identify the publicly played build. Later evidence-only commits may deploy identical src/public trees; verify the unchanged entry asset before delivery."
+  "verificationNote": "The runtime commit/deployment identify the publicly played build. Later evidence-only commits may deploy identical src/public trees; verify the unchanged entry asset before delivery.",
+  "ios": {
+    "bundleId": "jp.shunpei1130.nekotsubushi",
+    "minimumOS": "16.0",
+    "simulatorOS": "26.4.1",
+    "nativeMethodsPassed": 3,
+    "nativeMethodsFailed": 0,
+    "unsignedReleaseArchive": "VERIFIED",
+    "appStoreSubmission": "Awaiting owner signing and App Store Connect authorization",
+    "report": "artifacts/ios-native/report.json"
+  }
 }

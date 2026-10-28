@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-28T07:50:49.359Z",
+  "browser": "chromium",
+  "browserVersion": "141.0.7390.37",
+  "base": "http://127.0.0.1:5180",
+  "entry": "/assets/index-1drYmYmA.js",
+  "checks": [
+    {
+      "name": "G1: three social buttons, real PNG, caption, fallback and retry",
+      "passed": true,
+      "ms": 6828
+    },
+    {
+      "name": "G2: three social buttons, real PNG, caption, fallback and retry",
+      "passed": true,
+      "ms": 5925
+    },
+    {
+      "name": "G3: three social buttons, real PNG, caption, fallback and retry",
+      "passed": true,
+      "ms": 8627
+    },
+    {
+      "name": "G4: three social buttons, real PNG, caption, fallback and retry",
+      "passed": true,
+      "ms": 6137
+    },
+    {
+      "name": "G5: three social buttons, real PNG, caption, fallback and retry",
+      "passed": true,
+      "ms": 6300
+    },
+    {
+      "name": "G6: three social buttons, real PNG, caption, fallback and retry",
+      "passed": true,
+      "ms": 5642
+    },
+    {
+      "name": "X composer URL is correct and opened only by the user gesture",
+      "passed": true,
+      "ms": 1534
+    },
+    {
+      "name": "small iPhone, landscape and iPad retain visible stage and scrollable sharing",
+      "passed": true,
+      "ms": 10476
+    },
+    {
+      "name": "native file-share user gesture and cancel branches preserve the result",
+      "passed": true,
+      "ms": 3011
+    },
+    {
+      "name": "no JS or HTTP errors",
+      "passed": true,
+      "ms": 0
+    }
+  ],
+  "errors": [],
+  "passed": 10,
+  "failed": 0,
+  "method": "Mobile browser emulation. Competitive result states are injected integration fixtures; cheek finish, buttons, generated PNGs, downloads and user gestures are real browser operations. X uses a local route stub and no post is sent. Actual iOS app tests run separately in Xcode Simulator.",
+  "sourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+  "ciRunId": 40652501519
+}
