@@ -29,6 +29,12 @@ final class GameViewController: CAPBridgeViewController {
             console.error = (...args) => { report(args.map(x => x?.stack || x?.message || String(x)).join(' ')); original(...args); };
             addEventListener('error', e => report(e.error?.stack || e.message));
             addEventListener('unhandledrejection', e => report(e.reason?.stack || e.reason));
+            let downAt = 0;
+            addEventListener('pointerdown', e => { downAt = e.timeStamp; }, true);
+            addEventListener('pointerup', e => setTimeout(() => {
+                const s = window.__game?.snapshot();
+                if (s) report('INPUT ' + JSON.stringify({mode:s.mode,score:s.score,status:s.status,elapsed:s.elapsed,gestureMs:e.timeStamp-downAt,queueMs:performance.now()-e.timeStamp}));
+            }, 0), true);
             """
             configuration.userContentController.addUserScript(WKUserScript(source: logger, injectionTime: .atDocumentStart, forMainFrameOnly: true))
         }
@@ -49,7 +55,7 @@ final class GameViewController: CAPBridgeViewController {
 #if DEBUG
 private final class UIErrorLogger: NSObject, WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        NSLog("neko-ui-error: %@", String(describing: message.body))
+        NSLog("neko-ui-log: %@", String(describing: message.body))
     }
 }
 #endif

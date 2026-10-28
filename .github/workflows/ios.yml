@@ -86,6 +86,34 @@ jobs:
           xcrun simctl bootstatus "$PAD_ID" -b
           xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$PAD_ID" -only-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Tablet.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/tablet.log
           xcrun xcresulttool export attachments --path artifacts/ios/Tablet.xcresult --output-path artifacts/ios/tablet-screenshots
+      - name: Export lightweight native diagnostics
+        if: always()
+        run: |
+          mkdir -p artifacts/ios-review
+          for NEKO_RESULT in Simulator Tablet; do
+            if [ -d "artifacts/ios/${NEKO_RESULT}.xcresult" ]; then
+              xcrun xcresulttool export attachments --path "artifacts/ios/${NEKO_RESULT}.xcresult" --output-path "$RUNNER_TEMP/neko-review-${NEKO_RESULT}" || true
+              xcrun xcresulttool get test-results summary --path "artifacts/ios/${NEKO_RESULT}.xcresult" > "artifacts/ios-review/${NEKO_RESULT}-summary.json" || true
+            fi
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import os,shutil
+          out=Path('artifacts/ios-review')
+          for source in Path(os.environ['RUNNER_TEMP']).glob('neko-review-*'):
+              target=out/source.name;target.mkdir(exist_ok=True)
+              for p in source.rglob('*'):
+                  if p.is_file() and p.suffix.lower() in ['.png','.json']:
+                      shutil.copy2(p,target/p.name)
+          for p in Path('artifacts/ios').glob('*.log'):
+              shutil.copy2(p,out/p.name)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nekotsubushi-ios-review
+          path: artifacts/ios-review/
+          retention-days: 1
       - name: Build unsigned App Store archive
         run: |
           set -euo pipefail

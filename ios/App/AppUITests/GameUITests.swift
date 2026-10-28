@@ -5,7 +5,13 @@ final class GameUITests: XCTestCase {
     let names = ["ねこつんつん", "箱をずらせ", "猫パンチ寸止め", "その帽子、いやニャ！", "ほっぺむにむに", "あとちょっとで届くのに"]
     let operations = ["目を閉じている間にタップ", "飛び込む瞬間、箱をスワイプ", "長押しして、パンチの前に離す", "帽子が外れたら、またタップ", "ほっぺを引っぱって、離すだけ", "羽を動かして、つかまるな！"]
     override func setUp() { continueAfterFailure = false }
-    override func tearDown() { app.terminate() }
+    override func tearDown() {
+        if testRun?.hasSucceeded == false && app.state == .runningForeground {
+            print("NATIVE FAILURE HIERARCHY\n" + app.debugDescription)
+            photo("native-failure")
+        }
+        app.terminate()
+    }
     func button(_ title: String) -> XCUIElement { app.buttons.matching(identifier:title).firstMatch }
     func named(_ value: String) -> XCUIElement {
         app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", value)).firstMatch
@@ -52,13 +58,24 @@ final class GameUITests: XCTestCase {
         for _ in 0..<4 {if control.isHittable {break}; app.swipeUp()}
         control.tap()
     }
+    func assertNativeShare() {
+        // Verify actual OS activities. UIActivityViewController's root view
+        // identifier is not necessarily exposed by iOS accessibility.
+        // None of these labels occurs in the game's HTML share dialog.
+        let controls=["AirDrop","Copy","コピー","Save Video","ビデオを保存","Save Image","Save to Files","ファイルに保存","Close","Cancel"]
+        let activity=app.descendants(matching:.any).matching(NSPredicate(format:"identifier == %@ OR label IN %@","ActivityListView",controls)).firstMatch
+        XCTAssertTrue(activity.waitForExistence(timeout:20),"The native activity sheet must expose a real OS share control")
+    }
     func test01FreshTouchPauseAndShare() {
         app.launchArguments=["--ui-testing"]
         app.launch()
         XCTAssertTrue(button("音と動きの設定").waitForExistence(timeout:40)); photo("fresh-ios-menu")
         enter(1)
         point(1,0.69,0.51).tap()
-        XCTAssertTrue(named("成功回数 1 回").waitForExistence(timeout:8))
+        // This hint is hidden only after a successful tap starts the game.
+        // WebKit does not consistently expose a live status's aria-label.
+        let started=XCTNSPredicateExpectation(predicate:NSPredicate(format:"exists == false"),object:named("猫をタップして、はじめる"))
+        XCTAssertEqual(XCTWaiter.wait(for:[started],timeout:10),.completed,"The real touch must start the clock")
         button("一時停止").tap()
         XCTAssertTrue(named("ひと休み中。").waitForExistence(timeout:5))
         button("つづける").tap()
@@ -73,7 +90,7 @@ final class GameUITests: XCTestCase {
         tapVisible("文章をコピー")
         XCTAssertTrue(named("投稿用の文章をコピーしました。").waitForExistence(timeout:5))
         tapVisible("共有先からInstagramを選ぶ")
-        XCTAssertTrue(app.otherElements.matching(identifier:"neko-native-share-sheet").firstMatch.waitForExistence(timeout:10))
+        assertNativeShare()
         photo("ios-native-image-share-sheet")
         let close=button("Close")
         if close.exists {close.tap()} else if button("Cancel").exists {button("Cancel").tap()} else {app.swipeDown()}
@@ -96,7 +113,7 @@ final class GameUITests: XCTestCase {
                 XCTAssertTrue(named("縦動画ができました。共有先からTikTokを選んでください。").waitForExistence(timeout:60))
                 photo("ios-tiktok-video-ready")
                 tapVisible("共有先からTikTokを選ぶ")
-                XCTAssertTrue(app.otherElements.matching(identifier:"neko-native-share-sheet").firstMatch.waitForExistence(timeout:10))
+                assertNativeShare()
                 photo("ios-native-video-share-sheet")
             }
         }
@@ -112,7 +129,7 @@ final class GameUITests: XCTestCase {
         XCTAssertTrue(named("画像の用意ができました。共有先からInstagramを選んでください。").waitForExistence(timeout:30))
         photo("ios-ipad-share")
         tapVisible("共有先からInstagramを選ぶ")
-        XCTAssertTrue(app.otherElements.matching(identifier:"neko-native-share-sheet").firstMatch.waitForExistence(timeout:10))
+        assertNativeShare()
         photo("ios-ipad-native-share-sheet")
     }
 }
