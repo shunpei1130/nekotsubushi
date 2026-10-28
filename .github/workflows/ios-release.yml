@@ -58,6 +58,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -c 'import base64,os,pathlib,re; key=os.environ["ASC_KEY_ID"]; assert re.fullmatch("[A-Z0-9]{10}",key); p=pathlib.Path.home()/".appstoreconnect/private_keys";p.mkdir(parents=True,exist_ok=True);f=p/("AuthKey_"+key+".p8");f.write_bytes(base64.b64decode(os.environ["ASC_API_KEY_P8_BASE64"],validate=True));f.chmod(0o600)'
+          npx tsx scripts/app-store.mts
           IPA_PATH=$(python3 -c 'from pathlib import Path; print(next(Path("artifacts/ios-signed").glob("*.ipa")))')
           xcrun iTMSTransporter -m upload -assetFile "$IPA_PATH" -apiKey "$ASC_KEY_ID" -apiIssuer "$ASC_ISSUER_ID"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

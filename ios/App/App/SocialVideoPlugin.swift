@@ -36,7 +36,6 @@ private final class SocialVideoExport {
     private let outputURL: URL
     private var completion: ((Result<URL, Error>) -> Void)?
     private var writer: AVAssetWriter?
-    private var input: AVAssetWriterInput?
     private var watchdog: DispatchSourceTimer?
     private var frame = 0
     private var finishing = false
@@ -57,7 +56,6 @@ private final class SocialVideoExport {
                 AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: 4_000_000,
                                                  AVVideoProfileLevelKey: AVVideoProfileLevelH264MainAutoLevel]
             ])
-            self.input = input
             input.expectsMediaDataInRealTime = false
             let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input, sourcePixelBufferAttributes: [
                 kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
@@ -124,7 +122,6 @@ private final class SocialVideoExport {
         guard !finished else { return }
         finished = true
         watchdog?.setEventHandler {}; watchdog?.cancel(); watchdog = nil
-        input?.stopRequestingMediaData()
         if case .failure = result {
             if writer?.status == .writing { writer?.cancelWriting() }
             try? FileManager.default.removeItem(at: outputURL)
