@@ -46,7 +46,7 @@ iOS 16以上のiPhone／iPad向けに、全素材を同梱したネイティブ�
 
 全モードの終了画面にX・TikTok・Instagramの共有ボタンがあります。05は右上の「おわる」から終了します。Xは記録と挑戦リンクを入れた投稿画面、Instagramは猫と記録のPNG、iOSのTikTokは端末内で作る5秒の縦MP4を用意します。投稿するかどうかは本人が確定します。ブラウザで対応する共有先がない場合も、画像保存と文章コピーを使えます。
 
-[iOSのビルド・検査](ios/README.md)、[署名・ストア接続](ios/STORE-SUBMISSION.md)、[iOS検証記録](qa/ios-report.md)を参照してください。App Storeの公開状態とSimulator検査は区別して記録します。
+[iOSのビルド・検査](ios/README.md)、[署名・ストア接続](ios/STORE-SUBMISSION.md)、[iOS検証記録](qa/ios-report.md)、[後日の接続・提出手順](qa/ios-release-readiness.md)を参照してください。App Storeの公開状態とSimulator検査は区別して記録します。
 
 ## 起動と検証
 
@@ -69,7 +69,7 @@ BROWSER=webkit npm run test:journey
 BASE_URL=https://nekotsubushi.vercel.app npm run test:replay
 ```
 
-`npm test` の単体テストは94件で、判定、入箱、頬メッシュ、追加成績、日替わり、共有、保存移行、仕草とステージ開放を検査します。ブラウザ検査はメニュー・6モード・実時計での保存と友人比較・表情収集と再生・20回再挑戦・共有の代替操作、および初期ロック・各段階・境界・移行・挑戦リンクを対象にします。`test:journey` は初期状態を、従来機能の回帰検査は明示的な構成済み達成記録で開放した状態も検査します。構成した記録による境界検査を、人間のプレイ実績として扱いません。各実行の成否は `artifacts/journey/` と `artifacts/replay/` の `report.json` を確認してください。
+`npm test` の単体テストは103件で、判定、入箱、頬メッシュ、追加成績、日替わり、共有、保存移行、仕草とステージ開放を検査します。ブラウザ検査はメニュー・6モード・実時計での保存と友人比較・表情収集と再生・20回再挑戦・共有の代替操作、および初期ロック・各段階・境界・移行・挑戦リンクを対象にします。`test:journey` は初期状態を、従来機能の回帰検査は明示的な構成済み達成記録で開放した状態も検査します。構成した記録による境界検査を、人間のプレイ実績として扱いません。各実行の成否は `artifacts/journey/` と `artifacts/replay/` の `report.json` を確認してください。
 
 Chromiumは `/usr/bin/chromium` があれば使用し、`CHROMIUM_EXECUTABLE_PATH` で指定もできます。WebKitは `WEBKIT_EXECUTABLE_PATH` で指定できます。Linux WebKitや端末サイズのビューポートは、物理iPhone Safari／Android実機の検査とは異なります。実機のOS共有画面や発熱・長時間性能は別途確認が必要です。
 

@@ -1,0 +1,12 @@
+{
+  "defaultNativeCaptureCommit": "7a6763180fa3784b8d6b629ca2960c7cd53dfdcc",
+  "defaultNativeCaptureRunId": 40669076446,
+  "exceptions": {
+    "fresh-ios-menu.png": {
+      "captureCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+      "captureRunId": 40652501519,
+      "reason": "The latest cold-start menu attachment was captured before painting completed and was excluded from submission media. This earlier actual native screenshot shows the unchanged src/public menu layout after painting completed."
+    }
+  },
+  "diagnosticNotSubmitted": "Latest early blank menu capture retained in the original Actions review artifact, not used in store screenshots. Physical-device cold-start performance remains unverified."
+}

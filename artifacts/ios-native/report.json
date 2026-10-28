@@ -1,10 +1,10 @@
 {
   "date": "2026-10-28",
   "runtimeCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
-  "ciRunId": 40652501519,
-  "ciURL": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40652501519",
+  "ciRunId": 40669076446,
+  "ciURL": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40669076446",
   "unitTests": {
-    "passed": 94,
+    "passed": 103,
     "failed": 0
   },
   "mobileBrowsers": {
@@ -25,7 +25,7 @@
     "tablet": "iPad Pro 13-inch (M5)",
     "tabletMethodsPassed": 1,
     "failed": 0,
-    "coverage": "Fresh one-stage menu, real tap/pause/resume/rotation/result, six modes start and finish, three social buttons, PNG sharing, clipboard, native MP4 export and real OS image/video share activities; iPad layout and sharing. All-stage preconditions are explicit constructed Debug fixtures; not human achievement evidence."
+    "coverage": "Fresh one-stage menu, real tap/pause/resume/rotation/result, six modes start and finish, three social buttons, PNG sharing, clipboard, native MP4 export and real OS image/video share activities; iPad layout and sharing. All-stage preconditions are explicit constructed Debug fixtures; not human achievement evidence. Final image and video cancellation confirmed by actual OS callbacks and trusted native touches."
   },
   "video": {
     "codec": "h264",
@@ -35,7 +35,9 @@
     "frames": 150,
     "durationSeconds": 5,
     "bytes": 2469043,
-    "visualReview": "Decoded actual native first frame: upright, readable Japanese, complete consistent cat portrait. Five-second card zoom, not gameplay footage."
+    "visualReview": "Decoded actual first, middle and final frames: upright readable Japanese, consistent orange fur and face, gentle zoom. Five-second record card, not gameplay footage.",
+    "sha256": "f50bdc193b9ccd95c0fefcee7addca2c0291e237050d0ebce4a1bfb003a497ce",
+    "sourceCommit": "7a6763180fa3784b8d6b629ca2960c7cd53dfdcc"
   },
   "archive": {
     "CFBundleIdentifier": "jp.shunpei1130.nekotsubushi",
@@ -49,10 +51,11 @@
     "CFBundleSupportedPlatforms": [
       "iPhoneOS"
     ],
-    "archiveSHA256": "e7a4a9a1f477e4a25309ff8d1ba90ac7391c37fe10fe4fd4086740294cbf76b8",
-    "archiveBytes": 21096252,
+    "archiveSHA256": "c614336e721d71fb0eab95e7173a253afcf6f902d7a6dcef719e459e3d355dd4",
+    "archiveBytes": 21104675,
     "debugFixtureInRelease": false,
-    "signedForDistribution": false
+    "signedForDistribution": false,
+    "sourceCommit": "7a6763180fa3784b8d6b629ca2960c7cd53dfdcc"
   },
   "scoreRulesVersion": 2,
   "journeyVersion": 1,
@@ -60,16 +63,35 @@
     "Physical iPhone/iPad and iOS 16 hardware",
     "Installed SNS apps and actual posts",
     "Signed distribution IPA and App Store Connect upload",
-    "TestFlight, App Store review and public store release"
+    "TestFlight, App Store review and public store release",
+    "Physical-device cold-start performance; latest early menu attachment was excluded from store media"
   ],
-  "storeStatus": "Owner signing and App Store Connect authorization required",
+  "storeStatus": "User postponed protected Apple credential setup; signed distribution and App Store connection remain unexecuted",
   "production": {
     "url": "https://nekotsubushi.vercel.app",
-    "deploymentId": "dpl_2rvY9VBxEtbWCpWxpWX1BxFTcLi9",
-    "sourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+    "deploymentId": "dpl_2esARsHLiRzJDYoG2t39npq7BguH",
+    "sourceCommit": "88727aea30b0378e1e5db58268610a5e7a713f86",
     "passed": 23,
     "failed": 0,
     "errors": 0,
-    "entry": "/assets/index-1drYmYmA.js"
-  }
+    "entry": "/assets/index-1drYmYmA.js",
+    "checksRuntimeCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
+    "equivalence": "src/public trees and entry JS unchanged"
+  },
+  "nativeCommit": "7a6763180fa3784b8d6b629ca2960c7cd53dfdcc",
+  "storePreparationCommit": "88727aea30b0378e1e5db58268610a5e7a713f86",
+  "storePreparation": {
+    "script": "scripts/app-store.mts",
+    "contractTestsPassed": 9,
+    "liveAppleRequests": false,
+    "workflow": "ios-release.yml",
+    "guide": "qa/ios-release-readiness.md"
+  },
+  "regressionCI": {
+    "runId": 40670353849,
+    "sourceCommit": "88727aea30b0378e1e5db58268610a5e7a713f86",
+    "browserChecksPassed": 44,
+    "failed": 0
+  },
+  "captureProvenance": "capture-provenance.json"
 }

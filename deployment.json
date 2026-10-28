@@ -10,30 +10,29 @@
   "url": "https://nekotsubushi.vercel.app",
   "sourceBranch": "main",
   "gitIntegrationConnected": true,
-  "sourceStatus": "iOS app and social sharing verified; website publicly verified; store signing and submission pending",
+  "sourceStatus": "iOS implementation, simulator tests, archive and store preparation complete; owner deferred Apple credentials",
   "runtimeCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
   "anonymousPublicAccessVerified": true,
   "status": "READY",
   "entryAsset": "/assets/index-1drYmYmA.js",
   "cssAsset": "/assets/index-C7OJerx7.css",
-  "verifiedGitSourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
-  "verifiedDeploymentId": "dpl_2rvY9VBxEtbWCpWxpWX1BxFTcLi9",
+  "verifiedGitSourceCommit": "88727aea30b0378e1e5db58268610a5e7a713f86",
+  "verifiedDeploymentId": "dpl_2esARsHLiRzJDYoG2t39npq7BguH",
   "rulesVersion": 2,
   "journeyVersion": 1,
   "verificationReport": "qa/ios-report.md",
-  "localUnitTests": 94,
+  "localUnitTests": 103,
   "localBrowserChecks": 20,
   "publicChecks": 23,
   "publicErrors": 0,
   "runtimeTrees": {
     "src": "d8e0f012cd76657f9938aff5187232232a42efb1",
-    "public": "7620b077df345951925a3bdcdb176f6d7bff5c33",
-    "ios": "bee8a67e9c39aad136addec34fdb3f0241b7c001"
+    "public": "7620b077df345951925a3bdcdb176f6d7bff5c33"
   },
   "ci": {
-    "runId": 40652501519,
-    "commit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
-    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40652501519",
+    "runId": 40669076446,
+    "commit": "7a6763180fa3784b8d6b629ca2960c7cd53dfdcc",
+    "url": "https://github.com/shunpei1130/nekotsubushi/actions/runs/40669076446",
     "conclusion": "success"
   },
   "verificationNote": "The runtime commit/deployment identify the publicly played build. Later evidence-only commits may deploy identical src/public trees; verify the unchanged entry asset before delivery.",
@@ -45,6 +44,16 @@
     "nativeMethodsFailed": 0,
     "unsignedReleaseArchive": "VERIFIED",
     "appStoreSubmission": "Awaiting owner signing and App Store Connect authorization",
-    "report": "artifacts/ios-native/report.json"
+    "report": "artifacts/ios-native/report.json",
+    "nativeCommit": "7a6763180fa3784b8d6b629ca2960c7cd53dfdcc",
+    "nativeAppTree": "66c77d87c5126aacdecad22d9c956e3cc7c84bdd",
+    "archiveSHA256": "c614336e721d71fb0eab95e7173a253afcf6f902d7a6dcef719e459e3d355dd4",
+    "readiness": "qa/ios-release-readiness.md"
+  },
+  "regressionCI": {
+    "runId": 40670353849,
+    "commit": "88727aea30b0378e1e5db58268610a5e7a713f86",
+    "conclusion": "success",
+    "checks": 44
   }
 }

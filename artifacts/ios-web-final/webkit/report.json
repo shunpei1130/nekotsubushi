@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-28T07:52:28.185Z",
+  "date": "2026-10-28T10:05:32.776Z",
   "browser": "webkit",
   "browserVersion": "26.0",
   "base": "http://127.0.0.1:5180",
@@ -8,47 +8,47 @@
     {
       "name": "G1: three social buttons, real PNG, caption, fallback and retry",
       "passed": true,
-      "ms": 12295
+      "ms": 16884
     },
     {
       "name": "G2: three social buttons, real PNG, caption, fallback and retry",
       "passed": true,
-      "ms": 4890
+      "ms": 5021
     },
     {
       "name": "G3: three social buttons, real PNG, caption, fallback and retry",
       "passed": true,
-      "ms": 4126
+      "ms": 4206
     },
     {
       "name": "G4: three social buttons, real PNG, caption, fallback and retry",
       "passed": true,
-      "ms": 4829
+      "ms": 5081
     },
     {
       "name": "G5: three social buttons, real PNG, caption, fallback and retry",
       "passed": true,
-      "ms": 3091
+      "ms": 3223
     },
     {
       "name": "G6: three social buttons, real PNG, caption, fallback and retry",
       "passed": true,
-      "ms": 3602
+      "ms": 3586
     },
     {
       "name": "X composer URL is correct and opened only by the user gesture",
       "passed": true,
-      "ms": 1797
+      "ms": 1874
     },
     {
       "name": "small iPhone, landscape and iPad retain visible stage and scrollable sharing",
       "passed": true,
-      "ms": 6306
+      "ms": 7070
     },
     {
       "name": "native file-share user gesture and cancel branches preserve the result",
       "passed": true,
-      "ms": 2246
+      "ms": 2238
     },
     {
       "name": "no JS or HTTP errors",
@@ -59,7 +59,5 @@
   "errors": [],
   "passed": 10,
   "failed": 0,
-  "method": "Mobile browser emulation. Competitive result states are injected integration fixtures; cheek finish, buttons, generated PNGs, downloads and user gestures are real browser operations. X uses a local route stub and no post is sent. Actual iOS app tests run separately in Xcode Simulator.",
-  "sourceCommit": "5417ba75e2ac2c04650ef7ad6226e2ac831b9d89",
-  "ciRunId": 40652501519
+  "method": "Mobile browser emulation. Competitive result states are injected integration fixtures; cheek finish, buttons, generated PNGs, downloads and user gestures are real browser operations. X uses a local route stub and no post is sent. Actual iOS app tests run separately in Xcode Simulator."
 }
