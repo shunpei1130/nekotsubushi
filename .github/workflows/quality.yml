@@ -40,10 +40,17 @@ jobs:
         env:
           BROWSER: ${{ matrix.browser }}
           QA_OUTPUT: artifacts/replay/${{ matrix.browser }}
+      - name: Stage locks, evidence migration and clear progression
+        run: npm run test:journey
+        env:
+          BROWSER: ${{ matrix.browser }}
+          QA_OUTPUT: artifacts/journey/${{ matrix.browser }}
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: game-quality-${{ matrix.browser }}
-          path: artifacts/replay/${{ matrix.browser }}
+          path: |
+            artifacts/replay/${{ matrix.browser }}
+            artifacts/journey/${{ matrix.browser }}
           if-no-files-found: ignore
           retention-days: 14

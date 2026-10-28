@@ -1,0 +1,171 @@
+{
+  "sourceCommit": "88b87303b83b4269adba07fb1390ad75cceaa20b",
+  "method": "AI browser-operated trusted mouse, normal clock. Current phase only, cached coordinates, no future deadlines/fixtures/steps/engine changes. Not a human or physical-device usability study.",
+  "runs": [
+    {
+      "mode": 1,
+      "strategy": "closed-only-220ms-cadence",
+      "result": {
+        "mode": 1,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 45,
+        "maxStreak": 45,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "inputs": 45,
+      "wallMs": 30101
+    },
+    {
+      "mode": 1,
+      "strategy": "closed-only-150ms-cadence",
+      "result": {
+        "mode": 1,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 21,
+        "maxStreak": 15,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "inputs": 23,
+      "wallMs": 30043
+    },
+    {
+      "mode": 2,
+      "strategy": "100ms-reaction-one-swipe",
+      "result": {
+        "mode": 2,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 11,
+        "maxStreak": 11,
+        "specialCount": 0,
+        "perfectCount": 3,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "swipeApiWallMs": [
+        274,
+        341,
+        249,
+        297,
+        234,
+        224,
+        230,
+        250,
+        224,
+        240,
+        231
+      ]
+    },
+    {
+      "mode": 2,
+      "strategy": "190ms-reaction-one-swipe",
+      "result": {
+        "mode": 2,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 6,
+        "maxStreak": 5,
+        "specialCount": 2,
+        "perfectCount": 4,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "swipeApiWallMs": [
+        228,
+        259,
+        238,
+        268,
+        362,
+        3385,
+        888,
+        1512,
+        289,
+        419
+      ]
+    },
+    {
+      "mode": 3,
+      "strategy": "300ms-after-visible-warning",
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 287,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    },
+    {
+      "mode": 3,
+      "strategy": "450ms-after-visible-warning",
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 122,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    },
+    {
+      "mode": 3,
+      "strategy": "520ms-after-visible-warning",
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 3,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    },
+    {
+      "mode": 3,
+      "strategy": "670ms-after-visible-warning",
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": false,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    }
+  ]
+}

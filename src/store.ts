@@ -1,10 +1,11 @@
-import { COLLECTION, RULES_VERSION, compareResults, courseKey, isDailyDate, isRunResult, type RunContext, type RunResult } from './progression';
+import { JOURNEY_VERSION, STAGE_ORDER, journeyStatus as statusForJourney, loadJourney, stageProof, type Journey, type JourneyEvidence, type JourneyStatus } from './journey';
+import { COLLECTION, RULES_VERSION, compareResults, courseKey, isDailyDate, isRunResult, type ModeId, type RunContext, type RunResult } from './progression';
 
 type StoredRun = { best: RunResult | null; last: RunResult; updatedAt: number };
 export type Save = {
   schemaVersion: 2; sound: boolean; reduced: boolean; records: Record<string, number>;
   legacyRecords: Record<string, number>; clears: number; seen: number[]; unlocked: string[];
-  runs: Record<string, StoredRun>;
+  runs: Record<string, StoredRun>; journey: Journey;
 };
 export type StorageLike = Pick<Storage, 'getItem' | 'setItem'>;
 export const SAVE_KEY = 'nekotsubushi:v2';
@@ -13,7 +14,7 @@ const reactionIds = new Set(COLLECTION.map(r => r.id));
 const MAX_COURSES = 90;
 const storage = (): StorageLike | null => { try { return globalThis.localStorage ?? null; } catch { return null; } };
 const reducedDefault = () => { try { return globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false; } catch { return false; } };
-const fresh = (reduced = reducedDefault()): Save => ({ schemaVersion: 2, sound: true, reduced, records: {}, legacyRecords: {}, clears: 0, seen: [], unlocked: [], runs: {} });
+const fresh = (reduced = reducedDefault()): Save => ({ schemaVersion: 2, sound: true, reduced, records: {}, legacyRecords: {}, clears: 0, seen: [], unlocked: [], runs: {}, journey: { version: JOURNEY_VERSION, proofs: {} } });
 function nonnegative(value: unknown, max = 1_000_000): number | null {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? Math.min(max, Math.floor(value)) : null;
 }
@@ -61,10 +62,63 @@ export function loadSave(source: StorageLike | null = storage(), reduced = reduc
       if (updatedAt === null) continue;
       result.runs[key] = { best: item.best ? { ...item.best } : null, last: { ...item.last }, updatedAt };
     }
+    result.journey = loadJourney(raw.journey);
+    reconcileJourney(result);
     result.runs = pruneRuns(result.runs);
   }
   return result;
 }
+
+/** Stored detailed results are evidence; old numeric scores never imply a
+ * streak, timing grade, near miss or a successful punch margin. */
+function reconcileJourney(state: Save): ModeId[] {
+  const added: ModeId[] = [];
+  for (const mode of STAGE_ORDER) {
+    const status = statusForJourney(state.journey);
+    if (status.cleared.includes(mode)) continue;
+    if (status.current !== mode) break;
+    let proof = null;
+    if (mode === 5) {
+      // Old collection totals have no same-session proof. Keep expressions,
+      // but require a new six-gesture session before progressing to stage 6.
+      break;
+    } else {
+      for (const run of Object.values(state.runs)) {
+        const candidates = [run.best, run.last];
+        for (const result of candidates) {
+          if (result?.mode !== mode) continue;
+          proof = stageProof(mode, { result });
+          if (proof) break;
+        }
+        if (proof) break;
+      }
+    }
+    if (!proof) break;
+    state.journey.proofs[mode] = proof;
+    added.push(mode);
+  }
+  return added;
+}
+export function journeyStatus(state: Save = save): JourneyStatus { return statusForJourney(state.journey); }
+export function isStageUnlocked(mode: number, state: Save = save): boolean { return journeyStatus(state).unlocked.includes(mode as ModeId); }
+export function currentStage(state: Save = save): ModeId | null { return journeyStatus(state).current; }
+export type StageCompletion = { passed: boolean; newlyCleared: ModeId[]; newlyUnlocked: ModeId[]; allClear: boolean };
+/** Call once a genuine completed run (or session of cheek gestures) is known.
+ * Repeated frame/event calls are harmless; a locked stage cannot skip ahead. */
+export function completeStage(mode: ModeId, evidence: JourneyEvidence): StageCompletion {
+  const before = journeyStatus();
+  const proof = stageProof(mode, evidence);
+  const permitted = before.unlocked.includes(mode);
+  const newlyCleared: ModeId[] = [];
+  if (permitted && proof && before.current === mode) {
+    save.journey.proofs[mode] = proof;
+    newlyCleared.push(mode, ...reconcileJourney(save));
+    persist();
+  }
+  const after = journeyStatus();
+  return { passed: permitted && proof !== null, newlyCleared, newlyUnlocked: after.unlocked.filter(stage => !before.unlocked.includes(stage)), allClear: after.allClear };
+}
+
 export let save: Save = loadSave();
 export function persist() { try { storage()?.setItem(SAVE_KEY, JSON.stringify(save)); } catch {} }
 function clone(result: RunResult | undefined | null): RunResult | null { return result ? { ...result } : null; }

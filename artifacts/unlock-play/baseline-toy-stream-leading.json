@@ -1,0 +1,34 @@
+{
+  "sourceCommit": "88b87303b83b4269adba07fb1390ad75cceaa20b",
+  "method": "AI-operated normal-clock trusted CDP mouse stream, cached screen coordinates and continuous geometric route; not a human/physical-device playtest. No future timings/engine changes/fixture/step. Protocol packets are sent at wall-clock intervals without waiting for each renderer acknowledgement.",
+  "runs": [
+    {
+      "mode": 6,
+      "strategy": "continuous-perimeter-1100pxs-initial240px-target",
+      "wallMs": 16165,
+      "events": 457,
+      "result": {
+        "status": "result",
+        "phase": "CLEAR",
+        "elapsed": 15,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 15000,
+          "nearMissMs": 350,
+          "cheekGesture": null
+        },
+        "success": true,
+        "toyX": 90,
+        "toyY": 944.1200169958736,
+        "catX": 114.65851276530616,
+        "catY": 825.8216083640655
+      }
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-28T04:53:47.898Z",
+  "baseURL": "http://127.0.0.1:5180",
+  "entryAsset": "/assets/index-B1WKOo-7.js",
+  "browser": "chromium",
+  "browserVersion": "154.0.8037.57",
+  "checks": [
+    {
+      "name": "UI: six modes, daily entry, twelve reactions and desktop layout",
+      "passed": true,
+      "elapsedMs": 14229
+    },
+    {
+      "name": "METRICS: poke streak and caught reset, box perfect, hat rhythm",
+      "passed": true,
+      "elapsedMs": 10857
+    },
+    {
+      "name": "METRICS: punch remaining time and feather near-miss without debug persistence",
+      "passed": true,
+      "elapsedMs": 5081
+    },
+    {
+      "name": "COLLECTION: real cheek gesture unlocks, previews and survives reload",
+      "passed": true,
+      "elapsedMs": 16209
+    },
+    {
+      "name": "DAILY: Japan midnight changes next course, retry retains the started course",
+      "passed": true,
+      "elapsedMs": 3359
+    },
+    {
+      "name": "SAVE: v1 remains intact, preserved old records and concrete new best delta",
+      "passed": true,
+      "elapsedMs": 7421
+    },
+    {
+      "name": "SOCIAL: real result, copied same-course link, PNG and friend reply",
+      "passed": true,
+      "elapsedMs": 13216
+    },
+    {
+      "name": "RETRY: twenty real rounds keep one canvas and reuse essential textures",
+      "passed": true,
+      "elapsedMs": 42181
+    },
+    {
+      "name": "LINKS: unsupported rules and malformed challenges show an explanation",
+      "passed": true,
+      "elapsedMs": 1167
+    },
+    {
+      "name": "STORAGE: unavailable local storage still permits initial game input and replay",
+      "passed": true,
+      "elapsedMs": 3247
+    },
+    {
+      "name": "SHARE: cancelling the native sheet keeps the result and permits retry",
+      "passed": true,
+      "elapsedMs": 4496
+    },
+    {
+      "name": "ERRORS: no JavaScript, asset HTTP or console errors",
+      "passed": true,
+      "elapsedMs": 0
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "menu-mobile.png",
+    "collection-mobile.png",
+    "menu-desktop.png",
+    "hat-rhythm.png",
+    "punch-close.png",
+    "cheek-discovery.png",
+    "collection-live-preview.png",
+    "collection-unlocked.png",
+    "daily-course.png",
+    "new-best.png",
+    "challenge-card.png",
+    "friend-comparison.png",
+    "retry-round-20.png"
+  ],
+  "measurements": {
+    "renderBuffer": {
+      "initial": {
+        "buffer": 390,
+        "display": 390,
+        "dpr": 1
+      },
+      "resized": {
+        "buffer": 401,
+        "display": 401.265625,
+        "dpr": 1
+      }
+    },
+    "collectionLayout": {
+      "containerWidth": 320,
+      "canvasWidth": 294,
+      "hintWidth": 194
+    },
+    "collectionReload": {
+      "previewOpenDuringReload": true,
+      "waitUntil": "domcontentloaded",
+      "appReady": true,
+      "persistenceVerified": true
+    },
+    "daily": {
+      "before": {
+        "kind": "daily",
+        "mode": 4,
+        "seed": 1576595987,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-26"
+      },
+      "after": {
+        "kind": "daily",
+        "mode": 6,
+        "seed": 23183726,
+        "rulesVersion": 2,
+        "dailyDate": "2026-10-27"
+      }
+    },
+    "newBest": {
+      "firstRemaining": 4063,
+      "targetRemaining": 1800,
+      "improvedRemaining": 1618
+    },
+    "social": {
+      "sourceContext": {
+        "kind": "normal",
+        "mode": 3,
+        "seed": 4013940553,
+        "rulesVersion": 2
+      },
+      "targetContext": {
+        "kind": "challenge",
+        "rulesVersion": 2,
+        "mode": 3,
+        "seed": 4013940553,
+        "target": {
+          "mode": 3,
+          "rulesVersion": 2,
+          "success": true,
+          "count": 0,
+          "maxStreak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": 3905,
+          "survivalMs": 0,
+          "nearMissMs": 0
+        }
+      },
+      "link": "http://127.0.0.1:5180/?challenge=eyJ2IjoyLCJtIjozLCJzIjo0MDEzOTQwNTUzLCJyIjpbMSwwLDAsMCwwLDAsMzkwNSwwLDBdfQ",
+      "reply": "http://127.0.0.1:5180/?challenge=eyJ2IjoyLCJtIjozLCJzIjo0MDEzOTQwNTUzLCJyIjpbMSwwLDAsMCwwLDAsMzM2NSwwLDBdfQ"
+    },
+    "retry": {
+      "rounds": 20,
+      "readyMilliseconds": [
+        628,
+        693,
+        730,
+        836,
+        778,
+        763,
+        719,
+        820,
+        653,
+        803,
+        573,
+        641,
+        626,
+        696,
+        851,
+        517,
+        803,
+        606,
+        740,
+        838
+      ],
+      "essentialTextureRequests": 0
+    }
+  },
+  "passed": 12,
+  "failed": 0,
+  "method": "Trusted Playwright mouse pointer input. Metric and denied-storage checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Constructed qualifying historical records prepare already-unlocked regression contexts; fresh-player gating is covered by journey-browser. Viewports are emulated.",
+  "limitations": [
+    "Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised."
+  ]
+}

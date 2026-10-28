@@ -1,14 +1,16 @@
 import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { seedHistoricalScript } from './journey-fixtures.ts';
 
 const base = process.env.BASE_URL || 'http://127.0.0.1:5174';
 const out = 'artifacts/hat-motion';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
 const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+await page.addInitScript(seedHistoricalScript());
 const report: any = { date: new Date().toISOString(), baseURL: base, checks: [], frames: {}, errors: [],
-  method: 'Real pointer input; deterministic engine clock; hat fall uses actual presentation frames. Mobile viewport is emulation.' };
+  method: 'Real pointer input; deterministic engine clock; hat fall uses actual presentation frames. Constructed new journey proofs prepare an unlocked regression player. Mobile viewport is emulation.' };
 page.on('pageerror', e => report.errors.push(e.message));
 page.on('console', e => { if (e.type() === 'error') report.errors.push(e.text()); });
 page.on('response', r => { if (r.status() >= 400) report.errors.push(`HTTP ${r.status()} ${r.url()}`); });

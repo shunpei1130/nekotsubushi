@@ -1,0 +1,344 @@
+{
+  "method": "AI browser-operated normal-clock trusted mouse inputs, not human/physical-device play. Observes current phase and position only. No engine timing/schedule/step/fixtures.",
+  "date": "2026-10-28T04:36:02.699Z",
+  "runs": [
+    {
+      "mode": 4,
+      "strategy": "visual-120ms",
+      "taps": 10,
+      "wallMs": 16377,
+      "result": {
+        "phase": "WEARING",
+        "status": "result",
+        "score": 10,
+        "elapsed": 15,
+        "remaining": 0,
+        "success": true,
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 0,
+          "nearMissMs": 0,
+          "cheekGesture": null
+        }
+      }
+    },
+    {
+      "mode": 5,
+      "strategy": "six visibly guided gestures",
+      "wallMs": 18071,
+      "gestureResults": [
+        {
+          "intended": "right",
+          "observed": "right"
+        },
+        {
+          "intended": "left",
+          "observed": "left"
+        },
+        {
+          "intended": "up",
+          "observed": "up"
+        },
+        {
+          "intended": "down",
+          "observed": "down"
+        },
+        {
+          "intended": "inward",
+          "observed": "inward"
+        },
+        {
+          "intended": "gentle",
+          "observed": "gentle"
+        }
+      ],
+      "result": {
+        "phase": "IDLE",
+        "status": "playing",
+        "score": 0,
+        "elapsed": 0,
+        "remaining": 0,
+        "success": false,
+        "catX": 715.16,
+        "catY": 635.36,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 0,
+          "nearMissMs": 0,
+          "cheekGesture": "gentle"
+        }
+      }
+    },
+    {
+      "mode": 6,
+      "strategy": "stationary",
+      "wallMs": 1441,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.2152608074473618,
+        "remaining": 14.784739192552639,
+        "success": false,
+        "catX": 765.6683669979145,
+        "catY": 533.8367508784014,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 215,
+          "nearMissMs": 215,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.067,
+          "state": {
+            "phase": "PLAYING",
+            "status": "playing",
+            "score": 0,
+            "elapsed": 0.006700000000011642,
+            "remaining": 14.993299999999989,
+            "success": false,
+            "catX": 716.7049286514365,
+            "catY": 632.2546496258459,
+            "toyX": 846.9,
+            "toyY": 300.96,
+            "cheekX": 0,
+            "cheekY": 0,
+            "metrics": {
+              "maxStreak": 0,
+              "streak": 0,
+              "specialCount": 0,
+              "perfectCount": 0,
+              "perfectStreak": 0,
+              "maxPerfectStreak": 0,
+              "remainingMs": null,
+              "survivalMs": 6,
+              "nearMissMs": 6,
+              "cheekGesture": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "strategy": "rectangle-2.8s",
+      "wallMs": 1913,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.2152609008201809,
+        "remaining": 14.78473909917982,
+        "success": false,
+        "catX": 766.667751462952,
+        "catY": 531.8279597801578,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 215,
+          "nearMissMs": 215,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.071,
+          "state": {
+            "phase": "PLAYING",
+            "status": "playing",
+            "score": 0,
+            "elapsed": 0.009300000000046566,
+            "remaining": 14.990699999999954,
+            "success": false,
+            "catX": 717.304568719335,
+            "catY": 631.0493560949928,
+            "toyX": 846.9,
+            "toyY": 300.96,
+            "cheekX": 0,
+            "cheekY": 0,
+            "metrics": {
+              "maxStreak": 0,
+              "streak": 0,
+              "specialCount": 0,
+              "perfectCount": 0,
+              "perfectStreak": 0,
+              "maxPerfectStreak": 0,
+              "remainingMs": null,
+              "survivalMs": 9,
+              "nearMissMs": 9,
+              "cheekGesture": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "strategy": "oval-3.5s",
+      "wallMs": 1850,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.21526042276442175,
+        "remaining": 14.784739577235579,
+        "success": false,
+        "catX": 766.063533400591,
+        "catY": 533.0424552096254,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 215,
+          "nearMissMs": 215,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.085,
+          "state": {
+            "phase": "PLAYING",
+            "status": "playing",
+            "score": 0,
+            "elapsed": 0.010899999999965075,
+            "remaining": 14.989100000000034,
+            "success": false,
+            "catX": 717.6735806743973,
+            "catY": 630.3076316071632,
+            "toyX": 846.9,
+            "toyY": 300.96,
+            "cheekX": 0,
+            "cheekY": 0,
+            "metrics": {
+              "maxStreak": 0,
+              "streak": 0,
+              "specialCount": 0,
+              "perfectCount": 0,
+              "perfectStreak": 0,
+              "maxPerfectStreak": 0,
+              "remainingMs": null,
+              "survivalMs": 10,
+              "nearMissMs": 10,
+              "cheekGesture": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "strategy": "oval-2.8s",
+      "wallMs": 1681,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.21526071700899568,
+        "remaining": 14.784739282991005,
+        "success": false,
+        "catX": 765.9240205471607,
+        "catY": 533.3228799989487,
+        "toyX": 846.9,
+        "toyY": 300.96,
+        "cheekX": 0,
+        "cheekY": 0,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 215,
+          "nearMissMs": 215,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.068,
+          "state": {
+            "phase": "PLAYING",
+            "status": "playing",
+            "score": 0,
+            "elapsed": 0.005400000000023283,
+            "remaining": 14.994599999999977,
+            "success": false,
+            "catX": 716.4051075277149,
+            "catY": 632.8572985817459,
+            "toyX": 846.9,
+            "toyY": 300.96,
+            "cheekX": 0,
+            "cheekY": 0,
+            "metrics": {
+              "maxStreak": 0,
+              "streak": 0,
+              "specialCount": 0,
+              "perfectCount": 0,
+              "perfectStreak": 0,
+              "maxPerfectStreak": 0,
+              "remainingMs": null,
+              "survivalMs": 5,
+              "nearMissMs": 5,
+              "cheekGesture": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

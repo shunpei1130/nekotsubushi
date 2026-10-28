@@ -3,6 +3,7 @@ import { chromium, type Browser, type BrowserContext, type Page } from '@playwri
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { seedHistoricalScript } from './journey-fixtures.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const out = resolve(root, 'artifacts/improved-motion');
@@ -11,7 +12,7 @@ const reportFile = process.env.QA_REPORT_NAME ?? 'report.json';
 const filter = process.env.QA_FILTER ? new RegExp(process.env.QA_FILTER) : null;
 const report: any = {
   date: new Date().toISOString(), baseURL: base, browser: '',
-  method: 'Real browser pointer input at 390×844. test=1 freezes game time except __game.step; presentation animation uses real render time. Videos and keyframes show entry/landing, hand retreat, punch return and cheek deformation.',
+  method: 'Real browser pointer input at 390×844. test=1 freezes game time except __game.step; presentation animation uses real render time. Videos and keyframes show entry/landing, hand retreat, punch return and cheek deformation. Constructed qualifying new journey proofs prepare an unlocked regression player.',
   checks: [], frames: {}, screenshots: [], videos: [], errors: [],
   limitations: ['Mobile viewport emulation is not a physical iPhone or Android device test.', 'Video timing includes screenshot and browser automation overhead; engine events are advanced explicitly.'],
 };
@@ -91,6 +92,7 @@ async function check(name: string, task: () => Promise<void>) {
 async function recorded(name: string, task: (page: Page) => Promise<void>) {
   const context = await browser!.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, hasTouch: true,
     recordVideo: { dir: resolve(out, 'video'), size: { width: 390, height: 844 } } });
+  await context.addInitScript(seedHistoricalScript());
   const page = await context.newPage();
   page.on('pageerror', error => report.errors.push({ mode: name, message: error.message }));
   page.on('console', message => { if (message.type() === 'error') report.errors.push({ mode: name, message: message.text() }); });
@@ -124,6 +126,7 @@ try {
 
   await check('M01: caught reaction hides the scoring hand and +1', async () => {
     const context = await browser!.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
+    await context.addInitScript(seedHistoricalScript());
     const page = await context.newPage();
     try {
       await open(page, 1);
@@ -247,6 +250,7 @@ try {
 
   await check('M03-REDUCED: essential release and punch retreat complete with reduced motion', async () => {
     const context = await browser!.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+    await context.addInitScript(seedHistoricalScript());
     const page = await context.newPage();
     try {
       await open(page, 3);
@@ -340,6 +344,7 @@ try {
 
   await check('FIXTURES: six updated native-resolution reference poses', async () => {
     const context: BrowserContext = await browser!.newContext({ viewport: { width: 941, height: 1672 }, deviceScaleFactor: 1 });
+    await context.addInitScript(seedHistoricalScript());
     const page = await context.newPage();
     try {
       for (let mode = 1; mode <= 6; mode++) {

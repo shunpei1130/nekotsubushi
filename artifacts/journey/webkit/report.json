@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-28T04:55:05.018Z",
+  "baseURL": "http://127.0.0.1:5180",
+  "browser": "webkit",
+  "browserVersion": "26.0",
+  "entryAsset": "/assets/index-B1WKOo-7.js",
+  "goals": {
+    "1": {
+      "count": 40,
+      "maxStreak": 35
+    },
+    "2": {
+      "count": 10,
+      "perfectCount": 3
+    },
+    "3": {
+      "remainingMs": 150
+    },
+    "4": {
+      "count": 13,
+      "perfectCount": 0
+    },
+    "5": {
+      "gestures": 6
+    },
+    "6": {
+      "survivalMs": 15000,
+      "nearMissMs": 0
+    }
+  },
+  "checks": [
+    {
+      "name": "FRESH: one stage only, visible conditions and locked-card guidance",
+      "passed": true,
+      "elapsedMs": 3844
+    },
+    {
+      "name": "ROUTES: debug, fixture, direct, friend and daily links cannot jump locked stages",
+      "passed": true,
+      "elapsedMs": 3229
+    },
+    {
+      "name": "MIGRATION: exact old same-run evidence opens only its continuous prefix",
+      "passed": true,
+      "elapsedMs": 15954
+    },
+    {
+      "name": "MIGRATION: v1 totals, missing first stage, corrupt proofs and unsupported data never grant access",
+      "passed": true,
+      "elapsedMs": 7973
+    },
+    {
+      "name": "COMPLETION: exact boundary pass/fail, next stage, repeated result, reload and all clear",
+      "passed": true,
+      "elapsedMs": 20977
+    },
+    {
+      "name": "DEBUG: accelerated result never saves a clear or unlocks another stage",
+      "passed": true,
+      "elapsedMs": 2315
+    },
+    {
+      "name": "CHEEK SESSION: discoveries across separate visits do not clear the single-session task",
+      "passed": true,
+      "elapsedMs": 9964
+    },
+    {
+      "name": "PENDING FRIEND: a locked invitation keeps its course and opens after the preceding clear",
+      "passed": true,
+      "elapsedMs": 4130
+    },
+    {
+      "name": "LAYOUT: desktop, landscape and denied storage retain one initial game",
+      "passed": true,
+      "elapsedMs": 4156
+    },
+    {
+      "name": "ERRORS: no JavaScript, HTTP asset or console errors",
+      "passed": true,
+      "elapsedMs": 0
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "fresh-menu-mobile.png",
+    "locked-card-guidance.png",
+    "locked-challenge-link.png",
+    "all-clear-from-new-proofs.png",
+    "stage-1-clear.png",
+    "stage-2-clear.png",
+    "stage-3-clear.png",
+    "stage-4-clear.png",
+    "stage-6-clear.png",
+    "six-portraits-still-stage-five.png",
+    "fresh-menu-desktop.png",
+    "stage-one-landscape.png"
+  ],
+  "passed": 10,
+  "failed": 0,
+  "method": "Constructed historical-save fixtures and injected finished-engine results verify deterministic boundaries and UI/store wiring. Fresh game input and six cheek gestures use trusted Playwright pointer input and real elapsed time. These fixtures are not human playtest evidence.",
+  "limitations": [
+    "390px mobile, desktop and landscape viewports are emulated. Linux WebKit is not a physical iPhone. Difficulty calibration is in a separate playtest report."
+  ]
+}

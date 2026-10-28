@@ -4,6 +4,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { resolve, dirname, join } from 'node:path';
 import assert from 'node:assert/strict';
+import { historicalSave, seedHistoricalScript } from './journey-fixtures.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const browserKind = process.env.BROWSER === 'webkit' ? 'webkit' : 'chromium';
@@ -13,7 +14,7 @@ const base = process.env.BASE_URL ?? 'http://127.0.0.1:5173';
 const report: any = {
   date: new Date().toISOString(), baseURL: base,
   browser: '', platform: process.platform,
-  method: 'Chromium with real mouse/pointer browser input. Mechanics use window.__game.step; persistence uses a normal real-clock trial. Device viewports are emulation, not physical-device certification.',
+  method: 'Chromium with real mouse/pointer browser input. Mechanics use window.__game.step; persistence uses a normal real-clock trial. Constructed qualifying new journey proofs prepare unlocked regression users; fresh-player locks are tested separately. Device viewports are emulation, not physical-device certification.',
   checks: [], errors: [], screenshots: [], snapshots: {}, performance: {},
   limitations: ['Physical iPhone Safari and Android devices are not connected. Chromium device-sized viewports do not certify physical Safari behavior.'],
 };
@@ -110,6 +111,7 @@ try {
   }
   report.browser = await browser.version();
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, hasTouch: true });
+  await context.addInitScript(seedHistoricalScript());
   const page = await context.newPage();
   page.on('response', (response) => { if (response.status() >= 400) report.httpErrors.push({url: response.url(), status: response.status()}); });
   page.on('pageerror', (error) => runtimeErrors.push(error.message));
@@ -396,6 +398,7 @@ try {
   await check('SAVE-01: successful record persists; corrupt and unavailable storage remain playable', async () => {
     await page.goto(base, { waitUntil: 'networkidle' });
     await page.evaluate(() => { localStorage.removeItem('nekotsubushi:v1'); localStorage.removeItem('nekotsubushi:v2'); });
+    await page.evaluate(value=>localStorage.setItem('nekotsubushi:v2',JSON.stringify(value)),historicalSave(2));
     // Preview/test clocks deliberately cannot save. Exercise a normal trial
     // using real elapsed time and trusted pointer input instead.
     await page.goto(`${base}/?mode=3`, { waitUntil: 'networkidle' });

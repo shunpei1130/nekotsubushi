@@ -1,0 +1,90 @@
+{
+  "sourceCommit": "88b87303b83b4269adba07fb1390ad75cceaa20b",
+  "method": "AI-operated normal-clock trusted CDP mouse stream, cached screen coordinates and continuous geometric route; not a human/physical-device playtest. No future timings/engine changes/fixture/step. Protocol packets are sent at wall-clock intervals without waiting for each renderer acknowledgement.",
+  "runs": [
+    {
+      "mode": 6,
+      "strategy": "continuous-rectangle-3.3s",
+      "wallMs": 16170,
+      "events": 451,
+      "result": {
+        "status": "result",
+        "phase": "CAPTURED",
+        "elapsed": 0.18451244603543962,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 184,
+          "nearMissMs": 184,
+          "cheekGesture": null
+        },
+        "success": false,
+        "toyX": 754.5560102413862,
+        "toyY": 300.96,
+        "catX": 727.7301101554598,
+        "catY": 543.5082774466368
+      }
+    },
+    {
+      "mode": 6,
+      "strategy": "continuous-rectangle-2.7s",
+      "wallMs": 16168,
+      "events": 434,
+      "result": {
+        "status": "result",
+        "phase": "CAPTURED",
+        "elapsed": 0.17639845749680244,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 176,
+          "nearMissMs": 176,
+          "cheekGesture": null
+        },
+        "success": false,
+        "toyX": 758.2474636325464,
+        "toyY": 300.96,
+        "catX": 725.3907921073641,
+        "catY": 543.9868394588324
+      }
+    },
+    {
+      "mode": 6,
+      "strategy": "continuous-rectangle-2.2s",
+      "wallMs": 16178,
+      "events": 459,
+      "result": {
+        "status": "result",
+        "phase": "CLEAR",
+        "elapsed": 15,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 15000,
+          "nearMissMs": 274,
+          "cheekGesture": null
+        },
+        "success": true,
+        "toyX": 857.7498642391415,
+        "toyY": 1211.223062414844,
+        "catX": 469.98156842791576,
+        "catY": 1315.5393050611017
+      }
+    }
+  ]
+}

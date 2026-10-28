@@ -1,0 +1,115 @@
+{
+  "method": "AI browser-operated trusted mouse, real elapsed clock, current visible WARNING only. Prerequisite stages 1/2 are seeded using the actual recorded qualifying baseline runs, not fabricated scores. No future deadline/step/fixture/engine mutation. Not human/physical-device play.",
+  "entry": "/assets/index-B1WKOo-7.js",
+  "goalMs": 150,
+  "trials": [
+    {
+      "requestedWaitMs": 380,
+      "observationToReleaseMs": 392,
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 212,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "stagePassed": false
+    },
+    {
+      "requestedWaitMs": 420,
+      "observationToReleaseMs": 434,
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 179,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "stagePassed": false
+    },
+    {
+      "requestedWaitMs": 420,
+      "observationToReleaseMs": 539,
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 62,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "stagePassed": true
+    },
+    {
+      "requestedWaitMs": 450,
+      "observationToReleaseMs": 510,
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 109,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "stagePassed": true
+    },
+    {
+      "requestedWaitMs": 450,
+      "observationToReleaseMs": 467,
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 174,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "stagePassed": false
+    },
+    {
+      "requestedWaitMs": 520,
+      "observationToReleaseMs": 589,
+      "result": {
+        "mode": 3,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": 41,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      },
+      "stagePassed": true
+    }
+  ]
+}

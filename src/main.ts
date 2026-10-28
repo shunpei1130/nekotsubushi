@@ -2,7 +2,8 @@ import './style.css';
 import { GameEngine, W, H } from './engine';
 import { GameScene } from './scene';
 import { modes, asset, icons } from './data';
-import { save, persist, sound, bestResult, previousResult, recordRun, collectCheek, unlockReaction } from './store';
+import { save, persist, sound, bestResult, previousResult, recordRun, collectCheek, unlockReaction, journeyStatus, isStageUnlocked, currentStage, completeStage, type StageCompletion } from './store';
+import { CHEEK_GESTURES, stageGoal, evaluateStage } from './journey';
 import { COLLECTION, normalContext, dailyContext, parseChallenge, encodeChallenge, resultFromEngine, compareResults, formatResult, type RunContext, type RunResult, type ModeId } from './progression';
 import { prepareShareCard, sharePrepared, copyChallenge, downloadShareCard, revokeShareCard, type ShareCard } from './share';
 
@@ -59,6 +60,12 @@ let collectionPaused = false;
 let collectionScene: GameScene | null = null;
 let collectionGeneration = 0;
 let collectionLoading = false;
+let stageCompletion: StageCompletion | null = null;
+let cheekSession = new Set<import('./progression').CheekGesture>();
+const PENDING_KEY = 'nekotsubushi:pending-challenge';
+let pendingRun: RunContext | null = (() => {
+  try { const link = sessionStorage.getItem(PENDING_KEY); return link ? parseChallenge(link).context ?? null : null; } catch { return null; }
+})();
 let toastTimer: ReturnType<typeof setTimeout> | undefined;
 const previewRun = capture || fixtureMode || testMode || params.has('time') || params.has('seed');
 window.__ready = false;
@@ -118,6 +125,7 @@ function cleanup() {
   scene?.destroy(); scene = null;
   engine = null;
   runContext = null; runResult = null; resultRecord = null;
+  stageCompletion = null; cheekSession.clear();
   delete window.__game;
   modalState = '';
   loading = false;
@@ -133,6 +141,7 @@ async function menu() {
   document.title = '猫つぶし｜ひとゆび、ねこあそび。';
   const daily = dailyContext();
   const dailyBest = bestResult(daily);
+  const journey = journeyStatus();
   app.innerHTML = `<main class="menu-shell">
     <header class="menu-header">
       <span class="menu-eyebrow">ちょっと、猫とひと休み。</span>
@@ -140,21 +149,23 @@ async function menu() {
       <p class="menu-subtitle">ひとゆび、ねこあそび。</p>
       <button class="icon-button menu-settings" data-action="settings" aria-label="音と動きの設定">${icons.settings}</button>
     </header>
-    <button class="daily-card" data-action="daily"><img src="${asset(`thumb-${two(daily.mode)}`)}" alt=""><span class="daily-copy"><small>${daily.dailyDate}・今日のねこチャレンジ</small><strong>${modes[daily.mode - 1].name}</strong><span>${dailyBest ? `今日のベスト ${formatResult(dailyBest)}` : 'みんな同じお題で、ひと勝負。'}</span></span><span class="daily-arrow" aria-hidden="true">›</span></button>
+    <section class="journey-summary journey-progress ${journey.allClear ? 'is-complete' : ''}" aria-label="ステージの進み具合"><div><span class="menu-eyebrow">ひとつクリアで、次のねこ。</span><strong>${journey.allClear ? '全6ステージ、クリア！' : `${journey.cleared.length} / 6 クリア`}</strong><p>${journey.allClear ? 'おめでとう！ どのあそびでも、さらに記録に挑めます。' : `次は ${two(journey.current!)} ${modes[journey.current! - 1].name}`}</p></div><span class="journey-paws" aria-hidden="true">${Array.from({length:6},(_,i)=>`<i class="${i < journey.cleared.length ? 'is-done' : i === journey.cleared.length ? 'is-current' : ''}">${i < journey.cleared.length ? '✓' : i+1}</i>`).join('')}</span></section>
+    ${pendingRun ? `<aside class="pending-challenge"><strong>${pendingRun.kind === 'daily' ? '日替わりのお題' : '友だちの挑戦状'}をおあずかり中</strong><p>${two(pendingRun.mode)} ${modes[pendingRun.mode-1].name}。${isStageUnlocked(pendingRun.mode) ? 'あそべるようになりました！' : '先にステージをクリアして開放しよう。'}</p><button class="secondary-button" data-action="pending-challenge">${isStageUnlocked(pendingRun.mode) ? 'このお題であそぶ' : '開放までの道のりを見る'}</button></aside>` : ''}
+    <button class="daily-card ${isStageUnlocked(daily.mode) ? '' : 'is-stage-locked'}" data-action="daily"><img src="${asset(`thumb-${two(daily.mode)}`)}" alt=""><span class="daily-copy"><small>${daily.dailyDate}・今日のねこチャレンジ</small><strong>${modes[daily.mode - 1].name}</strong><span>${!isStageUnlocked(daily.mode) ? `未解放・${two(daily.mode-1)}クリアであそべます` : dailyBest ? `今日のベスト ${formatResult(dailyBest)}` : 'みんな同じお題で、ひと勝負。'}</span></span><span class="daily-arrow" aria-hidden="true">›</span></button>
     <button class="collection-entry" data-action="collection"><span>${icons.paw}</span><strong>ねこのきろく</strong><span>表情 ${save.unlocked.length} / ${COLLECTION.length}</span><span aria-hidden="true">›</span></button>
-    <div class="menu-section-label"><span>今日は、どの猫とあそぶ？</span><span>6つのあそび</span></div>
+    <div class="menu-section-label"><span>${journey.allClear ? '今日は、どの猫とあそぶ？' : 'クリアして、次のあそびへ。'}</span><span>${journey.unlocked.length} / 6 開放</span></div>
     <section class="mode-grid" aria-label="ゲームを選ぶ">${modes.map(m => `
-      <button class="mode-card mode-card-${m.id}" data-mode="${m.id}" aria-label="${m.name}。${m.operation}。${m.time}">
+      <button class="mode-card mode-card-${m.id} ${isStageUnlocked(m.id) ? journey.cleared.includes(m.id as ModeId) ? 'is-stage-cleared' : 'is-stage-current' : 'is-stage-locked'}" data-mode="${m.id}" aria-disabled="${!isStageUnlocked(m.id)}" aria-label="${m.name}。${isStageUnlocked(m.id) ? m.operation + '。クリア条件：' + stageGoal(m.id as ModeId) : '未解放。' + two(m.id-1) + 'のクリアで開放'}">
         <div class="card-art"><span class="card-number">${two(m.id)}</span><span class="card-time">${m.time}</span>
           <span class="card-art-halo"></span><img src="${asset(`thumb-${two(m.id)}`)}" alt="${m.tag}" loading="eager" decoding="async">
           <span class="card-art-paw">${icons.paw}</span>
         </div>
-        <div class="card-copy"><h2>${m.id === 6 ? 'あとちょっとで<br>届くのに' : m.name}</h2><p>${m.operation}</p><span class="card-record">${recordLabel(m.id)}</span><span class="card-arrow" aria-hidden="true">›</span></div>
+        <div class="card-copy"><span class="stage-card-state">${journey.cleared.includes(m.id as ModeId) ? '✓ クリア済み' : isStageUnlocked(m.id) ? 'いまのステージ' : `未解放・${two(m.id-1)}クリアで開放`}</span><h2>${m.id === 6 ? 'あとちょっとで<br>届くのに' : m.name}</h2><p>${m.operation}</p><span class="card-goal">${stageGoal(m.id as ModeId)}</span><span class="card-record">${recordLabel(m.id)}</span><span class="card-arrow" aria-hidden="true">›</span></div>
       </button>`).join('')}
     </section>
     <footer class="menu-footer"><span>${icons.paw}</span><p>ふわふわを、ひとりじめ。<small>登録いらず。スマホでも、パソコンでも。</small></p></footer>
     <dialog id="settings-dialog" aria-labelledby="settings-title"><form method="dialog"><button class="dialog-close" aria-label="閉じる">×</button><span class="dialog-paw">${icons.paw}</span><h2 id="settings-title">あそびの設定</h2><label class="setting-row"><span>音をならす<small>ぷに、ぽふ。小さな音で。</small></span><input type="checkbox" name="sound" ${save.sound ? 'checked' : ''}><span class="switch" aria-hidden="true"></span></label><label class="setting-row"><span>動きをひかえめに<small>大きな揺れやきらめきを減らす</small></span><input type="checkbox" name="reduced" ${save.reduced ? 'checked' : ''}><span class="switch" aria-hidden="true"></span></label><button class="primary-button" value="close">これであそぶ</button><p class="settings-footnote">記録と設定は、この端末に保存されます。</p></form></dialog>
-  </main>${collectionDialogHtml()}`;
+  </main>${collectionDialogHtml()}<dialog id="stage-lock-dialog" aria-labelledby="stage-lock-title"></dialog>`;
   const dialog = document.querySelector<HTMLDialogElement>('#settings-dialog')!;
   dialog.addEventListener('change', () => {
     save.sound = dialog.querySelector<HTMLInputElement>('[name="sound"]')!.checked;
@@ -165,6 +176,27 @@ async function menu() {
   await Promise.allSettled(Array.from(app.querySelectorAll<HTMLImageElement>('.mode-card img,.daily-card img')).map(img => img.decode()));
   await document.fonts.ready;
   window.__ready = true;
+}
+
+function showStageLock(id: ModeId) {
+  const dialog = document.querySelector<HTMLDialogElement>('#stage-lock-dialog');
+  if (!dialog) return;
+  const current = currentStage();
+  dialog.innerHTML = `<button class="dialog-close" data-action="close-stage-lock" aria-label="閉じる">×</button><span class="menu-eyebrow">ひとつずつ、ねこのお相手。</span><h2 id="stage-lock-title">${two(id)}は、まだおあずけ。</h2><p>${two(id-1)}をクリアすると開放されます。${current ? `まずは ${two(current)} ${modes[current-1].name}から。` : ''}</p>${current ? `<div class="lock-goal"><strong>いまのクリア条件</strong><p>${stageGoal(current)}</p></div><button class="primary-button" data-action="journey-current">${two(current)}に挑戦する</button>` : ''}<button class="text-button" data-action="close-stage-lock">メニューを見る</button><p class="settings-footnote">記録や見つけた表情は、そのまま残ります。</p>`;
+  dialog.showModal();
+}
+
+function rememberPending(context: RunContext | null) {
+  pendingRun = context ? structuredClone(context) : null;
+  try {
+    if (!context) sessionStorage.removeItem(PENDING_KEY);
+    else if (context.kind === 'challenge' && context.target) sessionStorage.setItem(PENDING_KEY,encodeChallenge(context,context.target));
+    else if (context.kind === 'daily' && context.dailyDate) sessionStorage.setItem(PENDING_KEY,`?daily=${context.dailyDate}&mode=${context.mode}`);
+  } catch {}
+}
+
+function taskHtml(id: ModeId) {
+  return `<section class="stage-task stage-goal" aria-label="クリア条件"><div><strong>${two(id)} クリア条件</strong><span data-stage="state">${journeyStatus().cleared.includes(id) ? 'クリア済み' : '次のあそびを開放しよう'}</span></div><p>${stageGoal(id)}</p><small data-stage="progress"></small>${id === 5 ? `<details class="cheek-guide"><summary>6種類の見つけ方</summary><p>右・左の頬を外へ／上へ／下へ／鼻の方へ／小さく引いて1秒待つ。離すと1種類。時間制限はありません。</p><div>${CHEEK_GESTURES.map(g=>`<span data-gesture="${g}">${({right:'右',left:'左',up:'上',down:'下',inward:'内',gentle:'そっと1秒'})[g]}</span>`).join('')}</div></details><div data-stage="cheek-clear"></div>` : ''}</section>`;
 }
 
 function hudHtml(id: number) {
@@ -181,6 +213,10 @@ function hudHtml(id: number) {
 }
 
 async function startMode(id: number, context?: RunContext) {
+  if (!isStageUnlocked(id)) {
+    if (context) rememberPending(context);
+    await menu(); showStageLock(id as ModeId); return;
+  }
   cleanup();
   window.__ready = false;
   loading = true;
@@ -198,7 +234,9 @@ async function startMode(id: number, context?: RunContext) {
   lastEventId = 0; notice = ''; noticeUntil = 0;
   document.body.className = `game-page${capture ? ' capture-page' : ''}${save.reduced ? ' reduced-motion' : ''}`;
   document.title = `${modes[id - 1].name}｜猫つぶし`;
-  const gameParams = new URLSearchParams(location.search);
+  const gameParams = runContext.kind === 'challenge' && runContext.target
+    ? new URL(encodeChallenge(runContext,runContext.target,location.origin)).searchParams
+    : new URLSearchParams(location.search);
   for (const key of ['challenge','daily']) if (runContext.kind === 'normal') gameParams.delete(key);
   if (runContext.kind === 'daily') gameParams.set('daily', runContext.dailyDate!);
   gameParams.set('mode', String(id));
@@ -206,6 +244,7 @@ async function startMode(id: number, context?: RunContext) {
   app.innerHTML = `<main class="game-view">
     ${capture ? '' : `<nav class="game-nav" aria-label="ゲームの操作"><button class="nav-back" data-action="menu">${icons.back}<span>メニューへ</span></button><span class="nav-brand">猫つぶし</span><div class="nav-right"><button class="icon-button" data-action="sound" aria-label="${save.sound ? '音を消す' : '音を出す'}" aria-pressed="${save.sound}">${soundIcon()}</button>${id === 5 ? `<button class="icon-button" data-action="collection" aria-label="表情コレクション">${icons.paw}</button>` : id === 6 ? '' : `<button class="icon-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>`}</div></nav>`}
     ${!capture && runContext.kind !== 'normal' ? `<aside class="challenge-banner"><small>${runContext.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題' : '友だちからの挑戦状'}</small><strong>${runContext.target ? '友だちの記録 ' + escapeHtml(formatResult(runContext.target)) : '今日のねこチャレンジ'}</strong><span>同じ条件で、何度でも。</span></aside>` : ''}
+    ${capture || fixtureMode ? '' : taskHtml(id as ModeId)}
     <div class="game-viewport"><div id="stage" class="stage mode-${id}" role="application" aria-label="${modes[id - 1].name}。${modes[id - 1].operation}"><div class="hud" aria-label="ゲームの状態">${hudHtml(id)}</div></div></div>
     <div class="load-layer"><span class="loading-paw">${icons.paw}</span><p>猫がおめかし中…</p><span>ふわふわを準備しています</span></div>
     <div id="modal-host"></div>
@@ -311,6 +350,7 @@ function saveResult() {
     showDiscovery(resultRecord.unlocked);
     if (resultRecord.newBest && resultRecord.previousBest) scene?.playReaction('personal-best');
     challengeUrl = encodeChallenge(runContext, runResult);
+    stageCompletion = completeStage(engine.mode as ModeId, {result:runResult});
   }
 }
 
@@ -322,7 +362,9 @@ function processEvents() {
     lastEventId = event.id;
     if (event.type === 'cheek' && event.tag) {
       scene.playReaction(`cheek-${event.tag}`);
+      if (CHEEK_GESTURES.includes(event.tag as import('./progression').CheekGesture)) cheekSession.add(event.tag as import('./progression').CheekGesture);
       if (!runTainted) showDiscovery(collectCheek(event.tag));
+      if (!runTainted && cheekSession.size === CHEEK_GESTURES.length && !stageCompletion) stageCompletion = completeStage(5,{gestures:[...cheekSession]});
     }
     if (event.type === 'milestone' && event.tag && milestones[event.tag]) {
       const id = milestones[event.tag]; scene.playReaction(id);
@@ -378,12 +420,29 @@ function draw() {
   if (e.phase === 'SUCCESS' && previousPhase !== 'SUCCESS') resultRevealsAt = performance.now() + 240;
   previousScore = e.score; previousPhase = e.phase;
   saveResult();
+  drawStageTask();
   const nextModal = e.status === 'paused' ? 'paused' : e.status === 'result' && performance.now() >= resultRevealsAt && scene.reactionComplete() ? 'result' : '';
   if (modalState !== nextModal) {
     modalState = nextModal;
     const host = document.querySelector('#modal-host')!;
     host.innerHTML = nextModal === 'paused' ? `<div class="modal-scrim"><section class="game-modal" role="dialog" aria-modal="true" aria-labelledby="pause-title"><span class="dialog-paw">${icons.paw}</span><h2 id="pause-title">ひと休み中。</h2><p>猫も、ちょっとひと息。</p><button class="primary-button" data-action="resume">つづける</button><button class="secondary-button" data-action="menu">メニューへ</button></section></div>` : nextModal === 'result' ? resultHtml(e) : '';
     host.querySelector<HTMLButtonElement>('.primary-button')?.focus({ preventScroll: true });
+  }
+}
+
+function drawStageTask() {
+  if (!engine) return;
+  const assessment = evaluateStage(engine.mode as ModeId, engine.mode === 5 ? {gestures:[...cheekSession]} : {result:resultFromEngine(engine.snapshot())});
+  const progress = document.querySelector<HTMLElement>('[data-stage="progress"]');
+  const message = runTainted ? 'プレビューでは開放・記録の保存はされません。' : assessment.passed ? engine.status === 'result' || engine.mode === 5 ? 'クリア！ 条件を達成しました。' : '条件到達！ 最後までリズムを保とう。' : assessment.remaining;
+  if (progress && progress.textContent !== message) progress.textContent = message;
+  const state = document.querySelector<HTMLElement>('[data-stage="state"]');
+  const stateText = journeyStatus().cleared.includes(engine.mode as ModeId) ? '✓ クリア済み' : '次のあそびを開放しよう';
+  if (state && state.textContent !== stateText) state.textContent = stateText;
+  if (engine.mode === 5) {
+    for (const item of document.querySelectorAll<HTMLElement>('[data-gesture]')) item.classList.toggle('is-found',cheekSession.has(item.dataset.gesture as import('./progression').CheekGesture));
+    const host = document.querySelector<HTMLElement>('[data-stage="cheek-clear"]');
+    if (host && stageCompletion?.passed && !host.childElementCount) host.innerHTML = `<p class="cheek-success">6種類、みつけた！ このままむにむにも楽しめます。</p><button class="primary-button" data-action="next-stage" data-next-mode="6">06 あとちょっとで届くのにへ</button>`;
   }
 }
 
@@ -397,11 +456,20 @@ function resultHtml(e: GameEngine) {
   const portrait = COLLECTION.find(c => c.id === resultRecord?.unlocked.at(-1))?.asset ?? asset(`thumb-${two(e.mode)}`);
   const target = runContext?.target;
   const comparison = target ? compareResults(result, target) : 0;
-  return `<div class="modal-scrim"><section class="game-modal result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-cat"><img src="${portrait}" alt=""></div><span class="result-eyebrow">${runContext?.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題・' : ''}${two(e.mode)} ${modes[e.mode - 1].name}</span><h2 id="result-title">${title}</h2>${resultRecord?.newBest && resultRecord.previousBest ? '<span class="new-record">自己ベスト更新！</span>' : ''}<div class="result-value" data-result="own">${value}<span>${label}</span></div><div class="result-details">${details.map(([name,detail]) => `<div class="result-detail"><span>${name}</span><strong>${detail}</strong></div>`).join('')}</div><p id="result-delta" class="result-delta">${resultGap(result, startingBest)}</p><div class="result-history">${best ? `<span>${runContext?.kind === 'normal' ? '自己ベスト' : 'このお題のベスト'}：${formatResult(best)}</span>` : ''}${startingPrevious ? `<span>前回：${formatResult(startingPrevious)}</span>` : ''}</div>${target ? `<div class="result-comparison"><strong>${comparison > 0 ? '友だちの記録を超えた！' : comparison === 0 ? '友だちと同じ記録！' : 'もう一度、挑んでみよう。'}</strong><span data-result="target">友だち：${formatResult(target)}</span><span>あなた：${formatResult(result)}</span><small>${comparisonDetail(result)}</small></div>` : ''}<button class="primary-button" data-action="retry">もう1回！</button><div class="result-actions">${runTainted ? '<p class="settings-footnote">プレビューの記録は保存・共有されません。</p>' : '<button class="secondary-button" data-action="share">この記録で、友だちに挑戦状</button>'}<button class="text-button" data-action="menu">メニューへ</button></div></section></div>`;
+  return `<div class="modal-scrim"><section class="game-modal result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-cat"><img src="${portrait}" alt=""></div><span class="result-eyebrow">${runContext?.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題・' : ''}${two(e.mode)} ${modes[e.mode - 1].name}</span><h2 id="result-title">${title}</h2>${resultRecord?.newBest && resultRecord.previousBest ? '<span class="new-record">自己ベスト更新！</span>' : ''}<div class="result-value" data-result="own">${value}<span>${label}</span></div><div class="result-details">${details.map(([name,detail]) => `<div class="result-detail"><span>${name}</span><strong>${detail}</strong></div>`).join('')}</div><p id="result-delta" class="result-delta">${resultGap(result, startingBest)}</p><div class="result-history">${best ? `<span>${runContext?.kind === 'normal' ? '自己ベスト' : 'このお題のベスト'}：${formatResult(best)}</span>` : ''}${startingPrevious ? `<span>前回：${formatResult(startingPrevious)}</span>` : ''}</div>${target ? `<div class="result-comparison"><strong>${comparison > 0 ? '友だちの記録を超えた！' : comparison === 0 ? '友だちと同じ記録！' : 'もう一度、挑んでみよう。'}</strong><span data-result="target">友だち：${formatResult(target)}</span><span>あなた：${formatResult(result)}</span><small>${comparisonDetail(result)}</small></div>` : ''}${stageResultHtml(e.mode as ModeId, result)}<div class="result-actions">${runTainted ? '<p class="settings-footnote">プレビューの記録は保存・共有されません。</p>' : '<button class="secondary-button" data-action="share">この記録で、友だちに挑戦状</button>'}<button class="text-button" data-action="menu">メニューへ</button></div></section></div>`;
 }
 
 function comparisonDetail(result: RunResult) {
   return result.mode === 3 ? '成功して、残り時間が小さいほど上位。' : result.mode === 6 ? '生存時間が同じなら、ひやひや時間で勝負。' : result.mode === 4 ? '回数が同じなら、ぴったり回数と連続数で勝負。' : '回数が同じなら、最大連続数と特別判定で勝負。';
+}
+
+function stageResultHtml(mode: ModeId, result: RunResult) {
+  const assessment = evaluateStage(mode,{result});
+  const cleared = !runTainted && !!stageCompletion?.passed;
+  const allClear = cleared && stageCompletion!.allClear;
+  const next = stageCompletion?.newlyUnlocked.at(-1) ?? (mode < 6 ? mode + 1 : null);
+  const hint = mode === 1 ? '目が開きそうなら手を止める。速さより、途切れないリズムを。' : mode === 2 ? 'ジャンプを見てから横へ。「ぴったり」は飛んでから0.30〜0.44秒。' : mode === 3 ? '前足が上がる合図から約0.65秒でパンチ。最後の一瞬をねらおう。' : mode === 4 ? '帽子が完全に外れてから。先走り連打より、外れるリズムを。' : '羽を止めず、大きく回そう。ひやひやは猫の近くで逃げた時間。';
+  return `<section class="stage-result ${cleared ? 'is-cleared' : ''}" data-stage-passed="${cleared}" aria-label="ステージ判定"><strong>${runTainted ? 'ステージ判定はプレビューです' : allClear ? '全6ステージ、クリア！' : cleared ? 'ステージ、クリア！' : '次こそ、ステージクリア！'}</strong><p>${assessment.description}</p><span>${runTainted ? 'このプレイではステージは開放されません。' : cleared ? allClear ? 'おめでとう！ すべてのねこあそびを制覇しました。' : `${two(next!)} ${modes[next!-1].name}であそべます。` : assessment.remaining}</span>${!cleared ? `<small>${hint}</small>` : ''}</section>${cleared && !allClear && next && isStageUnlocked(next) ? `<button class="primary-button" data-action="next-stage" data-next-mode="${next}">次のゲームへ · ${two(next)}</button><button class="secondary-button" data-action="retry">もう1回！</button>` : allClear ? '<button class="primary-button" data-action="menu">クリアした6つのあそびへ</button><button class="secondary-button" data-action="retry">もう1回！</button>' : '<button class="primary-button" data-action="retry">もう1回！</button>'}${pendingRun && isStageUnlocked(pendingRun.mode) ? '<button class="secondary-button" data-action="pending-challenge">おあずかり中の挑戦であそぶ</button>' : ''}`;
 }
 
 function resultGap(result: RunResult, best: RunResult | null) {
@@ -416,12 +484,14 @@ function resultGap(result: RunResult, best: RunResult | null) {
 
 function retryMode() {
   if (!engine || !runContext) return;
+  if (!isStageUnlocked(engine.mode)) { void startMode(engine.mode,runContext); return; }
   const context = runContext.kind === 'normal' && !previewRun ? normalContext(engine.mode as ModeId) : structuredClone(runContext);
   if (!scene || loading) { void startMode(engine.mode, context); return; }
   clearShare();
   const current = new GameEngine(context.mode, {seed:context.seed,best:bestFor(context.mode)});
   runTainted = previewRun;
   engine = current; runContext = context; runResult = null; resultRecord = null;
+  stageCompletion = null; cheekSession.clear();
   startingBest = bestResult(context); startingPrevious = previousResult(context);
   recorded = false; previousScore = 0; previousPhase = current.phase; lastEventId = 0;
   notice = ''; noticeUntil = 0; resultRevealsAt = 0; modalState = '';
@@ -524,6 +594,10 @@ app.addEventListener('click', event => {
   if (!button) return;
   event.stopPropagation();
   const action = button.dataset.action;
+  if (action === 'close-stage-lock') { document.querySelector<HTMLDialogElement>('#stage-lock-dialog')?.close(); return; }
+  if (action === 'journey-current') { const id = currentStage(); if (id) void startMode(id); return; }
+  if (action === 'next-stage') { const id = Number(button.dataset.nextMode); if (id >= 1 && id <= 6) void startMode(id); return; }
+  if (action === 'pending-challenge' && pendingRun) { const context = structuredClone(pendingRun); if (isStageUnlocked(context.mode)) rememberPending(null); void startMode(context.mode,context); return; }
   if (action === 'daily') { const today = dailyContext(); void startMode(today.mode, today); return; }
   if (action === 'collection') { openCollection(); return; }
   if (action === 'close-collection') { document.querySelector<HTMLDialogElement>('#collection-dialog')?.close(); return; }

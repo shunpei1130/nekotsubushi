@@ -8,7 +8,8 @@
   "build": "tsc --noEmit && vite build",
   "test": "tsx --test tests/*.test.ts",
   "test:browser": "tsx tests/browser.ts",
-  "test:replay": "tsx tests/replay-browser.ts"
+  "test:replay": "tsx tests/replay-browser.ts",
+  "test:journey": "tsx tests/journey-browser.ts"
  },
  "dependencies": {
   "pixi.js": "8.14.0"

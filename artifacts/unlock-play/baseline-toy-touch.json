@@ -1,0 +1,187 @@
+{
+  "method": "AI-controlled trusted CDP touch input on normal clock; not human or physical-device playtest. No engine future timing or mutation. Batched start/first move removes protocol roundtrip before the first drag.",
+  "runs": [
+    {
+      "mode": 6,
+      "period": 2.8,
+      "wallMs": 2692,
+      "final": {
+        "status": "result",
+        "elapsed": 0.387780689656389,
+        "success": false,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 387,
+          "nearMissMs": 387,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.394,
+          "status": "result",
+          "elapsed": 0.387780689656389,
+          "success": false,
+          "toyX": 600.0000118940304,
+          "toyY": 300.99998363830076,
+          "catX": 642.31732551041,
+          "catY": 496.0271710796362,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 387,
+            "nearMissMs": 387,
+            "cheekGesture": null
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "period": 2.2,
+      "wallMs": 3207,
+      "final": {
+        "status": "result",
+        "elapsed": 0.3096010438354438,
+        "success": false,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 309,
+          "nearMissMs": 309,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.228,
+          "status": "playing",
+          "elapsed": 0.28600000000000003,
+          "success": false,
+          "toyX": 600.0000118940304,
+          "toyY": 300.99998363830076,
+          "catX": 639.0822397810931,
+          "catY": 522.2554974975412,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 286,
+            "nearMissMs": 286,
+            "cheekGesture": null
+          }
+        },
+        {
+          "wall": 1.018,
+          "status": "result",
+          "elapsed": 0.3096010438354438,
+          "success": false,
+          "toyX": 600.0000118940304,
+          "toyY": 300.99998363830076,
+          "catX": 629.7530264231721,
+          "catY": 513.8495900075487,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 309,
+            "nearMissMs": 309,
+            "cheekGesture": null
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "period": 1.8,
+      "wallMs": 3166,
+      "final": {
+        "status": "result",
+        "elapsed": 0.3141960944933521,
+        "success": false,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 314,
+          "nearMissMs": 314,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.319,
+          "status": "playing",
+          "elapsed": 0.3081999999999535,
+          "success": false,
+          "toyX": 600.0000118940304,
+          "toyY": 300.99998363830076,
+          "catX": 633.2163954068078,
+          "catY": 514.9904257099083,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 308,
+            "nearMissMs": 308,
+            "cheekGesture": null
+          }
+        },
+        {
+          "wall": 1.156,
+          "status": "result",
+          "elapsed": 0.3141960944933521,
+          "success": false,
+          "toyX": 600.0000118940304,
+          "toyY": 300.99998363830076,
+          "catX": 630.0630222165096,
+          "catY": 512.2344067045619,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 314,
+            "nearMissMs": 314,
+            "cheekGesture": null
+          }
+        }
+      ]
+    }
+  ]
+}

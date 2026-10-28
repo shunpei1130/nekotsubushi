@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-28T04:57:18.303849+00:00",
+  "baseURL": "http://127.0.0.1:5180",
+  "entryAsset": "/assets/index-B1WKOo-7.js",
+  "stylesheet": "/assets/index-CN9oqsnf.css",
+  "stageGoals": {
+    "1": {
+      "count": 40,
+      "maxStreak": 35
+    },
+    "2": {
+      "count": 10,
+      "perfectCount": 3
+    },
+    "3": {
+      "remainingMs": 150
+    },
+    "4": {
+      "count": 13,
+      "perfectCount": 0
+    },
+    "5": {
+      "gestures": 6
+    },
+    "6": {
+      "survivalMs": 15000,
+      "nearMissMs": 0
+    }
+  },
+  "suites": [
+    {
+      "name": "chromium",
+      "report": "artifacts/journey/chromium/report.json",
+      "browser": "chromium",
+      "browserVersion": "154.0.8037.57",
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "date": "2026-10-28T04:51:36.066Z"
+    },
+    {
+      "name": "replay-chromium",
+      "report": "artifacts/journey/replay-chromium/report.json",
+      "browser": "chromium",
+      "browserVersion": "154.0.8037.57",
+      "passed": 12,
+      "failed": 0,
+      "errors": 0,
+      "date": "2026-10-28T04:53:47.898Z"
+    },
+    {
+      "name": "webkit",
+      "report": "artifacts/journey/webkit/report.json",
+      "browser": "webkit",
+      "browserVersion": "26.0",
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "date": "2026-10-28T04:55:05.018Z"
+    },
+    {
+      "name": "replay-webkit",
+      "report": "artifacts/journey/replay-webkit/report.json",
+      "browser": "webkit",
+      "browserVersion": "26.0",
+      "passed": 12,
+      "failed": 0,
+      "errors": 0,
+      "date": "2026-10-28T04:56:40.871Z"
+    }
+  ],
+  "passed": 44,
+  "failed": 0,
+  "errors": 0,
+  "method": "Each final suite completed as one uninterrupted successful execution. Journey boundaries use explicitly constructed records and completed-engine fixtures; fresh input and cheek-session checks use trusted browser pointer input and elapsed time. Replay contexts use constructed qualifying NEW journey proofs. These integration fixtures are not human difficulty playtests. Separate calibration records document normal-clock play.",
+  "limitations": [
+    "Physical iPhone Safari and Android were not available.",
+    "Linux WebKit with emulated viewports is not physical-device certification.",
+    "Actual OS share-sheet/provider UI was not tested.",
+    "Initial harness diagnostics remain outside delivery evidence in /workspace/nekotsubushi-journey-diagnostics; final suites are not consolidated partial runs.",
+    "Legacy browser/native-WebKit/production/motion/hat-motion runner setup changes were syntax checked, but those older runner suites were not executed as part of these 44 categories."
+  ]
+}

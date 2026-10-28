@@ -1,3 +1,5 @@
+> 現在のステージ開放方式と最新検証は [journey-report.md](journey-report.md) を参照。この資料は前版の検証履歴です。
+
 # 継続・再挑戦・友人比較の改善版
 
 対象はルール版2。最終アプリのエントリーは `/assets/index-cdHTuW4C.js`、CSSは `/assets/index-Bhu8JXUe.css`。既存の公開先とリポジトリを継続使用し、ログイン・課金・DB・ランキングサーバーは追加していない。

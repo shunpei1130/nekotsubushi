@@ -5,6 +5,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { dirname, join, resolve } from 'node:path';
 import assert from 'node:assert/strict';
+import { historicalSave, seedHistoricalScript } from './journey-fixtures.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const kind = process.env.BROWSER === 'webkit' ? 'webkit' : 'chromium';
@@ -30,8 +31,11 @@ async function serve() {
   throw new Error('Vite did not become available');
 }
 
-async function context(viewport={width:390,height:844}): Promise<BrowserContext> {
+async function context(viewport={width:390,height:844},withJourney=true): Promise<BrowserContext> {
   const ctx = await browser.newContext({viewport,deviceScaleFactor:1,hasTouch:true,acceptDownloads:true});
+  // Regression setup uses constructed, qualifying historical records. This is
+  // not a production unlock override or evidence of difficulty playtesting.
+  if(withJourney)await ctx.addInitScript(seedHistoricalScript());
   ctx.on('page', page => {
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => {if(message.type()==='error') errors.push(message.text());});
@@ -39,8 +43,8 @@ async function context(viewport={width:390,height:844}): Promise<BrowserContext>
   });
   return ctx;
 }
-async function usingPage(task:(page:Page,ctx:BrowserContext)=>Promise<void>,viewport?:{width:number;height:number}) {
-  const ctx=await context(viewport);
+async function usingPage(task:(page:Page,ctx:BrowserContext)=>Promise<void>,viewport?:{width:number;height:number},withJourney=true) {
+  const ctx=await context(viewport,withJourney);
   try {await task(await ctx.newPage(),ctx);} finally {await ctx.close();}
 }
 async function ready(page:Page,game=true) {
@@ -187,7 +191,10 @@ try {
   });
 
   await check('COLLECTION: real cheek gesture unlocks, previews and survives reload',async()=>{
-    await usingPage(async page=>{
+    await usingPage(async(page,ctx)=>{
+      // Open stage five with genuine qualifying earlier-stage test records,
+      // leaving cheek discoveries empty so this still tests new collection.
+      await ctx.addInitScript(seedHistoricalScript(4));
       await open(page,5,false);await down(page,750,900);await move(page,920,900);await page.mouse.up();
       await page.waitForFunction(()=>JSON.parse(localStorage.getItem('nekotsubushi:v2')||'{}').unlocked?.includes('cheek-right'));
       await page.waitForTimeout(500);await screenshot(page,'cheek-discovery.png');
@@ -230,7 +237,7 @@ try {
       await page.locator('.collection-live-preview canvas').waitFor();
       await page.locator('[data-action="close-collection"]').first().click();
       await page.waitForFunction(()=>!document.querySelector('.collection-live-preview canvas'));
-    });
+    },undefined,false);
   });
 
   await check('DAILY: Japan midnight changes next course, retry retains the started course',async()=>{
@@ -251,10 +258,14 @@ try {
     });
   });
 
-  await check('SAVE: v1 remains intact, old punch record separated, concrete new best delta',async()=>{
+  await check('SAVE: v1 remains intact, preserved old records and concrete new best delta',async()=>{
     await usingPage(async(page,ctx)=>{
       const old={schemaVersion:1,sound:false,reduced:false,records:{'1':12,'2':7,'3':4200,'4':8,'6':15000},clears:1,seen:[1,2,3,4,5,6]};
       await ctx.addInitScript(value=>localStorage.setItem('nekotsubushi:v1',JSON.stringify(value)),old);
+      // Reach stage three using explicit historical same-run evidence for 1/2.
+      // Pure v1 migration with insufficient evidence is tested by journey QA.
+      const migrated={...historicalSave(2),records:{'1':12,'2':7,'4':8,'6':15000},legacyRecords:{'3':4200}};
+      await ctx.addInitScript(value=>{if(localStorage.getItem('nekotsubushi:v2')===null)localStorage.setItem('nekotsubushi:v2',JSON.stringify(value));},migrated);
       await open(page,3,false);await realPunch(page,500);
       const firstRemaining=(await state(page)).metrics.remainingMs;
       let saved=await page.evaluate(()=>({old:localStorage.getItem('nekotsubushi:v1'),next:JSON.parse(localStorage.getItem('nekotsubushi:v2')||'null')}));
@@ -270,7 +281,7 @@ try {
       assert.match(await page.locator('.result-modal').innerText(),/新記録|更新/);
       await page.locator('#result-delta').waitFor();assert.ok((await page.locator('#result-delta').innerText()).trim().length>0);
       await screenshot(page,'new-best.png');
-    });
+    },undefined,false);
   });
 
   await check('SOCIAL: real result, copied same-course link, PNG and friend reply',async()=>{
@@ -335,17 +346,17 @@ try {
     });
   });
 
-  await check('STORAGE: unavailable local storage still permits real play and replay',async()=>{
+  await check('STORAGE: unavailable local storage still permits initial game input and replay',async()=>{
     await usingPage(async(page,ctx)=>{
       await ctx.addInitScript(`
         Storage.prototype.getItem=()=>{throw new DOMException('Storage unavailable','SecurityError');};
         Storage.prototype.setItem=()=>{throw new DOMException('Storage unavailable','QuotaExceededError');};
       `);
-      await open(page,3,false);await realPunch(page,300);
+      await open(page,1,false);await tap(page);await step(page,31000);await result(page);
       await page.locator('[data-action="retry"]').click();await ready(page);
-      assert.equal((await state(page)).status,'ready');await realPunch(page,300);
-      assert.match(await page.locator('.result-modal').innerText(),/秒/);
-    });
+      assert.equal((await state(page)).status,'ready');await tap(page);await step(page,31000);await result(page);
+      assert.match(await page.locator('.result-modal').innerText(),/回/);
+    },undefined,false);
   });
 
   await check('SHARE: cancelling the native sheet keeps the result and permits retry',async()=>{
@@ -369,7 +380,7 @@ try {
   checks.push({name:'Browser setup',passed:false,elapsedMs:0,error:error instanceof Error?error.stack:String(error)});
   console.error(error);
 } finally {
-  const report={date:new Date().toISOString(),baseURL:base,entryAsset,browser:kind,browserVersion:browser! ? await browser.version():null,checks,errors,screenshots,measurements,passed:checks.filter(c=>c.passed).length,failed:checks.filter(c=>!c.passed).length,method:'Trusted Playwright mouse pointer input. Only test=1 metric checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Viewports are emulated.',limitations:['Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised.']};
+  const report={date:new Date().toISOString(),baseURL:base,entryAsset,browser:kind,browserVersion:browser! ? await browser.version():null,checks,errors,screenshots,measurements,passed:checks.filter(c=>c.passed).length,failed:checks.filter(c=>!c.passed).length,method:'Trusted Playwright mouse pointer input. Metric and denied-storage checks use __game.step; persisted, shared and collection flows use real pointer input and real elapsed time. Constructed qualifying historical records prepare already-unlocked regression contexts; fresh-player gating is covered by journey-browser. Viewports are emulated.',limitations:['Physical iPhone Safari and Android are not connected. Linux WebKit and Chromium viewport emulation are not physical-device certification. OS share-sheet UI is unavailable in headless browsers; fallback share is exercised.']};
   await writeFile(join(out,'report.json'),JSON.stringify(report,null,2));
   if(browser!)await browser.close();server?.kill();
   console.log(JSON.stringify({report:join(out,'report.json'),passed:report.passed,failed:report.failed}));

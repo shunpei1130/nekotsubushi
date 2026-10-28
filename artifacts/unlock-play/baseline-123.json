@@ -1,0 +1,73 @@
+{
+  "method": "AI browser-operated normal clock and trusted mouse. Only visible current phase observed, no fixture, step, future timing or direct game calls; not human play.",
+  "runs": [
+    {
+      "mode": 1,
+      "strategy": "cautious-260ms",
+      "result": {
+        "mode": 1,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 25,
+        "maxStreak": 25,
+        "specialCount": 1,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    },
+    {
+      "mode": 1,
+      "strategy": "rhythm-220ms",
+      "result": {
+        "mode": 1,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 18,
+        "maxStreak": 6,
+        "specialCount": 3,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    },
+    {
+      "mode": 2,
+      "strategy": "react-200ms-drag120ms",
+      "result": {
+        "mode": 2,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    },
+    {
+      "mode": 2,
+      "strategy": "react-280ms-drag100ms",
+      "result": {
+        "mode": 2,
+        "rulesVersion": 2,
+        "success": true,
+        "count": 0,
+        "maxStreak": 0,
+        "specialCount": 0,
+        "perfectCount": 0,
+        "maxPerfectStreak": 0,
+        "remainingMs": null,
+        "survivalMs": 0,
+        "nearMissMs": 0
+      }
+    }
+  ]
+}

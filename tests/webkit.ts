@@ -2,14 +2,15 @@
 import { webkit, devices, type Browser, type Page } from '@playwright/test';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { resolve, dirname, join } from 'node:path';
+import { seedHistoricalScript } from './journey-fixtures.ts';
 
 const base = process.env.BASE_URL || 'http://127.0.0.1:5173';
 const out = resolve(import.meta.dirname, '../artifacts');
 const reportFile = process.env.QA_REPORT || 'webkit-report.json';
 const report: any = {
   date: new Date().toISOString(), baseURL: base, browser: 'WebKit', viewport: { width: 390, height: 844 },
-  method: 'Playwright 1.56.1 WebKit 26.0, iPhone 13 mobile/touch context. Native WebKit Input.dispatchTouchEvent produces trusted touch PointerEvents. Deterministic game time uses __game.step; game state is never directly changed.',
+  method: 'Playwright 1.56.1 WebKit 26.0, iPhone 13 mobile/touch context. Native WebKit Input.dispatchTouchEvent produces trusted touch PointerEvents. Deterministic game time uses __game.step; game state is never directly changed. Constructed qualifying NEW journey proofs prepare an already-cleared regression player; fresh-player gates are covered separately.',
   checks: [], screenshots: [], errors: [], snapshots: {},
   limitations: ['This is Linux WebKit with an iPhone viewport/user agent, not a physical iPhone or shipping iOS Safari. Physical-device certification remains outstanding.'],
   environment: { customExecutable: process.env.WEBKIT_EXECUTABLE_PATH || null },
@@ -86,9 +87,11 @@ async function until(phase: string) {
 }
 await mkdir(out, { recursive: true });
 try {
-  browser = await webkit.launch({ headless: true, ...(process.env.WEBKIT_EXECUTABLE_PATH ? { executablePath: process.env.WEBKIT_EXECUTABLE_PATH } : {}) });
+  const wk=join(dirname(webkit.executablePath()),'minibrowser-wpe');
+  browser = await webkit.launch({ headless: true, ...(process.env.WEBKIT_EXECUTABLE_PATH ? { executablePath: process.env.WEBKIT_EXECUTABLE_PATH } : {}), ...(process.env.WEBKIT_QA_LIBS?{executablePath:join(wk,'bin/MiniBrowser'),env:{...process.env,LD_LIBRARY_PATH:`${process.env.WEBKIT_QA_LIBS}:${wk}/lib:${wk}/sys/lib`,WEBKIT_EXEC_PATH:join(wk,'bin'),WEBKIT_INJECTED_BUNDLE_PATH:join(wk,'lib'),WEBKIT_INSPECTOR_RESOURCES_PATH:join(wk,'share')}}:{}) });
   report.version = browser.version();
   const context = await browser.newContext({ ...devices['iPhone 13'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, hasTouch: true });
+  await context.addInitScript(seedHistoricalScript());
   page = await context.newPage();
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', e => { if (e.type() === 'error') errors.push(e.text()); });

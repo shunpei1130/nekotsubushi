@@ -1,9 +1,11 @@
 import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 import {writeFile} from 'node:fs/promises';
+import {seedHistoricalScript} from './journey-fixtures.ts';
 const url=process.env.BASE_URL||'https://nekotsubushi.vercel.app';
 const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox'],proxy:process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined});
 const page=await browser.newPage({viewport:{width:390,height:844}}),errors:string[]=[],checks:any[]=[];
+await page.addInitScript(seedHistoricalScript());
 let entryAsset:string|null=null;
 page.on('pageerror',e=>errors.push(e.message));page.on('console',e=>{if(e.type()==='error')errors.push(e.text())});page.on('response',r=>{if(r.status()>=400)errors.push(`HTTP ${r.status()} ${r.url()}`)});
 const state=()=>page.evaluate(()=>(window as any).__game.snapshot());
@@ -26,5 +28,5 @@ try{
   await page.locator('[data-action=menu]').click();await page.locator('[data-mode="1"]').waitFor();checks.push({name:`Production mode ${mode}: input, outcome, retry and menu`,passed:true});
  }
  assert.deepEqual(errors,[]);checks.push({name:'No public JavaScript or HTTP asset errors',passed:true});
- const report={date:new Date().toISOString(),url,browser:await browser.version(),anonymous:true,entryAsset,checks,errors,passed:checks.length};await writeFile('artifacts/production-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+ const report={date:new Date().toISOString(),url,browser:await browser.version(),anonymous:true,entryAsset,precondition:'Constructed qualifying NEW journey proofs in localStorage prepare an already-cleared regression player. This does not verify fresh-player access; journey-browser independently verifies initial one-stage access.',checks,errors,passed:checks.length};await writeFile('artifacts/production-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
 }finally{await browser.close()}

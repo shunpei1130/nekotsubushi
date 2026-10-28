@@ -1,0 +1,261 @@
+{
+  "sourceCommit": "88b87303b83b4269adba07fb1390ad75cceaa20b",
+  "method": "AI-operated normal-clock trusted mouse input, not a human or physical-device playtest. Precomputed stage coordinates remove avoidable browser automation latency. Only current visual phase/state observed; no future timing or fixture/step/direct engine mutation.",
+  "runs": [
+    {
+      "mode": 4,
+      "strategy": "current-phase-plus-200ms-reaction",
+      "taps": 13,
+      "clickLatencyMs": [
+        385,
+        388,
+        486,
+        515,
+        602,
+        448,
+        364,
+        433,
+        512,
+        379,
+        391,
+        351
+      ],
+      "wallMs": 16595,
+      "result": {
+        "phase": "BARE",
+        "status": "result",
+        "score": 11,
+        "elapsed": 15,
+        "success": true,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 0,
+          "nearMissMs": 0,
+          "cheekGesture": null
+        }
+      }
+    },
+    {
+      "mode": 4,
+      "strategy": "current-phase-plus-120ms-reaction",
+      "taps": 13,
+      "clickLatencyMs": [
+        309,
+        307,
+        340,
+        324,
+        340,
+        256,
+        345,
+        298,
+        310,
+        294,
+        297,
+        285
+      ],
+      "wallMs": 16622,
+      "result": {
+        "phase": "BARE",
+        "status": "result",
+        "score": 12,
+        "elapsed": 15,
+        "success": true,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 0,
+          "nearMissMs": 0,
+          "cheekGesture": null
+        }
+      }
+    },
+    {
+      "mode": 4,
+      "strategy": "current-phase-plus-80ms-reaction",
+      "taps": 13,
+      "clickLatencyMs": [
+        262,
+        289,
+        313,
+        302,
+        257,
+        287,
+        306,
+        280,
+        297,
+        328,
+        263,
+        287
+      ],
+      "wallMs": 16539,
+      "result": {
+        "phase": "WEARING",
+        "status": "result",
+        "score": 13,
+        "elapsed": 15,
+        "success": true,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 0,
+          "nearMissMs": 0,
+          "cheekGesture": null
+        }
+      }
+    },
+    {
+      "mode": 6,
+      "strategy": "rectangle-period-2.8s",
+      "wallMs": 2088,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.21526029272417707,
+        "success": false,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 215,
+          "nearMissMs": 215,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.406,
+          "phase": "CAPTURED",
+          "status": "result",
+          "score": 0.2,
+          "elapsed": 0.21526029272417707,
+          "success": false,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 215,
+            "nearMissMs": 215,
+            "cheekGesture": null
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "strategy": "rectangle-period-2.2s",
+      "wallMs": 2194,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.21526041406858623,
+        "success": false,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 215,
+          "nearMissMs": 215,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.402,
+          "phase": "CAPTURED",
+          "status": "result",
+          "score": 0.2,
+          "elapsed": 0.21526041406858623,
+          "success": false,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 215,
+            "nearMissMs": 215,
+            "cheekGesture": null
+          }
+        }
+      ]
+    },
+    {
+      "mode": 6,
+      "strategy": "rectangle-period-1.8s",
+      "wallMs": 1887,
+      "result": {
+        "phase": "CAPTURED",
+        "status": "result",
+        "score": 0.2,
+        "elapsed": 0.21376355377096887,
+        "success": false,
+        "metrics": {
+          "maxStreak": 0,
+          "streak": 0,
+          "specialCount": 0,
+          "perfectCount": 0,
+          "perfectStreak": 0,
+          "maxPerfectStreak": 0,
+          "remainingMs": null,
+          "survivalMs": 213,
+          "nearMissMs": 213,
+          "cheekGesture": null
+        }
+      },
+      "samples": [
+        {
+          "wall": 0.378,
+          "phase": "CAPTURED",
+          "status": "result",
+          "score": 0.2,
+          "elapsed": 0.21376355377096887,
+          "success": false,
+          "metrics": {
+            "maxStreak": 0,
+            "streak": 0,
+            "specialCount": 0,
+            "perfectCount": 0,
+            "perfectStreak": 0,
+            "maxPerfectStreak": 0,
+            "remainingMs": null,
+            "survivalMs": 213,
+            "nearMissMs": 213,
+            "cheekGesture": null
+          }
+        }
+      ]
+    }
+  ]
+}
