@@ -43,7 +43,8 @@ final class GameUITests: XCTestCase {
         let url=Bundle(for:Self.self).url(forResource:"qualifying-history",withExtension:"json")!
         app.launchEnvironment["NEKO_UI_TEST_SAVE"]=try! String(contentsOf:url,encoding:.utf8)
         app.launch()
-        XCTAssertTrue(named("全6ステージ、クリア！").waitForExistence(timeout:60),"The simulator fixture did not load")
+        let proof=app.descendants(matching:.any).matching(NSPredicate(format:"label CONTAINS %@","全6ステージ、クリア！")).firstMatch
+        XCTAssertTrue(proof.waitForExistence(timeout:60),"The simulator fixture did not load")
     }
     func tapVisible(_ title: String) {
         let control=button(title)
@@ -110,5 +111,8 @@ final class GameUITests: XCTestCase {
         app.swipeUp();tapVisible("Instagramで共有")
         XCTAssertTrue(named("画像の用意ができました。共有先からInstagramを選んでください。").waitForExistence(timeout:30))
         photo("ios-ipad-share")
+        tapVisible("共有先からInstagramを選ぶ")
+        XCTAssertTrue(app.otherElements.matching(identifier:"neko-native-share-sheet").firstMatch.waitForExistence(timeout:10))
+        photo("ios-ipad-native-share-sheet")
     }
 }
