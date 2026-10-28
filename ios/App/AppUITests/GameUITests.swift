@@ -10,7 +10,15 @@ final class GameUITests: XCTestCase {
             print("NATIVE FAILURE HIERARCHY\n" + app.debugDescription)
             photo("native-failure")
         }
+        stopApp()
+    }
+    func stopApp() {
+        guard app.state != .notRunning else { return }
+        // SpringBoard can refuse a foreground termination during a remote
+        // share-extension transition. Finish sharing, then background first.
+        XCUIDevice.shared.press(.home)
         app.terminate()
+        XCTAssertTrue(app.wait(for:.notRunning,timeout:10))
     }
     func button(_ title: String) -> XCUIElement { app.buttons.matching(identifier:title).firstMatch }
     func named(_ value: String) -> XCUIElement {
@@ -44,7 +52,7 @@ final class GameUITests: XCTestCase {
         return app.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx:(frame.width-width)/2+x*width,dy:top+y*height))
     }
     func launchUnlocked() {
-        app.terminate()
+        stopApp()
         app.launchArguments=["--ui-testing"]
         let url=Bundle(for:Self.self).url(forResource:"qualifying-history",withExtension:"json")!
         app.launchEnvironment["NEKO_UI_TEST_SAVE"]=try! String(contentsOf:url,encoding:.utf8)
@@ -77,6 +85,23 @@ final class GameUITests: XCTestCase {
         let activity=app.descendants(matching:.any).matching(NSPredicate(format:"identifier == %@ OR label IN %@","ActivityListView",controls)).firstMatch
         XCTAssertTrue(activity.waitForExistence(timeout:20),"The native activity sheet must expose a real OS share control")
     }
+    func dismissNativeShare() {
+        let cancelled=named("いつでも、また送れます。")
+        // The iPad popover dismisses on its backdrop. On iPhone the compact
+        // activity sheet has no Close button: drag its header, not the page
+        // behind it (a whole-app swipe can start above the sheet).
+        app.coordinate(withNormalizedOffset:CGVector(dx:0.1,dy:0.15)).tap()
+        if !cancelled.waitForExistence(timeout:3) {
+            for _ in 0..<3 {
+                let start=app.coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.64))
+                let end=app.coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.98))
+                start.press(forDuration:0.1,thenDragTo:end)
+                if cancelled.waitForExistence(timeout:5) {break}
+            }
+        }
+        XCTAssertTrue(cancelled.waitForExistence(timeout:10),"Native cancellation must return to the game before the next round")
+        button("閉じる").tap()
+    }
     func test01FreshTouchPauseAndShare() {
         app.launchArguments=["--ui-testing"]
         app.launch()
@@ -103,8 +128,7 @@ final class GameUITests: XCTestCase {
         tapVisible("共有先からInstagramを選ぶ")
         assertNativeShare()
         photo("ios-native-image-share-sheet")
-        let close=button("Close")
-        if close.exists {close.tap()} else if button("Cancel").exists {button("Cancel").tap()} else {app.swipeDown()}
+        dismissNativeShare()
     }
     func test02AllSixResultsAndTikTokMovie() {
         for mode in 1...6 {
@@ -126,6 +150,7 @@ final class GameUITests: XCTestCase {
                 tapVisible("共有先からTikTokを選ぶ")
                 assertNativeShare()
                 photo("ios-native-video-share-sheet")
+                dismissNativeShare()
             }
         }
     }
@@ -142,5 +167,6 @@ final class GameUITests: XCTestCase {
         tapVisible("共有先からInstagramを選ぶ")
         assertNativeShare()
         photo("ios-ipad-native-share-sheet")
+        dismissNativeShare()
     }
 }
