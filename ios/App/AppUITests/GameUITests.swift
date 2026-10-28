@@ -39,6 +39,12 @@ final class GameUITests: XCTestCase {
         app.launchEnvironment["NEKO_UI_TEST_SAVE"]=try! String(contentsOf:url,encoding:.utf8)
         app.launch()
     }
+    func tapVisible(_ title: String) {
+        let button=app.buttons[title]
+        XCTAssertTrue(button.waitForExistence(timeout:20))
+        for _ in 0..<4 {if button.isHittable {break}; app.swipeUp()}
+        button.tap()
+    }
     func test01FreshTouchPauseAndShare() {
         app.launch()
         XCTAssertTrue(app.buttons["音と動きの設定"].waitForExistence(timeout:40)); photo("fresh-ios-menu")
@@ -49,12 +55,16 @@ final class GameUITests: XCTestCase {
         XCTAssertTrue(named("ひと休み中。").waitForExistence(timeout:5))
         app.buttons["つづける"].tap()
         XCUIDevice.shared.orientation = .landscapeLeft; sleep(1); photo("ios-landscape"); XCUIDevice.shared.orientation = .portrait
+        if app.buttons["つづける"].exists {app.buttons["つづける"].tap()}
         XCTAssertTrue(named("いい、ひまつぶし。").waitForExistence(timeout:45))
+        app.swipeUp()
         XCTAssertTrue(app.buttons["Xで共有"].exists)
         XCTAssertTrue(app.buttons["Instagramで共有"].exists)
-        app.buttons["Instagramで共有"].tap()
+        tapVisible("Instagramで共有")
         XCTAssertTrue(app.buttons["共有先からInstagramを選ぶ"].waitForExistence(timeout:20))
-        app.buttons["共有先からInstagramを選ぶ"].tap(); sleep(2); photo("ios-native-image-share-sheet")
+        tapVisible("文章をコピー")
+        XCTAssertTrue(named("投稿用の文章をコピーしました。").waitForExistence(timeout:5))
+        tapVisible("共有先からInstagramを選ぶ"); sleep(2); photo("ios-native-image-share-sheet")
         let close=app.buttons["Close"]
         if close.exists {close.tap()} else if app.buttons["Cancel"].exists {app.buttons["Cancel"].tap()} else {app.swipeDown()}
     }
@@ -65,14 +75,17 @@ final class GameUITests: XCTestCase {
             else if mode == 3 { point(mode,0.5,0.51).press(forDuration:0.6) }
             else if mode == 6 { point(mode,0.90,0.18).press(forDuration:0.3) }
             else {point(mode,mode==2 ? 0.5:0.69,mode==2 ? 0.63:0.51).tap()}
-            XCTAssertTrue(app.buttons["TikTokで共有"].waitForExistence(timeout:45),"mode \(mode) result")
+            let title=mode==5 ? "むにむに、おしまい。" : mode==3 ? "寸止め、成功！" : mode==6 ? "つかまえたニャ！" : "いい、ひまつぶし。"
+            XCTAssertTrue(named(title).waitForExistence(timeout:45),"mode \(mode) result")
+            app.swipeUp()
+            XCTAssertTrue(app.buttons["TikTokで共有"].exists,"mode \(mode) share")
             XCTAssertTrue(app.buttons["Xで共有"].exists); XCTAssertTrue(app.buttons["Instagramで共有"].exists)
             photo("ios-result-\(mode)")
             if mode == 5 {
-                app.buttons["TikTokで共有"].tap()
+                tapVisible("TikTokで共有")
                 XCTAssertTrue(named("縦動画ができました。共有先からTikTokを選んでください。").waitForExistence(timeout:60))
                 photo("ios-tiktok-video-ready")
-                app.buttons["共有先からTikTokを選ぶ"].tap(); sleep(2); photo("ios-native-video-share-sheet")
+                tapVisible("共有先からTikTokを選ぶ"); sleep(2); photo("ios-native-video-share-sheet")
             }
         }
     }

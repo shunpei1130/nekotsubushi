@@ -171,7 +171,7 @@ async function menu() {
         <div class="card-copy"><span class="stage-card-state">${journey.cleared.includes(m.id as ModeId) ? '✓ クリア済み' : isStageUnlocked(m.id) ? 'いまのステージ' : `未解放・${two(m.id-1)}クリアで開放`}</span><h2>${m.id === 6 ? 'あとちょっとで<br>届くのに' : m.name}</h2><p>${m.operation}</p><span class="card-goal">${stageGoal(m.id as ModeId)}</span><span class="card-record">${recordLabel(m.id)}</span><span class="card-arrow" aria-hidden="true">›</span></div>
       </button>`).join('')}
     </section>
-    <footer class="menu-footer"><span>${icons.paw}</span><p>ふわふわを、ひとりじめ。<small>登録いらず。スマホでも、パソコンでも。</small></p></footer>
+    <footer class="menu-footer"><span>${icons.paw}</span><p>ふわふわを、ひとりじめ。<small>登録いらず。スマホでも、パソコンでも。</small></p></footer><a class="policy-link" href="/privacy.html">プライバシーとサポート</a>
     <dialog id="settings-dialog" aria-labelledby="settings-title"><form method="dialog"><button class="dialog-close" aria-label="閉じる">×</button><span class="dialog-paw">${icons.paw}</span><h2 id="settings-title">あそびの設定</h2><label class="setting-row"><span>音をならす<small>ぷに、ぽふ。小さな音で。</small></span><input type="checkbox" name="sound" ${save.sound ? 'checked' : ''}><span class="switch" aria-hidden="true"></span></label><label class="setting-row"><span>動きをひかえめに<small>大きな揺れやきらめきを減らす</small></span><input type="checkbox" name="reduced" ${save.reduced ? 'checked' : ''}><span class="switch" aria-hidden="true"></span></label><button class="primary-button" value="close">これであそぶ</button><p class="settings-footnote">記録と設定は、この端末に保存されます。</p></form></dialog>
   </main>${collectionDialogHtml()}<dialog id="stage-lock-dialog" aria-labelledby="stage-lock-title"></dialog>`;
   const dialog = document.querySelector<HTMLDialogElement>('#settings-dialog')!;
@@ -641,7 +641,7 @@ app.addEventListener('click', event => {
   }
   if (action === 'share') { void openShare(); return; }
   if (action === 'native-share' && challengeUrl) {
-    const job = shareCard ? shareNetwork ? shareSocial(shareCard,shareNetwork) : sharePrepared(shareCard) : typeof navigator.share === 'function' ? navigator.share({title:'猫つぶしの挑戦状',text:'この記録、超えられる？',url:challengeUrl}).then(() => 'shared' as const).catch(error => error?.name === 'AbortError' ? 'cancelled' as const : 'fallback' as const) : Promise.resolve('fallback' as const);
+    const job = shareCard ? shareNetwork ? shareSocial(shareCard,shareNetwork) : sharePrepared(shareCard) : shareNetwork ? Promise.resolve('fallback' as const) : typeof navigator.share === 'function' ? navigator.share({title:'猫つぶしの挑戦状',text:'この記録、超えられる？',url:challengeUrl}).then(() => 'shared' as const).catch(error => error?.name === 'AbortError' ? 'cancelled' as const : 'fallback' as const) : Promise.resolve('fallback' as const);
     void job.then(outcome => {
       const status = document.querySelector<HTMLElement>('.share-status');
       if (status) status.textContent = outcome === 'fallback' ? '下の「リンクをコピー」や「画像を保存」から送れます。' : outcome === 'cancelled' ? 'いつでも、また送れます。' : '共有操作が完了しました。投稿先でも内容をご確認ください。';

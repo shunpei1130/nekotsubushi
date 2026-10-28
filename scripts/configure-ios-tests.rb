@@ -11,6 +11,8 @@ unless tests
   tests.resources_build_phase.add_file_reference(group.new_file('qualifying-history.json'))
   tests.build_configurations.each do |config|
     config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'jp.shunpei1130.nekotsubushi.uitests'
+    config.build_settings['PRODUCT_NAME'] = '$(TARGET_NAME)'
+    config.build_settings['PRODUCT_MODULE_NAME'] = 'AppUITests'
     config.build_settings['GENERATE_INFOPLIST_FILE'] = 'YES'
     config.build_settings['TEST_TARGET_NAME'] = 'App'
     config.build_settings['SWIFT_VERSION'] = '5.0'

@@ -176,6 +176,9 @@ export async function sharePrepared(card: ShareCard): Promise<'shared' | 'fallba
 }
 
 export async function copyChallenge(url: string): Promise<boolean> {
+  if(isNative()) {
+    try {const {Clipboard}=await import('@capacitor/clipboard');await Clipboard.write({string:url});return true;} catch {return false;}
+  }
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(url);
