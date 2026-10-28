@@ -4,7 +4,7 @@ final class GameUITests: XCTestCase {
     let app = XCUIApplication()
     let names = ["ねこつんつん", "箱をずらせ", "猫パンチ寸止め", "その帽子、いやニャ！", "ほっぺむにむに", "あとちょっとで届くのに"]
     let operations = ["目を閉じている間にタップ", "飛び込む瞬間、箱をスワイプ", "長押しして、パンチの前に離す", "帽子が外れたら、またタップ", "ほっぺを引っぱって、離すだけ", "羽を動かして、つかまるな！"]
-    override func setUp() { continueAfterFailure = false; XCUIDevice.shared.orientation = .portrait }
+    override func setUp() { continueAfterFailure = false }
     override func tearDown() { app.terminate() }
     func button(_ title: String) -> XCUIElement { app.buttons.matching(identifier:title).firstMatch }
     func named(_ value: String) -> XCUIElement {
@@ -17,6 +17,7 @@ final class GameUITests: XCTestCase {
     func enter(_ mode: Int) {
         let card = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", names[mode-1] + "。")).firstMatch
         XCTAssertTrue(card.waitForExistence(timeout: 40))
+        XCTAssertFalse(card.label.contains("未解放"),"The explicit Debug precondition must be installed before testing locked modes")
         for _ in 0..<5 { if card.isHittable { break }; app.swipeUp() }
         card.tap()
         XCTAssertTrue(button("メニューへ").waitForExistence(timeout: 40))
@@ -42,6 +43,7 @@ final class GameUITests: XCTestCase {
         let url=Bundle(for:Self.self).url(forResource:"qualifying-history",withExtension:"json")!
         app.launchEnvironment["NEKO_UI_TEST_SAVE"]=try! String(contentsOf:url,encoding:.utf8)
         app.launch()
+        XCTAssertTrue(named("全6ステージ、クリア！").waitForExistence(timeout:60),"The simulator fixture did not load")
     }
     func tapVisible(_ title: String) {
         let control=button(title)

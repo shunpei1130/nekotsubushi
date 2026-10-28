@@ -21,6 +21,7 @@ final class GameViewController: CAPBridgeViewController {
         // Install scripts here, after that replacement and before navigation.
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--ui-testing") {
+            NSLog("neko-ui-test: custom game controller loaded; fixture supplied: %@", ProcessInfo.processInfo.environment["NEKO_UI_TEST_SAVE"] == nil ? "no" : "yes")
             configuration.userContentController.add(UIErrorLogger(), name: "nekoUIError")
             let logger = """
             const report = value => window.webkit.messageHandlers.nekoUIError.postMessage(String(value));
