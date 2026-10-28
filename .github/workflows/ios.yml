@@ -103,10 +103,12 @@ jobs:
           for source in Path(os.environ['RUNNER_TEMP']).glob('neko-review-*'):
               target=out/source.name;target.mkdir(exist_ok=True)
               for p in source.rglob('*'):
-                  if p.is_file() and p.suffix.lower() in ['.png','.json']:
+                  if p.is_file() and p.suffix.lower() in ['.png','.json','.txt']:
                       shutil.copy2(p,target/p.name)
           for p in Path('artifacts/ios').glob('*.log'):
               shutil.copy2(p,out/p.name)
+          video=Path('artifacts/ios/tiktok-native.mp4')
+          if video.exists(): shutil.copy2(video,out/video.name)
           PY
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
@@ -120,6 +122,13 @@ jobs:
           xcodebuild archive -project ios/App/App.xcodeproj -scheme App -configuration Release -destination generic/platform=iOS -archivePath artifacts/ios/Nekotsubushi-unsigned.xcarchive CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/archive.log
           test -d artifacts/ios/Nekotsubushi-unsigned.xcarchive/Products/Applications/App.app
           python3 -c 'from pathlib import Path; assert b"NEKO_UI_TEST_SAVE" not in Path("artifacts/ios/Nekotsubushi-unsigned.xcarchive/Products/Applications/App.app/App").read_bytes(), "Debug fixture must not ship in Release"'
+          ditto -c -k --sequesterRsrc --keepParent artifacts/ios/Nekotsubushi-unsigned.xcarchive artifacts/ios/Nekotsubushi-unsigned.xcarchive.zip
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nekotsubushi-ios-unsigned-archive
+          path: artifacts/ios/Nekotsubushi-unsigned.xcarchive.zip
+          retention-days: 1
+          compression-level: 0
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

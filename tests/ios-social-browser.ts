@@ -19,6 +19,11 @@ async function using(run:(p:Page)=>Promise<void>,viewport={width:393,height:852}
  try{await run(p);}finally{await ctx.close();}
 }
 async function open(p:Page,mode:number){await p.goto(`${base}/?mode=${mode}`,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__ready&&!!window.__game);entry??=await p.locator('script[type=module][src]').last().getAttribute('src');}
+async function visibleShareButton(p:Page){
+ await p.waitForFunction(()=>{const i=document.querySelector<HTMLImageElement>('#share-card-preview');return i?.complete&&i.naturalWidth>0});
+ const b=await p.locator('[data-action=native-share]').boundingBox(),d=await p.locator('#share-dialog').boundingBox();
+ assert.ok(b&&d&&b.y>=d.y&&b.y+b.height<=d.y+d.height,'Sharing must be visible before scrolling through optional caption fields');
+}
 async function end(p:Page,mode:number){
  if(mode===5){await p.locator('[data-action=finish-cheeks]').tap();}
  else await p.evaluate(()=>{const e=window.__game!.engine;e.status='result';e.success=true;e.score=[1,2,4].includes(e.mode)?3:0;e.phase=e.mode===3?'SUCCESS':e.mode===6?'CLEAR':'FINISHED';Object.assign(e.metrics,{maxStreak:[1,2].includes(e.mode)?3:0,remainingMs:e.mode===3?109:null,survivalMs:e.mode===6?15000:0,nearMissMs:0});});
@@ -32,6 +37,7 @@ try{
   await p.locator('[data-network=instagram]').tap();await p.locator('#share-card-preview:not([hidden])').waitFor();
   assert.match(await p.locator('#share-title').innerText(),/Instagram/);
   const dimensions=await p.locator('#share-card-preview').evaluate((i:HTMLImageElement)=>[i.naturalWidth,i.naturalHeight]);assert.deepEqual(dimensions,[1080,1350]);
+  await visibleShareButton(p);
   const url=new URL(await p.locator('#challenge-url').inputValue());assert.equal(url.origin,new URL(base).origin);assert.equal(url.searchParams.has('challenge'),mode!==5);
   await p.locator('[data-action=copy-caption]').tap();assert.match(await p.evaluate(()=>(window as any).__copiedText),/猫つぶし/);
   const download=p.waitForEvent('download');await p.locator('[data-action=download-card]').tap();assert.match((await download).suggestedFilename(),/\.png$/);
@@ -45,7 +51,7 @@ try{
   await open(p,3);await end(p,3);const popup=p.waitForEvent('popup');await p.locator('[data-network=x]').tap();const target=await popup;await target.waitForLoadState('domcontentloaded');const url=new URL(target.url());assert.equal(url.pathname,'/intent/tweet');assert.match(url.searchParams.get('text')!,/0.109/);assert.ok(url.searchParams.get('url')!.includes('challenge='));await target.close();
  }));
  await check('small iPhone, landscape and iPad retain visible stage and scrollable sharing',async()=>{
-  for(const viewport of [{width:320,height:568},{width:852,height:393},{width:768,height:1024}])await using(async p=>{await open(p,5);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);const b=await p.locator('#stage').boundingBox();assert.ok(b&&b.height>100&&b.y+b.height<=viewport.height+1);await end(p,5);await p.locator('[data-network=instagram]').tap();await p.locator('#share-card-preview:not([hidden])').waitFor();await p.locator('[data-action=copy-caption]').tap();await p.screenshot({path:`${out}/share-${viewport.width}x${viewport.height}.png`});},viewport);
+  for(const viewport of [{width:320,height:568},{width:852,height:393},{width:768,height:1024}])await using(async p=>{await open(p,5);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);const b=await p.locator('#stage').boundingBox();assert.ok(b&&b.height>100&&b.y+b.height<=viewport.height+1);await end(p,5);await p.locator('[data-network=instagram]').tap();await p.locator('#share-card-preview:not([hidden])').waitFor();if(viewport.height>viewport.width)await visibleShareButton(p);await p.locator('[data-action=copy-caption]').tap();await p.screenshot({path:`${out}/share-${viewport.width}x${viewport.height}.png`});},viewport);
  });
  await check('native file-share user gesture and cancel branches preserve the result',async()=>using(async p=>{
   await p.evaluate(()=>{}).catch(()=>{});

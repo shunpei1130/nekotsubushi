@@ -144,7 +144,9 @@ dialog{width:min(390px,calc(100vw - 40px));border:1px solid #e9d9bf;border-radiu
 .collection-dialog>[data-action="close-collection"]{min-height:46px}
 .share-dialog{width:min(420px,calc(100vw - 28px));text-align:center}
 .share-dialog>header{text-align:left}
-#share-card-preview{display:block;width:100%;max-height:48svh;object-fit:contain;border-radius:16px;background:#f6e5cb;box-shadow:0 5px 18px #63422212;margin:12px auto 16px}
+#share-card-preview{display:block;width:auto;max-width:100%;height:auto;max-height:36svh;object-fit:contain;border-radius:16px;background:#f6e5cb;box-shadow:0 5px 18px #63422212;margin:12px auto 16px}
+.share-dialog [data-action="copy-caption"]{margin-bottom:16px}
+@media(max-height:700px){#share-card-preview{max-height:24svh}}
 .share-dialog label{display:block;text-align:left;color:#8e6a49;font-size:12px;line-height:1.7;margin-bottom:5px}
 #challenge-url{
  display:block;width:100%;min-height:46px;padding:11px 12px;border:1px solid #dac2a0;border-radius:12px;

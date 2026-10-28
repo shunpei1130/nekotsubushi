@@ -107,7 +107,7 @@ function collectionDialogHtml() {
 }
 
 function shareDialogHtml() {
-  return `<dialog id="share-dialog" class="share-dialog" aria-labelledby="share-title"><button class="dialog-close" data-action="close-share" aria-label="閉じる">×</button><h2 id="share-title">この記録、超えられる？</h2><p class="share-instructions">同じ条件で、友だちとひと勝負。</p><img id="share-card-preview" alt="猫と今回の記録の共有画像" hidden><p class="share-status" role="status" aria-live="polite">共有素材を準備しています…</p><label for="challenge-url">あそべるリンク</label><input id="challenge-url" type="text" readonly autocomplete="off"><label for="share-caption">投稿用の文章</label><textarea id="share-caption" rows="3" readonly></textarea><button class="primary-button" data-action="native-share" disabled>友だちに送る</button><button class="secondary-button" data-action="copy-caption">文章をコピー</button><button class="secondary-button" data-action="copy-challenge" disabled>リンクをコピー</button><button class="secondary-button" data-action="download-card" disabled>画像を保存</button><p class="settings-footnote">共有先の選択と投稿は、ご自身で確定できます。アプリが表示されないときは素材を保存し、SNSから選んでください。</p></dialog>`;
+  return `<dialog id="share-dialog" class="share-dialog" aria-labelledby="share-title"><button class="dialog-close" data-action="close-share" aria-label="閉じる">×</button><h2 id="share-title">この記録、超えられる？</h2><p class="share-instructions">同じ条件で、友だちとひと勝負。</p><img id="share-card-preview" alt="猫と今回の記録の共有画像" hidden><p class="share-status" role="status" aria-live="polite">共有素材を準備しています…</p><button class="primary-button" data-action="native-share" disabled>友だちに送る</button><button class="secondary-button" data-action="copy-caption">文章をコピー</button><label for="challenge-url">あそべるリンク</label><input id="challenge-url" type="text" readonly autocomplete="off"><label for="share-caption">投稿用の文章</label><textarea id="share-caption" rows="3" readonly></textarea><button class="secondary-button" data-action="copy-challenge" disabled>リンクをコピー</button><button class="secondary-button" data-action="download-card" disabled>画像を保存</button><p class="settings-footnote">共有先の選択と投稿は、ご自身で確定できます。アプリが表示されないときは素材を保存し、SNSから選んでください。</p></dialog>`;
 }
 
 function socialButtonsHtml() {
@@ -525,7 +525,7 @@ async function openShare(network: SocialNetwork | null = null) {
   if (!dialog.open) dialog.showModal();
   dialog.querySelector<HTMLInputElement>('#challenge-url')!.value = challengeUrl;
   dialog.querySelector<HTMLButtonElement>('[data-action="copy-challenge"]')!.disabled = !challengeUrl;
-  dialog.querySelector<HTMLButtonElement>('[data-action="native-share"]')!.disabled = !challengeUrl;
+  dialog.querySelector<HTMLButtonElement>('[data-action="native-share"]')!.disabled = network !== null || !challengeUrl;
   // Keep result/retry fast: draw the export only when the player opens sharing.
   // The native-share button remains a separate, direct user gesture.
   if (!shareJob) {

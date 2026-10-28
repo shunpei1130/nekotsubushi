@@ -6,7 +6,7 @@ final class GameUITests: XCTestCase {
     let operations = ["目を閉じている間にタップ", "飛び込む瞬間、箱をスワイプ", "長押しして、パンチの前に離す", "帽子が外れたら、またタップ", "ほっぺを引っぱって、離すだけ", "羽を動かして、つかまるな！"]
     override func setUp() { continueAfterFailure = false }
     override func tearDown() {
-        if testRun?.hasSucceeded == false && app.state == .runningForeground {
+        if (testRun?.failureCount ?? 0) > 0 && app.state == .runningForeground {
             print("NATIVE FAILURE HIERARCHY\n" + app.debugDescription)
             photo("native-failure")
         }
@@ -55,7 +55,18 @@ final class GameUITests: XCTestCase {
     func tapVisible(_ title: String) {
         let control=button(title)
         XCTAssertTrue(control.waitForExistence(timeout:20))
-        for _ in 0..<4 {if control.isHittable {break}; app.swipeUp()}
+        let dialog=app.otherElements.matching(NSPredicate(format:"label CONTAINS %@","web dialog")).firstMatch
+        let screen=app.frame.insetBy(dx:0,dy:100)
+        let visible=dialog.exists ? dialog.frame.insetBy(dx:6,dy:12).intersection(screen) : screen
+        // WebKit may report clipped offscreen buttons as hittable. Keep the
+        // whole control inside the dialog's visible central screen area.
+        for _ in 0..<8 {
+            let bounds=control.frame
+            if control.isHittable && bounds.minY >= visible.minY && bounds.maxY <= visible.maxY {break}
+            if bounds.minY < visible.minY {app.swipeDown()} else {app.swipeUp()}
+        }
+        XCTAssertGreaterThanOrEqual(control.frame.minY,visible.minY)
+        XCTAssertLessThanOrEqual(control.frame.maxY,visible.maxY)
         control.tap()
     }
     func assertNativeShare() {

@@ -11,5 +11,8 @@
     1024
   ],
   "alpha": false,
-  "packaging": "ffmpeg Lanczos downsample to App Store size; RGB PNG without rounded corners"
+  "packaging": "ffmpeg Lanczos downsample to App Store size; RGB PNG without rounded corners",
+  "shareArtwork": "public/assets/share-cat.png",
+  "shareArtworkSHA256": "7515b8a67f6a07beb4ba9451b8818d1007060a4f7a4ce22e38af7a88bbb04f5b",
+  "shareArtworkNote": "The identical complete portrait is reused for social cards; gameplay sprites and meshes are unchanged."
 }

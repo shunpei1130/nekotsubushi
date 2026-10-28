@@ -1,4 +1,4 @@
-import { modes, asset } from './data';
+import { modes } from './data';
 import { encodeChallenge, formatResult, type RunContext, type RunResult } from './progression';
 import { isNative, nativeShare, sharingOrigin } from './native';
 
@@ -78,7 +78,9 @@ export async function prepareShareCard(context: RunContext, result: RunResult, p
   const mode = modes[result.mode - 1];
   const primary = formatResult(result);
   const text = shareCaption(result);
-  const fallback = asset(`m${String(result.mode).padStart(2, '0')}-${result.mode === 3 ? 'body' : 'cat'}`);
+  // Scene parts may end at a stage boundary. Use the complete, high-resolution
+  // portrait for posters so an isolated sprite edge never appears in sharing.
+  const fallback = '/assets/share-cat.png';
   const imagePromise = portraitAsset && portraitAsset !== fallback
     ? loadSameOriginImage(portraitAsset).catch(() => loadSameOriginImage(fallback))
     : loadSameOriginImage(fallback);
