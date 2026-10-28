@@ -64,17 +64,26 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/ios
-          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); print(next(x["udid"] for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")))')
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); phones=[x for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")]; print(next((x["udid"] for x in phones if "Max" in x["name"]),phones[0]["udid"]))')
           xcrun simctl boot "$DEVICE_ID" || true
           xcrun simctl bootstatus "$DEVICE_ID" -b
-          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Simulator.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/simulator.log
+          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" -skip-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Simulator.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/simulator.log
           APP_DATA=$(xcrun simctl get_app_container "$DEVICE_ID" jp.shunpei1130.nekotsubushi data)
           swift scripts/validate-ios-video.swift "$APP_DATA/Library/Caches"
           xcrun simctl io "$DEVICE_ID" screenshot artifacts/ios/simulator.png
+          xcrun xcresulttool export attachments --path artifacts/ios/Simulator.xcresult --output-path artifacts/ios/phone-screenshots
+          xcrun simctl shutdown "$DEVICE_ID"
+          PAD_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); print(next(x["udid"] for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPad")))')
+          xcrun simctl boot "$PAD_ID"
+          xcrun simctl bootstatus "$PAD_ID" -b
+          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$PAD_ID" -only-testing:AppUITests/GameUITests/test03TabletLayout -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Tablet.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/tablet.log
+          xcrun xcresulttool export attachments --path artifacts/ios/Tablet.xcresult --output-path artifacts/ios/tablet-screenshots
       - name: Build unsigned App Store archive
         run: |
           set -euo pipefail
           xcodebuild archive -project ios/App/App.xcodeproj -scheme App -configuration Release -destination generic/platform=iOS -archivePath artifacts/ios/Nekotsubushi-unsigned.xcarchive CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/archive.log
+          test -d artifacts/ios/Nekotsubushi-unsigned.xcarchive/Products/Applications/App.app
+          python3 -c 'from pathlib import Path; assert b"NEKO_UI_TEST_SAVE" not in Path("artifacts/ios/Nekotsubushi-unsigned.xcarchive/Products/Applications/App.app/App").read_bytes(), "Debug fixture must not ship in Release"'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

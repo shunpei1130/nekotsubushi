@@ -9,6 +9,13 @@ final class GameViewController: CAPBridgeViewController {
         bridge?.registerPluginInstance(SocialVideoPlugin())
     }
 
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        if viewControllerToPresent is UIActivityViewController {
+            viewControllerToPresent.view.accessibilityIdentifier = "neko-native-share-sheet"
+        }
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
+
     override func webViewConfiguration(for instanceConfiguration: InstanceConfiguration) -> WKWebViewConfiguration {
         let configuration = super.webViewConfiguration(for: instanceConfiguration)
         #if DEBUG

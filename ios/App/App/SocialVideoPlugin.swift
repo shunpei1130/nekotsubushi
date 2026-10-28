@@ -37,9 +37,10 @@ public class SocialVideoPlugin: CAPPlugin, CAPBridgedPlugin {
                 guard writer.startWriting() else { throw writer.error ?? ExportError.failed }
                 writer.startSession(atSourceTime: .zero)
                 guard let pool = adaptor.pixelBufferPool else { throw ExportError.failed }
+                let deadline = Date().addingTimeInterval(60)
                 for frame in 0..<150 {
                     while !input.isReadyForMoreMediaData {
-                        if writer.status == .failed || writer.status == .cancelled { throw writer.error ?? ExportError.failed }
+                        if writer.status == .failed || writer.status == .cancelled || Date() > deadline { writer.cancelWriting(); throw writer.error ?? ExportError.failed }
                         Thread.sleep(forTimeInterval: 0.002)
                     }
                     try autoreleasepool {
