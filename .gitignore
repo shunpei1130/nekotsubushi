@@ -8,3 +8,14 @@ playwright-report/
 test-results/
 __pycache__/
 *.pyc
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/DerivedData/
+ios/build/
+ios/**/xcuserdata/
+*.ipa
+*.xcarchive/
+
+ios/App/AppUITests/qualifying-history.json
+artifacts/ios/*.xcresult/

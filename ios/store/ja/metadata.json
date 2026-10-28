@@ -1,0 +1,17 @@
+{
+  "name": "猫つぶし",
+  "subtitle": "ひとゆび、ねこあそび。",
+  "locale": "ja",
+  "bundleId": "jp.shunpei1130.nekotsubushi",
+  "version": "1.0.0",
+  "minimumIOSVersion": "16.0",
+  "primaryCategory": "GAMES",
+  "privacyPolicyURL": "https://nekotsubushi.vercel.app/privacy.html",
+  "supportURL": "https://nekotsubushi.vercel.app/privacy.html",
+  "price": "free",
+  "inAppPurchases": false,
+  "tracking": false,
+  "developerDataCollection": false,
+  "reviewNotes": "ログイン、広告、課金はありません。初回はねこつんつんのみ開放されています。各ステージの条件を達成すると順に次のゲームが開放されます。条件はメニュー、ゲーム上部、結果に表示されます。SNSの投稿はユーザーが選択・確定します。TikTok用の5秒縦動画は端末内で生成します。ほっぺむにむには右上のおわるから終了・共有できます。審査で未開放モードを飛び越す特別な操作はありません。",
+  "submissionStatus": "Awaiting owner signing and App Store Connect authorization"
+}

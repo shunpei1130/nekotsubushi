@@ -1,0 +1,50 @@
+name: iOS app
+on:
+  push:
+    branches: [ios-share, main]
+    paths: ['ios/**','src/**','public/**','scripts/*ios*','capacitor.config.ts','package*.json','.github/workflows/ios.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build && npx cap sync ios
+      - name: Prepare native UI tests
+        run: |
+          gem install xcodeproj --user-install --no-document --version 1.27.0
+          npx tsx scripts/ios-fixtures.ts
+          ruby scripts/configure-ios-tests.rb
+          xcodebuild -version
+      - name: Build and test the actual iOS app
+        run: |
+          mkdir -p artifacts/ios
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; d=json.load(sys.stdin); print(next(x["udid"] for k,v in d["devices"].items() if "iOS" in k for x in v if x["name"].startswith("iPhone")))')
+          xcrun simctl boot "$DEVICE_ID" || true
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcodebuild test -project ios/App/App.xcodeproj -scheme App -destination "platform=iOS Simulator,id=$DEVICE_ID" -derivedDataPath ios/DerivedData -resultBundlePath artifacts/ios/Simulator.xcresult CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/simulator.log
+          APP_DATA=$(xcrun simctl get_app_container "$DEVICE_ID" jp.shunpei1130.nekotsubushi data)
+          swift scripts/validate-ios-video.swift "$APP_DATA/Library/Caches"
+          xcrun simctl io "$DEVICE_ID" screenshot artifacts/ios/simulator.png
+      - name: Build unsigned App Store archive
+        run: xcodebuild archive -project ios/App/App.xcodeproj -scheme App -configuration Release -destination generic/platform=iOS -archivePath artifacts/ios/Nekotsubushi-unsigned.xcarchive CODE_SIGNING_ALLOWED=NO | tee artifacts/ios/archive.log
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nekotsubushi-ios-build-and-tests
+          path: artifacts/ios/
+          retention-days: 1

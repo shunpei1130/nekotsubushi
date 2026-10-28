@@ -1,5 +1,29 @@
 import { modes, asset } from './data';
 import { encodeChallenge, formatResult, type RunContext, type RunResult } from './progression';
+import { isNative, nativeShare, sharingOrigin } from './native';
+
+export type SocialNetwork = 'x' | 'tiktok' | 'instagram';
+export function shareLink(context: RunContext, result: RunResult): string {
+  if (result.mode !== 5) return encodeChallenge(context, result, sharingOrigin());
+  return new URL('/?mode=5', sharingOrigin()).href;
+}
+export function shareCaption(result: RunResult): string {
+  return result.mode === 5 ? 'ほっぺむにむにで、もちもちの猫とひと休み。 #猫つぶし'
+    : `${modes[result.mode-1].name}で${formatResult(result)}。この記録、超えられる？ #猫つぶし`;
+}
+export function xIntent(context: RunContext, result: RunResult): string {
+  const url = new URL('https://x.com/intent/tweet');
+  url.searchParams.set('text',shareCaption(result)); url.searchParams.set('url',shareLink(context,result));
+  return url.href;
+}
+export async function shareSocial(card: ShareCard, target: SocialNetwork): Promise<'shared'|'fallback'|'cancelled'> {
+  if (isNative()) return nativeShare(card,target==='tiktok',target!=='x');
+  if (target==='x') return sharePrepared(card);
+  try {
+    if (typeof navigator.share!=='function' || navigator.canShare?.({files:[card.file]})!==true) return 'fallback';
+    await navigator.share({files:[card.file]}); return 'shared';
+  } catch (error) { return error instanceof Error && error.name==='AbortError' ? 'cancelled' : 'fallback'; }
+}
 
 export type ShareCard = {
   url: string;
@@ -38,8 +62,8 @@ function imageAtNaturalRatio(ctx: CanvasRenderingContext2D, image: HTMLImageElem
 }
 
 async function loadSameOriginImage(path: string): Promise<HTMLImageElement> {
-  const url = new URL(path, location.origin);
-  if (url.origin !== location.origin) throw new Error('Share artwork must be hosted with the game');
+  const url = new URL(path, location.href);
+  if (url.protocol !== location.protocol || url.host !== location.host) throw new Error('Share artwork must be hosted with the game');
   const image = new Image();
   image.decoding = 'async';
   image.src = url.href;
@@ -50,10 +74,10 @@ async function loadSameOriginImage(path: string): Promise<HTMLImageElement> {
 
 /** Prepare before the share button is pressed so navigator.share keeps its user activation. */
 export async function prepareShareCard(context: RunContext, result: RunResult, portraitAsset?: string): Promise<ShareCard> {
-  const url = encodeChallenge(context, result, location.origin);
+  const url = shareLink(context, result);
   const mode = modes[result.mode - 1];
   const primary = formatResult(result);
-  const text = `${mode.name}で${primary}。この記録、超えられる？`;
+  const text = shareCaption(result);
   const fallback = asset(`m${String(result.mode).padStart(2, '0')}-${result.mode === 3 ? 'body' : 'cat'}`);
   const imagePromise = portraitAsset && portraitAsset !== fallback
     ? loadSameOriginImage(portraitAsset).catch(() => loadSameOriginImage(fallback))
@@ -79,7 +103,7 @@ export async function prepareShareCard(context: RunContext, result: RunResult, p
   centered(ctx, 'ひとゆび、ねこあそび。', 169, 25, '#9b7858');
   const courseLabel = context.dailyDate
     ? `${context.dailyDate.replaceAll('-', '.')} のねこチャレンジ`
-    : '同じ条件で、ひと勝負。';
+    : result.mode === 5 ? '時間を忘れて、むに。' : '同じ条件で、ひと勝負。';
   ctx.font = `800 25px ${FONT}`;
   const badgeWidth = Math.min(900, ctx.measureText(courseLabel).width + 64);
   rounded(ctx, (1080 - badgeWidth) / 2, 192, badgeWidth, 48, 24);
@@ -109,7 +133,8 @@ export async function prepareShareCard(context: RunContext, result: RunResult, p
   centered(ctx, mode.name, 961, 39);
   centered(ctx, primary, 1074, result.mode === 3 ? 82 : 100, ORANGE);
   let detail = '';
-  if (result.mode === 6) detail = `ひやひや ${(result.nearMissMs / 1000).toFixed(3)} 秒`;
+  if (result.mode === 5) detail = 'ひっぱって、離して。ふわふわを、ひとりじめ。';
+  else if (result.mode === 6) detail = `ひやひや ${(result.nearMissMs / 1000).toFixed(3)} 秒`;
   else if (result.mode === 3) detail = result.success ? 'パンチまでの残り時間。小さいほど、おみごと。' : '次こそ、もう少し早く。';
   else if (result.mode === 4) detail = `ぴったり ${result.perfectCount} 回・最高 ${result.maxPerfectStreak} 連続`;
   else if (result.mode === 2) detail = `ぴったり ${result.perfectCount} 回・最高 ${result.maxStreak} 連続`;
@@ -121,7 +146,7 @@ export async function prepareShareCard(context: RunContext, result: RunResult, p
   ctx.strokeStyle = '#e1c7a3';
   ctx.lineWidth = 2;
   ctx.stroke();
-  centered(ctx, 'この記録、超えられる？', 1235, 40, '#b06d26');
+  centered(ctx, result.mode === 5 ? 'このほっぺ、さわってみる？' : 'この記録、超えられる？', 1235, 40, '#b06d26');
   centered(ctx, new URL(url).host, 1290, 23, '#a1866c');
 
   const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob(value => {
@@ -134,6 +159,7 @@ export async function prepareShareCard(context: RunContext, result: RunResult, p
 
 /** Call directly from a user gesture; all image preparation has already completed. */
 export async function sharePrepared(card: ShareCard): Promise<'shared' | 'fallback' | 'cancelled'> {
+  if (isNative()) return nativeShare(card);
   if (typeof navigator.share !== 'function') return 'fallback';
   try {
     let canShareFile = false;

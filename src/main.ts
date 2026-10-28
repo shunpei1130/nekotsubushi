@@ -5,7 +5,8 @@ import { modes, asset, icons } from './data';
 import { save, persist, sound, bestResult, previousResult, recordRun, collectCheek, unlockReaction, journeyStatus, isStageUnlocked, currentStage, completeStage, type StageCompletion } from './store';
 import { CHEEK_GESTURES, stageGoal, evaluateStage } from './journey';
 import { COLLECTION, normalContext, dailyContext, parseChallenge, encodeChallenge, resultFromEngine, compareResults, formatResult, type RunContext, type RunResult, type ModeId } from './progression';
-import { prepareShareCard, sharePrepared, copyChallenge, downloadShareCard, revokeShareCard, type ShareCard } from './share';
+import { prepareShareCard, sharePrepared, shareSocial, shareLink, shareCaption, xIntent, copyChallenge, downloadShareCard, revokeShareCard, type ShareCard, type SocialNetwork } from './share';
+import { isNative, nativeAsset, removeNativeAssets, openExternal, nativeLifecycle, sharingOrigin } from './native';
 
 declare global {
   interface Window {
@@ -54,6 +55,8 @@ let noticeUntil = 0;
 let shareCard: ShareCard | null = null;
 let shareJob: Promise<ShareCard | null> | null = null;
 let shareGeneration = 0;
+let shareOpenGeneration = 0;
+let shareNetwork: SocialNetwork | null = null;
 let challengeUrl = '';
 let runTainted = false;
 let collectionPaused = false;
@@ -84,7 +87,8 @@ const soundIcon = () => save.sound ? icons.sound : icons.muted;
 
 function clearShare() {
   shareGeneration++;
-  if (shareCard) revokeShareCard(shareCard);
+  shareOpenGeneration++; shareNetwork = null;
+  if (shareCard) { if (isNative()) void removeNativeAssets(shareCard); revokeShareCard(shareCard); }
   shareCard = null; shareJob = null;
   challengeUrl = '';
   const dialog = document.querySelector<HTMLDialogElement>('#share-dialog');
@@ -103,7 +107,11 @@ function collectionDialogHtml() {
 }
 
 function shareDialogHtml() {
-  return `<dialog id="share-dialog" class="share-dialog" aria-labelledby="share-title"><button class="dialog-close" data-action="close-share" aria-label="閉じる">×</button><h2 id="share-title">この記録、超えられる？</h2><p>同じ条件で、友だちとひと勝負。</p><img id="share-card-preview" alt="猫と今回の記録の挑戦状" hidden><p class="share-status" aria-live="polite">挑戦状を準備しています…</p><label for="challenge-url">挑戦リンク</label><input id="challenge-url" type="text" readonly autocomplete="off"><button class="primary-button" data-action="native-share" disabled>友だちに送る</button><button class="secondary-button" data-action="copy-challenge" disabled>リンクをコピー</button><button class="secondary-button" data-action="download-card" disabled>画像を保存</button><p class="settings-footnote">画像を長押しして保存することもできます。記録はこの端末から共有したものです。</p></dialog>`;
+  return `<dialog id="share-dialog" class="share-dialog" aria-labelledby="share-title"><button class="dialog-close" data-action="close-share" aria-label="閉じる">×</button><h2 id="share-title">この記録、超えられる？</h2><p class="share-instructions">同じ条件で、友だちとひと勝負。</p><img id="share-card-preview" alt="猫と今回の記録の共有画像" hidden><p class="share-status" role="status" aria-live="polite">共有素材を準備しています…</p><label for="challenge-url">あそべるリンク</label><input id="challenge-url" type="text" readonly autocomplete="off"><label for="share-caption">投稿用の文章</label><textarea id="share-caption" rows="3" readonly></textarea><button class="primary-button" data-action="native-share" disabled>友だちに送る</button><button class="secondary-button" data-action="copy-caption">文章をコピー</button><button class="secondary-button" data-action="copy-challenge" disabled>リンクをコピー</button><button class="secondary-button" data-action="download-card" disabled>画像を保存</button><p class="settings-footnote">共有先の選択と投稿は、ご自身で確定できます。アプリが表示されないときは素材を保存し、SNSから選んでください。</p></dialog>`;
+}
+
+function socialButtonsHtml() {
+  return runTainted ? '' : `<section class="social-result" aria-label="SNSで共有"><p>この猫と記録を、シェア。</p><div class="social-buttons"><button data-action="social-share" data-network="x" aria-label="Xで共有"><span aria-hidden="true">𝕏</span>X</button><button data-action="social-share" data-network="tiktok" aria-label="TikTokで共有"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v12a4 4 0 1 1-4-4m4-8c1 4 3 5 6 5"/></svg>TikTok</button><button data-action="social-share" data-network="instagram" aria-label="Instagramで共有"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r=".6"/></svg>Instagram</button></div></section>`;
 }
 
 function showDiscovery(ids: string[]) {
@@ -190,7 +198,7 @@ function rememberPending(context: RunContext | null) {
   pendingRun = context ? structuredClone(context) : null;
   try {
     if (!context) sessionStorage.removeItem(PENDING_KEY);
-    else if (context.kind === 'challenge' && context.target) sessionStorage.setItem(PENDING_KEY,encodeChallenge(context,context.target));
+    else if (context.kind === 'challenge' && context.target) sessionStorage.setItem(PENDING_KEY,encodeChallenge(context,context.target,sharingOrigin()));
     else if (context.kind === 'daily' && context.dailyDate) sessionStorage.setItem(PENDING_KEY,`?daily=${context.dailyDate}&mode=${context.mode}`);
   } catch {}
 }
@@ -203,7 +211,7 @@ function hudHtml(id: number) {
   const m = modes[id - 1];
   const paw = id === 1 || id === 2 ? `<span class="title-paw">${icons.paw}</span>` : '';
   const title = `<div class="game-title">${paw}<span><em>${two(id)}</em> ${m.name}</span>${paw}</div>`;
-  const score = [1, 2, 4].includes(id) ? '<div class="score-plate"><strong data-hud="score">0</strong><span>回</span></div>' : '';
+  const score = [1, 2, 4].includes(id) ? '<div class="score-plate"><strong role="status" aria-label="成功回数 0 回" data-hud="score">0</strong><span>回</span></div>' : '';
   const timer = [1, 2, 4, 6].includes(id) ? '<div class="time-plate"><span>あと</span><strong data-hud="time">30</strong><span>秒</span></div>' : '';
   const hold = id === 3 ? `<div class="best-plate">${fixtureMode ? '<span class="crown" aria-hidden="true">♛</span> 最高 ' : '最接近 '}<b data-hud="best">—</b> 秒</div><div class="hold-value"><strong data-hud="hold">0.0</strong><span>秒</span></div>` : '';
   const special = id === 5 ? `<button class="stage-icon reset-button" data-action="reset" aria-label="ほっぺを元に戻す">${icons.reset}</button>` : id === 6 ? `<button class="stage-icon pause-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>` : '';
@@ -242,7 +250,7 @@ async function startMode(id: number, context?: RunContext) {
   gameParams.set('mode', String(id));
   history.replaceState({}, '', location.pathname + '?' + gameParams);
   app.innerHTML = `<main class="game-view">
-    ${capture ? '' : `<nav class="game-nav" aria-label="ゲームの操作"><button class="nav-back" data-action="menu">${icons.back}<span>メニューへ</span></button><span class="nav-brand">猫つぶし</span><div class="nav-right"><button class="icon-button" data-action="sound" aria-label="${save.sound ? '音を消す' : '音を出す'}" aria-pressed="${save.sound}">${soundIcon()}</button>${id === 5 ? `<button class="icon-button" data-action="collection" aria-label="表情コレクション">${icons.paw}</button>` : id === 6 ? '' : `<button class="icon-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>`}</div></nav>`}
+    ${capture ? '' : `<nav class="game-nav" aria-label="ゲームの操作"><button class="nav-back" data-action="menu">${icons.back}<span>メニューへ</span></button><span class="nav-brand">猫つぶし</span><div class="nav-right"><button class="icon-button" data-action="sound" aria-label="${save.sound ? '音を消す' : '音を出す'}" aria-pressed="${save.sound}">${soundIcon()}</button>${id === 5 ? `<button class="nav-finish" data-action="finish-cheeks">おわる</button><button class="icon-button" data-action="collection" aria-label="表情コレクション">${icons.paw}</button>` : id === 6 ? '' : `<button class="icon-button" data-action="pause" aria-label="一時停止">${icons.pause}</button>`}</div></nav>`}
     ${!capture && runContext.kind !== 'normal' ? `<aside class="challenge-banner"><small>${runContext.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題' : '友だちからの挑戦状'}</small><strong>${runContext.target ? '友だちの記録 ' + escapeHtml(formatResult(runContext.target)) : '今日のねこチャレンジ'}</strong><span>同じ条件で、何度でも。</span></aside>` : ''}
     ${capture || fixtureMode ? '' : taskHtml(id as ModeId)}
     <div class="game-viewport"><div id="stage" class="stage mode-${id}" role="application" aria-label="${modes[id - 1].name}。${modes[id - 1].operation}"><div class="hud" aria-label="ゲームの状態">${hudHtml(id)}</div></div></div>
@@ -349,9 +357,10 @@ function saveResult() {
     resultRecord = recordRun(runContext, runResult);
     showDiscovery(resultRecord.unlocked);
     if (resultRecord.newBest && resultRecord.previousBest) scene?.playReaction('personal-best');
-    challengeUrl = encodeChallenge(runContext, runResult);
+    challengeUrl = shareLink(runContext, runResult);
     stageCompletion = completeStage(engine.mode as ModeId, {result:runResult});
   }
+  if (runContext && !runTainted && engine.mode===5) challengeUrl=shareLink(runContext,runResult);
 }
 
 function processEvents() {
@@ -391,6 +400,7 @@ function draw() {
     if (el && el.textContent !== value) el.textContent = value;
   };
   text('score', String(e.score));
+  document.querySelector('[data-hud=score]')?.setAttribute('aria-label',`成功回数 ${e.score} 回`);
   text('time', String(Math.ceil(Math.max(0, e.remaining - 1e-9))));
   text('hold', (Math.floor(e.hold * 10 + 1e-6) / 10).toFixed(1));
   text('best', fixtureMode ? e.best.toFixed(1) : startingBest?.remainingMs !== null && startingBest?.remainingMs !== undefined ? (startingBest.remainingMs / 1000).toFixed(3) : '—');
@@ -449,14 +459,14 @@ function drawStageTask() {
 function resultHtml(e: GameEngine) {
   const result = runResult ?? resultFromEngine(e.snapshot());
   const countMode = [1, 2, 4].includes(e.mode), best = runTainted ? startingBest : bestResult(runContext!);
-  const value = countMode ? String(result.count) : e.mode === 3 ? (result.remainingMs !== null ? (result.remainingMs / 1000).toFixed(3) : '—') : (result.survivalMs / 1000).toFixed(3);
-  const label = countMode ? '回' : e.mode === 3 ? '秒前' : '秒';
-  const title = e.mode === 3 ? e.success ? '寸止め、成功！' : '猫パンチ、一本！' : e.mode === 6 ? e.success ? '逃げきったニャ！' : 'つかまえたニャ！' : 'いい、ひまつぶし。';
-  const details = e.mode === 1 || e.mode === 2 ? [['最大連続',`${result.maxStreak} 回`],[e.mode === 1 ? 'ギリギリ' : 'ぴったり',`${e.mode === 1 ? result.specialCount : result.perfectCount} 回`]] : e.mode === 4 ? [['ぴったり',`${result.perfectCount} 回`],['ぴったり連続',`${result.maxPerfectStreak} 回`]] : e.mode === 6 ? [['ひやひや時間',`${(result.nearMissMs / 1000).toFixed(3)} 秒`],['逃げ切り',e.success ? '成功！' : '次こそ！']] : [['残り時間',result.remainingMs !== null ? `${result.remainingMs} ms` : 'パンチの前に離そう'],['記録のねらい','小さいほど上手！']];
+  const value = e.mode===5 ? String(cheekSession.size) : countMode ? String(result.count) : e.mode === 3 ? (result.remainingMs !== null ? (result.remainingMs / 1000).toFixed(3) : '—') : (result.survivalMs / 1000).toFixed(3);
+  const label = e.mode===5 ? '種類' : countMode ? '回' : e.mode === 3 ? '秒前' : '秒';
+  const title = e.mode===5 ? 'むにむに、おしまい。' : e.mode === 3 ? e.success ? '寸止め、成功！' : '猫パンチ、一本！' : e.mode === 6 ? e.success ? '逃げきったニャ！' : 'つかまえたニャ！' : 'いい、ひまつぶし。';
+  const details = e.mode===5 ? [['今回の仕草',`${cheekSession.size} / 6 種類`],['時間制限','気ままに、むに。']] : e.mode === 1 || e.mode === 2 ? [['最大連続',`${result.maxStreak} 回`],[e.mode === 1 ? 'ギリギリ' : 'ぴったり',`${e.mode === 1 ? result.specialCount : result.perfectCount} 回`]] : e.mode === 4 ? [['ぴったり',`${result.perfectCount} 回`],['ぴったり連続',`${result.maxPerfectStreak} 回`]] : e.mode === 6 ? [['ひやひや時間',`${(result.nearMissMs / 1000).toFixed(3)} 秒`],['逃げ切り',e.success ? '成功！' : '次こそ！']] : [['残り時間',result.remainingMs !== null ? `${result.remainingMs} ms` : 'パンチの前に離そう'],['記録のねらい','小さいほど上手！']];
   const portrait = COLLECTION.find(c => c.id === resultRecord?.unlocked.at(-1))?.asset ?? asset(`thumb-${two(e.mode)}`);
   const target = runContext?.target;
   const comparison = target ? compareResults(result, target) : 0;
-  return `<div class="modal-scrim"><section class="game-modal result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-cat"><img src="${portrait}" alt=""></div><span class="result-eyebrow">${runContext?.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題・' : ''}${two(e.mode)} ${modes[e.mode - 1].name}</span><h2 id="result-title">${title}</h2>${resultRecord?.newBest && resultRecord.previousBest ? '<span class="new-record">自己ベスト更新！</span>' : ''}<div class="result-value" data-result="own">${value}<span>${label}</span></div><div class="result-details">${details.map(([name,detail]) => `<div class="result-detail"><span>${name}</span><strong>${detail}</strong></div>`).join('')}</div><p id="result-delta" class="result-delta">${resultGap(result, startingBest)}</p><div class="result-history">${best ? `<span>${runContext?.kind === 'normal' ? '自己ベスト' : 'このお題のベスト'}：${formatResult(best)}</span>` : ''}${startingPrevious ? `<span>前回：${formatResult(startingPrevious)}</span>` : ''}</div>${target ? `<div class="result-comparison"><strong>${comparison > 0 ? '友だちの記録を超えた！' : comparison === 0 ? '友だちと同じ記録！' : 'もう一度、挑んでみよう。'}</strong><span data-result="target">友だち：${formatResult(target)}</span><span>あなた：${formatResult(result)}</span><small>${comparisonDetail(result)}</small></div>` : ''}${stageResultHtml(e.mode as ModeId, result)}<div class="result-actions">${runTainted ? '<p class="settings-footnote">プレビューの記録は保存・共有されません。</p>' : '<button class="secondary-button" data-action="share">この記録で、友だちに挑戦状</button>'}<button class="text-button" data-action="menu">メニューへ</button></div></section></div>`;
+  return `<div class="modal-scrim"><section class="game-modal result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-cat"><img src="${portrait}" alt=""></div><span class="result-eyebrow">${runContext?.dailyDate ? escapeHtml(runContext.dailyDate) + ' のお題・' : ''}${two(e.mode)} ${modes[e.mode - 1].name}</span><h2 id="result-title">${title}</h2>${resultRecord?.newBest && resultRecord.previousBest ? '<span class="new-record">自己ベスト更新！</span>' : ''}<div class="result-value" data-result="own">${value}<span>${label}</span></div><div class="result-details">${details.map(([name,detail]) => `<div class="result-detail"><span>${name}</span><strong>${detail}</strong></div>`).join('')}</div><p id="result-delta" class="result-delta">${resultGap(result, startingBest)}</p><div class="result-history">${best ? `<span>${runContext?.kind === 'normal' ? '自己ベスト' : 'このお題のベスト'}：${formatResult(best)}</span>` : ''}${startingPrevious ? `<span>前回：${formatResult(startingPrevious)}</span>` : ''}</div>${target ? `<div class="result-comparison"><strong>${comparison > 0 ? '友だちの記録を超えた！' : comparison === 0 ? '友だちと同じ記録！' : 'もう一度、挑んでみよう。'}</strong><span data-result="target">友だち：${formatResult(target)}</span><span>あなた：${formatResult(result)}</span><small>${comparisonDetail(result)}</small></div>` : ''}${stageResultHtml(e.mode as ModeId, result)}<div class="result-actions">${runTainted ? '<p class="settings-footnote">プレビューの記録は保存・共有されません。</p>' : `<button class="secondary-button" data-action="share">${e.mode===5 ? "このほっぺを共有" : "この記録で、友だちに挑戦状"}</button>${socialButtonsHtml()}`}<button class="text-button" data-action="menu">メニューへ</button></div></section></div>`;
 }
 
 function comparisonDetail(result: RunResult) {
@@ -464,15 +474,16 @@ function comparisonDetail(result: RunResult) {
 }
 
 function stageResultHtml(mode: ModeId, result: RunResult) {
-  const assessment = evaluateStage(mode,{result});
+  const assessment = evaluateStage(mode,mode===5 ? {gestures:[...cheekSession]} : {result});
   const cleared = !runTainted && !!stageCompletion?.passed;
   const allClear = cleared && stageCompletion!.allClear;
   const next = stageCompletion?.newlyUnlocked.at(-1) ?? (mode < 6 ? mode + 1 : null);
-  const hint = mode === 1 ? '目が開きそうなら手を止める。速さより、途切れないリズムを。' : mode === 2 ? 'ジャンプを見てから横へ。「ぴったり」は飛んでから0.30〜0.44秒。' : mode === 3 ? '前足が上がる合図から約0.65秒でパンチ。最後の一瞬をねらおう。' : mode === 4 ? '帽子が完全に外れてから。先走り連打より、外れるリズムを。' : '羽を止めず、大きく回そう。ひやひやは猫の近くで逃げた時間。';
+  const hint = mode===5 ? '6種類の触り方は、ゲーム上部のガイドで見られます。' : mode === 1 ? '目が開きそうなら手を止める。速さより、途切れないリズムを。' : mode === 2 ? 'ジャンプを見てから横へ。「ぴったり」は飛んでから0.30〜0.44秒。' : mode === 3 ? '前足が上がる合図から約0.65秒でパンチ。最後の一瞬をねらおう。' : mode === 4 ? '帽子が完全に外れてから。先走り連打より、外れるリズムを。' : '羽を止めず、大きく回そう。ひやひやは猫の近くで逃げた時間。';
   return `<section class="stage-result ${cleared ? 'is-cleared' : ''}" data-stage-passed="${cleared}" aria-label="ステージ判定"><strong>${runTainted ? 'ステージ判定はプレビューです' : allClear ? '全6ステージ、クリア！' : cleared ? 'ステージ、クリア！' : '次こそ、ステージクリア！'}</strong><p>${assessment.description}</p><span>${runTainted ? 'このプレイではステージは開放されません。' : cleared ? allClear ? 'おめでとう！ すべてのねこあそびを制覇しました。' : `${two(next!)} ${modes[next!-1].name}であそべます。` : assessment.remaining}</span>${!cleared ? `<small>${hint}</small>` : ''}</section>${cleared && !allClear && next && isStageUnlocked(next) ? `<button class="primary-button" data-action="next-stage" data-next-mode="${next}">次のゲームへ · ${two(next)}</button><button class="secondary-button" data-action="retry">もう1回！</button>` : allClear ? '<button class="primary-button" data-action="menu">クリアした6つのあそびへ</button><button class="secondary-button" data-action="retry">もう1回！</button>' : '<button class="primary-button" data-action="retry">もう1回！</button>'}${pendingRun && isStageUnlocked(pendingRun.mode) ? '<button class="secondary-button" data-action="pending-challenge">おあずかり中の挑戦であそぶ</button>' : ''}`;
 }
 
 function resultGap(result: RunResult, best: RunResult | null) {
+  if (result.mode === 5) return 'もう一度、気ままにむにむに。見つけた表情は残ります。';
   if (result.mode === 3 && !result.success) return '次は、パンチの合図を見て少し早めに離そう。';
   if (!best || result.mode === 3 && !best.success) return 'はじめての記録！ 次はこの記録を超えてみよう。';
   if (compareResults(result, best) > 0) return '自己ベスト更新！ その調子、もうひと勝負。';
@@ -503,9 +514,14 @@ function retryMode() {
   lastNow = performance.now(); window.__ready = true; draw();
 }
 
-async function openShare() {
+async function openShare(network: SocialNetwork | null = null) {
   const dialog = document.querySelector<HTMLDialogElement>('#share-dialog');
   if (!dialog || runTainted || !runResult || !runContext) return;
+  shareNetwork=network; const opened=++shareOpenGeneration;
+  const label=network==='instagram'?'Instagram':network==='tiktok'?'TikTok':null;
+  dialog.querySelector('#share-title')!.textContent=label ? `${label}でシェア` : runResult.mode===5?'このほっぺ、さわってみる？':'この記録、超えられる？';
+  dialog.querySelector('.share-instructions')!.textContent=label ? `${isNative()&&network==='tiktok'?'縦動画':'猫の画像'}を用意します。共有メニューで${label}を選ぶか、保存して投稿に使えます。` : '猫の画像と、同じ条件であそべるリンクを送れます。';
+  dialog.querySelector<HTMLTextAreaElement>('#share-caption')!.value=`${shareCaption(runResult)}\n${challengeUrl}`;
   if (!dialog.open) dialog.showModal();
   dialog.querySelector<HTMLInputElement>('#challenge-url')!.value = challengeUrl;
   dialog.querySelector<HTMLButtonElement>('[data-action="copy-challenge"]')!.disabled = !challengeUrl;
@@ -521,14 +537,20 @@ async function openShare() {
     }).catch(() => null);
   }
   const card = shareCard ?? await shareJob;
-  if (!dialog.isConnected || !dialog.open) return;
+  if (!dialog.isConnected || !dialog.open || opened!==shareOpenGeneration) return;
   const status = dialog.querySelector<HTMLElement>('.share-status')!;
   if (!card) { status.textContent = '画像を準備できませんでした。挑戦リンクはそのまま送れます。'; return; }
   const img = dialog.querySelector<HTMLImageElement>('#share-card-preview')!;
   img.src = card.objectUrl; img.hidden = false;
   dialog.querySelector<HTMLInputElement>('#challenge-url')!.value = card.url;
   dialog.querySelectorAll<HTMLButtonElement>('button[disabled]').forEach(button => button.disabled = false);
-  status.textContent = '友だちも、同じお題で遊べます。';
+  if(isNative() && network==='tiktok') {
+    const shareButton=dialog.querySelector<HTMLButtonElement>('[data-action="native-share"]')!;
+    shareButton.disabled=true;status.textContent='5秒の縦動画を準備しています…';
+    try { await nativeAsset(card,true); if(opened!==shareOpenGeneration||!dialog.open)return; status.textContent='縦動画ができました。共有先からTikTokを選んでください。';shareButton.disabled=false; }
+    catch {if(opened!==shareOpenGeneration)return;status.textContent='動画を準備できませんでした。画像を保存して写真投稿に使えます。';}
+  } else status.textContent = label ? `画像の用意ができました。共有先から${label}を選んでください。` : '友だちも、同じお題で遊べます。';
+  dialog.querySelector<HTMLButtonElement>('[data-action="native-share"]')!.textContent=label ? `共有先から${label}を選ぶ` : '友だちに送る';
 }
 
 function openCollection() {
@@ -594,6 +616,13 @@ app.addEventListener('click', event => {
   if (!button) return;
   event.stopPropagation();
   const action = button.dataset.action;
+  if(action==='social-share' && runContext && runResult && !runTainted) {
+    const network=button.dataset.network as SocialNetwork;
+    if(network==='x'){void openExternal(xIntent(runContext,runResult));return;}
+    void openShare(network);return;
+  }
+  if(action==='copy-caption') {const value=document.querySelector<HTMLTextAreaElement>('#share-caption')!.value;void copyChallenge(value).then(ok=>{const status=document.querySelector('.share-status');if(status)status.textContent=ok?'投稿用の文章をコピーしました。':'文章を選択してコピーしてください。';if(!ok)document.querySelector<HTMLTextAreaElement>('#share-caption')?.select();});return;}
+  if(action==='finish-cheeks' && engine?.mode===5 && engine.status==='playing') {engine.cancel();engine.success=cheekSession.size===6;engine.status='result';draw();return;}
   if (action === 'close-stage-lock') { document.querySelector<HTMLDialogElement>('#stage-lock-dialog')?.close(); return; }
   if (action === 'journey-current') { const id = currentStage(); if (id) void startMode(id); return; }
   if (action === 'next-stage') { const id = Number(button.dataset.nextMode); if (id >= 1 && id <= 6) void startMode(id); return; }
@@ -612,10 +641,10 @@ app.addEventListener('click', event => {
   }
   if (action === 'share') { void openShare(); return; }
   if (action === 'native-share' && challengeUrl) {
-    const job = shareCard ? sharePrepared(shareCard) : typeof navigator.share === 'function' ? navigator.share({title:'猫つぶしの挑戦状',text:'この記録、超えられる？',url:challengeUrl}).then(() => 'shared' as const).catch(error => error?.name === 'AbortError' ? 'cancelled' as const : 'fallback' as const) : Promise.resolve('fallback' as const);
+    const job = shareCard ? shareNetwork ? shareSocial(shareCard,shareNetwork) : sharePrepared(shareCard) : typeof navigator.share === 'function' ? navigator.share({title:'猫つぶしの挑戦状',text:'この記録、超えられる？',url:challengeUrl}).then(() => 'shared' as const).catch(error => error?.name === 'AbortError' ? 'cancelled' as const : 'fallback' as const) : Promise.resolve('fallback' as const);
     void job.then(outcome => {
       const status = document.querySelector<HTMLElement>('.share-status');
-      if (status) status.textContent = outcome === 'fallback' ? '下の「リンクをコピー」や「画像を保存」から送れます。' : outcome === 'cancelled' ? 'いつでも、また送れます。' : '挑戦状を送りました。もうひと勝負する？';
+      if (status) status.textContent = outcome === 'fallback' ? '下の「リンクをコピー」や「画像を保存」から送れます。' : outcome === 'cancelled' ? 'いつでも、また送れます。' : '共有操作が完了しました。投稿先でも内容をご確認ください。';
     }); return;
   }
   if (action === 'copy-challenge' && challengeUrl) {
@@ -625,7 +654,7 @@ app.addEventListener('click', event => {
       if (!ok) document.querySelector<HTMLInputElement>('#challenge-url')?.select();
     }); return;
   }
-  if (action === 'download-card' && shareCard) { downloadShareCard(shareCard); return; }
+  if (action === 'download-card' && shareCard) { if(isNative())void shareSocial(shareCard,'instagram');else downloadShareCard(shareCard); return; }
   if (action === 'menu') { void menu(); return; }
   if (action === 'settings') { document.querySelector<HTMLDialogElement>('#settings-dialog')?.showModal(); return; }
   if (action === 'sound') {
@@ -678,3 +707,5 @@ else if (shared.error || invalidSeed) void menu().then(() => {
 });
 else if (Number.isInteger(initialMode) && initialMode >= 1 && initialMode <= 6) void startMode(initialMode);
 else void menu();
+
+void nativeLifecycle(suspend,()=>{lastNow=performance.now();},query=>{const link=parseChallenge(query);if(link.context)void startMode(link.context.mode,link.context);}).catch(()=>{});
